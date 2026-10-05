@@ -1,0 +1,4854 @@
+{
+ "session": {
+  "id": "S-20260923-195229",
+  "started_at": "2026-09-23T19:52:29",
+  "source": "replay",
+  "file": "/home/bima/Documents/capstone/aritmia_ritme/demo/mitdb_202_afib.txt",
+  "speed": 1.0,
+  "ended_at": "2026-09-23T20:00:38",
+  "error": null
+ },
+ "summary": {
+  "n_windows": 201,
+  "n_bad_signal": 0,
+  "counts": {
+   "AFib": 201
+  },
+  "hr_min": 80.0,
+  "hr_max": 104.3,
+  "hr_median": 88.3,
+  "events": [
+   {
+    "t": 12.354,
+    "label_name": "AFib",
+    "hr": 81.8
+   }
+  ]
+ },
+ "windows": [
+  {
+   "t_start": 0.108,
+   "t_end": 10.108,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": null,
+   "label_stable_name": null,
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 84.9,
+   "rr_cv": 0.202,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 16.81,
+    "template_corr": 0.968
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 2.354,
+   "t_end": 12.354,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 81.8,
+   "rr_cv": 0.218,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 18.37,
+    "template_corr": 0.968
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 4.6,
+   "t_end": 14.6,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 80.6,
+   "rr_cv": 0.198,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 16.75,
+    "template_corr": 0.968
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 6.846,
+   "t_end": 16.846,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 88.1,
+   "rr_cv": 0.199,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 17.95,
+    "template_corr": 0.967
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 9.092,
+   "t_end": 19.092,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 87.6,
+   "rr_cv": 0.232,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 17.6,
+    "template_corr": 0.99
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 11.338,
+   "t_end": 21.338,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 90.4,
+   "rr_cv": 0.205,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 16.34,
+    "template_corr": 0.99
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 13.585,
+   "t_end": 23.585,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 94.8,
+   "rr_cv": 0.213,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 15.42,
+    "template_corr": 0.989
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 15.831,
+   "t_end": 25.831,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 88.9,
+   "rr_cv": 0.187,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 16.24,
+    "template_corr": 0.991
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 18.077,
+   "t_end": 28.077,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 93.9,
+   "rr_cv": 0.186,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 15.13,
+    "template_corr": 0.989
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 20.323,
+   "t_end": 30.323,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 91.8,
+   "rr_cv": 0.184,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 15.5,
+    "template_corr": 0.989
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 22.569,
+   "t_end": 32.569,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 88.1,
+   "rr_cv": 0.217,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 17.31,
+    "template_corr": 0.99
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 24.815,
+   "t_end": 34.815,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 87.5,
+   "rr_cv": 0.217,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 16.41,
+    "template_corr": 0.987
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 27.062,
+   "t_end": 37.062,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 82.7,
+   "rr_cv": 0.196,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 17.08,
+    "template_corr": 0.987
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 29.308,
+   "t_end": 39.308,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 85.3,
+   "rr_cv": 0.226,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 16.27,
+    "template_corr": 0.986
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 31.554,
+   "t_end": 41.554,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 87.9,
+   "rr_cv": 0.219,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 16.23,
+    "template_corr": 0.985
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 33.8,
+   "t_end": 43.8,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 93.7,
+   "rr_cv": 0.267,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 15.69,
+    "template_corr": 0.989
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 36.046,
+   "t_end": 46.046,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 101.5,
+   "rr_cv": 0.222,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 13.82,
+    "template_corr": 0.991
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 38.292,
+   "t_end": 48.292,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 97.6,
+   "rr_cv": 0.254,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 14.92,
+    "template_corr": 0.991
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 40.538,
+   "t_end": 50.538,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 95.7,
+   "rr_cv": 0.251,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 14.76,
+    "template_corr": 0.991
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 42.785,
+   "t_end": 52.785,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 98.5,
+   "rr_cv": 0.258,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 14.35,
+    "template_corr": 0.991
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 45.031,
+   "t_end": 55.031,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 94.4,
+   "rr_cv": 0.23,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 15.49,
+    "template_corr": 0.991
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 47.277,
+   "t_end": 57.277,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 99.0,
+   "rr_cv": 0.218,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 15.22,
+    "template_corr": 0.989
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 49.523,
+   "t_end": 59.523,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 98.4,
+   "rr_cv": 0.234,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 14.71,
+    "template_corr": 0.988
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 51.769,
+   "t_end": 61.769,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 87.0,
+   "rr_cv": 0.238,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 18.01,
+    "template_corr": 0.988
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 54.015,
+   "t_end": 64.015,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 87.7,
+   "rr_cv": 0.235,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 16.7,
+    "template_corr": 0.987
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 56.262,
+   "t_end": 66.262,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 81.0,
+   "rr_cv": 0.195,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 18.53,
+    "template_corr": 0.987
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 58.508,
+   "t_end": 68.508,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 82.4,
+   "rr_cv": 0.204,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 19.02,
+    "template_corr": 0.988
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 60.754,
+   "t_end": 70.754,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 88.0,
+   "rr_cv": 0.18,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 17.81,
+    "template_corr": 0.987
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 63.0,
+   "t_end": 73.0,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 82.8,
+   "rr_cv": 0.215,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 17.35,
+    "template_corr": 0.991
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 65.246,
+   "t_end": 75.246,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 85.7,
+   "rr_cv": 0.204,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 16.24,
+    "template_corr": 0.989
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 67.492,
+   "t_end": 77.492,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 88.3,
+   "rr_cv": 0.206,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 17.82,
+    "template_corr": 0.985
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 69.738,
+   "t_end": 79.738,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 86.5,
+   "rr_cv": 0.232,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 17.75,
+    "template_corr": 0.987
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 71.985,
+   "t_end": 81.985,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 90.0,
+   "rr_cv": 0.199,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 16.75,
+    "template_corr": 0.989
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 74.231,
+   "t_end": 84.231,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 92.1,
+   "rr_cv": 0.235,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 16.8,
+    "template_corr": 0.988
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 76.477,
+   "t_end": 86.477,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 86.7,
+   "rr_cv": 0.222,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 17.75,
+    "template_corr": 0.988
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 78.723,
+   "t_end": 88.723,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 89.7,
+   "rr_cv": 0.211,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 16.82,
+    "template_corr": 0.99
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 80.969,
+   "t_end": 90.969,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 90.3,
+   "rr_cv": 0.222,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 16.6,
+    "template_corr": 0.991
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 83.215,
+   "t_end": 93.215,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 87.5,
+   "rr_cv": 0.201,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 17.62,
+    "template_corr": 0.993
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 85.462,
+   "t_end": 95.462,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 89.6,
+   "rr_cv": 0.2,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 17.64,
+    "template_corr": 0.993
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 87.708,
+   "t_end": 97.708,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 85.7,
+   "rr_cv": 0.231,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 16.72,
+    "template_corr": 0.993
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 89.954,
+   "t_end": 99.954,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 85.9,
+   "rr_cv": 0.211,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 17.17,
+    "template_corr": 0.993
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 92.2,
+   "t_end": 102.2,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 85.0,
+   "rr_cv": 0.201,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 17.45,
+    "template_corr": 0.99
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 94.446,
+   "t_end": 104.446,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 84.7,
+   "rr_cv": 0.233,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 17.48,
+    "template_corr": 0.989
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 96.692,
+   "t_end": 106.692,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 93.3,
+   "rr_cv": 0.243,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 15.49,
+    "template_corr": 0.977
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 98.938,
+   "t_end": 108.938,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 91.1,
+   "rr_cv": 0.219,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 15.74,
+    "template_corr": 0.976
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 101.185,
+   "t_end": 111.185,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 89.3,
+   "rr_cv": 0.235,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 16.85,
+    "template_corr": 0.978
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 103.431,
+   "t_end": 113.431,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 93.9,
+   "rr_cv": 0.213,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 15.69,
+    "template_corr": 0.978
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 105.677,
+   "t_end": 115.677,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 91.8,
+   "rr_cv": 0.223,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 16.15,
+    "template_corr": 0.989
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 107.923,
+   "t_end": 117.923,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 91.4,
+   "rr_cv": 0.215,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 16.33,
+    "template_corr": 0.988
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 110.169,
+   "t_end": 120.169,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 95.8,
+   "rr_cv": 0.198,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 14.99,
+    "template_corr": 0.988
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 112.415,
+   "t_end": 122.415,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 88.2,
+   "rr_cv": 0.253,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 16.03,
+    "template_corr": 0.989
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 114.662,
+   "t_end": 124.662,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 89.8,
+   "rr_cv": 0.234,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 16.35,
+    "template_corr": 0.989
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 116.908,
+   "t_end": 126.908,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 88.3,
+   "rr_cv": 0.24,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 16.44,
+    "template_corr": 0.987
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 119.154,
+   "t_end": 129.154,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 86.6,
+   "rr_cv": 0.237,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 17.93,
+    "template_corr": 0.987
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 121.4,
+   "t_end": 131.4,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 96.8,
+   "rr_cv": 0.19,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 16.9,
+    "template_corr": 0.987
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 123.646,
+   "t_end": 133.646,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 89.2,
+   "rr_cv": 0.211,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 16.5,
+    "template_corr": 0.986
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 125.892,
+   "t_end": 135.892,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 85.2,
+   "rr_cv": 0.193,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 16.54,
+    "template_corr": 0.987
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 128.138,
+   "t_end": 138.138,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 84.6,
+   "rr_cv": 0.179,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 16.98,
+    "template_corr": 0.989
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 130.385,
+   "t_end": 140.385,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 82.2,
+   "rr_cv": 0.171,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 17.29,
+    "template_corr": 0.989
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 132.631,
+   "t_end": 142.631,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 82.8,
+   "rr_cv": 0.161,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 17.28,
+    "template_corr": 0.992
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 134.877,
+   "t_end": 144.877,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 84.6,
+   "rr_cv": 0.201,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 17.31,
+    "template_corr": 0.991
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 137.123,
+   "t_end": 147.123,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 84.3,
+   "rr_cv": 0.223,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 17.39,
+    "template_corr": 0.99
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 139.369,
+   "t_end": 149.369,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 81.8,
+   "rr_cv": 0.215,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 19.16,
+    "template_corr": 0.99
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 141.615,
+   "t_end": 151.615,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 84.9,
+   "rr_cv": 0.232,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 16.91,
+    "template_corr": 0.989
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 143.862,
+   "t_end": 153.862,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 82.5,
+   "rr_cv": 0.181,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 19.0,
+    "template_corr": 0.989
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 146.108,
+   "t_end": 156.108,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 86.6,
+   "rr_cv": 0.176,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 17.61,
+    "template_corr": 0.99
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 148.354,
+   "t_end": 158.354,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 88.6,
+   "rr_cv": 0.176,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 16.57,
+    "template_corr": 0.989
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 150.6,
+   "t_end": 160.6,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 88.8,
+   "rr_cv": 0.199,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 16.1,
+    "template_corr": 0.99
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 152.846,
+   "t_end": 162.846,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 99.0,
+   "rr_cv": 0.253,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 13.87,
+    "template_corr": 0.989
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 155.092,
+   "t_end": 165.092,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 97.8,
+   "rr_cv": 0.256,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 15.89,
+    "template_corr": 0.99
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 157.338,
+   "t_end": 167.338,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 98.2,
+   "rr_cv": 0.302,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 15.28,
+    "template_corr": 0.99
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 159.585,
+   "t_end": 169.585,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 97.7,
+   "rr_cv": 0.263,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 15.14,
+    "template_corr": 0.989
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 161.831,
+   "t_end": 171.831,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 90.6,
+   "rr_cv": 0.205,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 16.6,
+    "template_corr": 0.991
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 164.077,
+   "t_end": 174.077,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 89.2,
+   "rr_cv": 0.211,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 16.68,
+    "template_corr": 0.99
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 166.323,
+   "t_end": 176.323,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 87.2,
+   "rr_cv": 0.18,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 16.35,
+    "template_corr": 0.991
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 168.569,
+   "t_end": 178.569,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 87.7,
+   "rr_cv": 0.193,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 17.29,
+    "template_corr": 0.991
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 170.815,
+   "t_end": 180.815,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 92.3,
+   "rr_cv": 0.234,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 16.38,
+    "template_corr": 0.991
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 173.062,
+   "t_end": 183.062,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 99.5,
+   "rr_cv": 0.244,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 14.24,
+    "template_corr": 0.99
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 175.308,
+   "t_end": 185.308,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 101.1,
+   "rr_cv": 0.207,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 14.08,
+    "template_corr": 0.99
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 177.554,
+   "t_end": 187.554,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 98.5,
+   "rr_cv": 0.241,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 14.95,
+    "template_corr": 0.988
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 179.8,
+   "t_end": 189.8,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 91.2,
+   "rr_cv": 0.221,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 16.13,
+    "template_corr": 0.988
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 182.046,
+   "t_end": 192.046,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 80.0,
+   "rr_cv": 0.177,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 17.78,
+    "template_corr": 0.989
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 184.292,
+   "t_end": 194.292,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 83.8,
+   "rr_cv": 0.24,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 17.6,
+    "template_corr": 0.989
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 186.538,
+   "t_end": 196.538,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 86.8,
+   "rr_cv": 0.241,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 17.53,
+    "template_corr": 0.988
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 188.785,
+   "t_end": 198.785,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 88.9,
+   "rr_cv": 0.268,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 17.64,
+    "template_corr": 0.991
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 191.031,
+   "t_end": 201.031,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 95.5,
+   "rr_cv": 0.232,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 16.28,
+    "template_corr": 0.992
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 193.277,
+   "t_end": 203.277,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 91.5,
+   "rr_cv": 0.246,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 16.43,
+    "template_corr": 0.992
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 195.523,
+   "t_end": 205.523,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 86.9,
+   "rr_cv": 0.225,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 16.32,
+    "template_corr": 0.993
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 197.769,
+   "t_end": 207.769,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 86.2,
+   "rr_cv": 0.223,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 17.76,
+    "template_corr": 0.989
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 200.015,
+   "t_end": 210.015,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 86.5,
+   "rr_cv": 0.205,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 16.36,
+    "template_corr": 0.988
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 202.262,
+   "t_end": 212.262,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 86.1,
+   "rr_cv": 0.193,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 16.53,
+    "template_corr": 0.988
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 204.508,
+   "t_end": 214.508,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 92.2,
+   "rr_cv": 0.197,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 16.73,
+    "template_corr": 0.988
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 206.754,
+   "t_end": 216.754,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 88.9,
+   "rr_cv": 0.187,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 16.76,
+    "template_corr": 0.99
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 209.0,
+   "t_end": 219.0,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 85.7,
+   "rr_cv": 0.189,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 19.46,
+    "template_corr": 0.992
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 211.246,
+   "t_end": 221.246,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 86.8,
+   "rr_cv": 0.291,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 16.76,
+    "template_corr": 0.99
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 213.492,
+   "t_end": 223.492,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 85.4,
+   "rr_cv": 0.292,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 17.72,
+    "template_corr": 0.992
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 215.738,
+   "t_end": 225.738,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 82.5,
+   "rr_cv": 0.279,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 18.03,
+    "template_corr": 0.991
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 217.985,
+   "t_end": 227.985,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 86.7,
+   "rr_cv": 0.319,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 16.34,
+    "template_corr": 0.99
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 220.231,
+   "t_end": 230.231,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 88.5,
+   "rr_cv": 0.247,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 15.87,
+    "template_corr": 0.989
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 222.692,
+   "t_end": 232.692,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 85.3,
+   "rr_cv": 0.196,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 17.26,
+    "template_corr": 0.99
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 224.938,
+   "t_end": 234.938,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 88.4,
+   "rr_cv": 0.185,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 16.17,
+    "template_corr": 0.988
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 227.185,
+   "t_end": 237.185,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 88.3,
+   "rr_cv": 0.115,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 17.42,
+    "template_corr": 0.99
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 229.431,
+   "t_end": 239.431,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 85.7,
+   "rr_cv": 0.204,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 16.38,
+    "template_corr": 0.971
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 231.677,
+   "t_end": 241.677,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 85.9,
+   "rr_cv": 0.214,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 16.82,
+    "template_corr": 0.968
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 233.923,
+   "t_end": 243.923,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 81.6,
+   "rr_cv": 0.209,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 16.96,
+    "template_corr": 0.968
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 236.169,
+   "t_end": 246.169,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 84.6,
+   "rr_cv": 0.24,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 17.06,
+    "template_corr": 0.968
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 238.415,
+   "t_end": 248.415,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 86.9,
+   "rr_cv": 0.231,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 17.31,
+    "template_corr": 0.967
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 240.662,
+   "t_end": 250.662,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 87.4,
+   "rr_cv": 0.228,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 17.04,
+    "template_corr": 0.99
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 242.908,
+   "t_end": 252.908,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 91.6,
+   "rr_cv": 0.2,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 16.51,
+    "template_corr": 0.99
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 245.154,
+   "t_end": 255.154,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 91.8,
+   "rr_cv": 0.192,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 16.5,
+    "template_corr": 0.991
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 247.4,
+   "t_end": 257.4,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 92.7,
+   "rr_cv": 0.175,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 14.87,
+    "template_corr": 0.991
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 249.646,
+   "t_end": 259.646,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 92.5,
+   "rr_cv": 0.192,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 16.34,
+    "template_corr": 0.99
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 251.892,
+   "t_end": 261.892,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 89.2,
+   "rr_cv": 0.218,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 16.17,
+    "template_corr": 0.989
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 254.138,
+   "t_end": 264.138,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 87.5,
+   "rr_cv": 0.217,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 16.61,
+    "template_corr": 0.986
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 256.385,
+   "t_end": 266.385,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 83.5,
+   "rr_cv": 0.195,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 17.99,
+    "template_corr": 0.987
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 258.631,
+   "t_end": 268.631,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 84.1,
+   "rr_cv": 0.216,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 17.14,
+    "template_corr": 0.987
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 260.877,
+   "t_end": 270.877,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 88.7,
+   "rr_cv": 0.219,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 17.39,
+    "template_corr": 0.987
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 263.123,
+   "t_end": 273.123,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 88.9,
+   "rr_cv": 0.222,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 15.96,
+    "template_corr": 0.988
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 265.369,
+   "t_end": 275.369,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 98.0,
+   "rr_cv": 0.257,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 14.7,
+    "template_corr": 0.988
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 267.615,
+   "t_end": 277.615,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 104.3,
+   "rr_cv": 0.223,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 14.98,
+    "template_corr": 0.988
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 269.862,
+   "t_end": 279.862,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 94.0,
+   "rr_cv": 0.264,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 15.89,
+    "template_corr": 0.99
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 272.108,
+   "t_end": 282.108,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 101.1,
+   "rr_cv": 0.271,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 13.96,
+    "template_corr": 0.989
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 274.354,
+   "t_end": 284.354,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 94.5,
+   "rr_cv": 0.229,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 16.34,
+    "template_corr": 0.99
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 276.6,
+   "t_end": 286.6,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 94.1,
+   "rr_cv": 0.241,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 15.27,
+    "template_corr": 0.99
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 278.846,
+   "t_end": 288.846,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 100.8,
+   "rr_cv": 0.196,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 14.47,
+    "template_corr": 0.989
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 281.092,
+   "t_end": 291.092,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 95.0,
+   "rr_cv": 0.262,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 15.71,
+    "template_corr": 0.988
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 283.338,
+   "t_end": 293.338,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 85.4,
+   "rr_cv": 0.231,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 18.14,
+    "template_corr": 0.988
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 285.585,
+   "t_end": 295.585,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 81.5,
+   "rr_cv": 0.222,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 19.58,
+    "template_corr": 0.987
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 287.831,
+   "t_end": 297.831,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 82.1,
+   "rr_cv": 0.207,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 17.75,
+    "template_corr": 0.989
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 290.077,
+   "t_end": 300.077,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 85.9,
+   "rr_cv": 0.197,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 17.74,
+    "template_corr": 0.989
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 292.323,
+   "t_end": 302.323,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 83.9,
+   "rr_cv": 0.226,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 17.44,
+    "template_corr": 0.987
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 294.569,
+   "t_end": 304.569,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 83.7,
+   "rr_cv": 0.197,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 17.69,
+    "template_corr": 0.989
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 296.815,
+   "t_end": 306.815,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 88.3,
+   "rr_cv": 0.231,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 16.73,
+    "template_corr": 0.988
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 299.062,
+   "t_end": 309.062,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 85.8,
+   "rr_cv": 0.217,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 17.02,
+    "template_corr": 0.985
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 301.308,
+   "t_end": 311.308,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 88.9,
+   "rr_cv": 0.198,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 16.54,
+    "template_corr": 0.987
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 303.554,
+   "t_end": 313.554,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 94.6,
+   "rr_cv": 0.227,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 15.62,
+    "template_corr": 0.986
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 305.8,
+   "t_end": 315.8,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 89.1,
+   "rr_cv": 0.218,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 16.61,
+    "template_corr": 0.985
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 308.046,
+   "t_end": 318.046,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 89.7,
+   "rr_cv": 0.201,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 16.68,
+    "template_corr": 0.987
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 310.292,
+   "t_end": 320.292,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 89.4,
+   "rr_cv": 0.216,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 16.57,
+    "template_corr": 0.99
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 312.538,
+   "t_end": 322.538,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 90.2,
+   "rr_cv": 0.235,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 16.21,
+    "template_corr": 0.99
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 314.785,
+   "t_end": 324.785,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 88.6,
+   "rr_cv": 0.197,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 16.58,
+    "template_corr": 0.992
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 317.031,
+   "t_end": 327.031,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 86.5,
+   "rr_cv": 0.23,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 16.59,
+    "template_corr": 0.992
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 319.277,
+   "t_end": 329.277,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 88.4,
+   "rr_cv": 0.218,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 17.11,
+    "template_corr": 0.993
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 321.523,
+   "t_end": 331.523,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 83.9,
+   "rr_cv": 0.191,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 18.79,
+    "template_corr": 0.991
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 323.769,
+   "t_end": 333.769,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 83.0,
+   "rr_cv": 0.216,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 17.48,
+    "template_corr": 0.991
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 326.015,
+   "t_end": 336.015,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 88.3,
+   "rr_cv": 0.191,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 15.79,
+    "template_corr": 0.99
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 328.262,
+   "t_end": 338.262,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 91.2,
+   "rr_cv": 0.229,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 16.27,
+    "template_corr": 0.977
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 330.508,
+   "t_end": 340.508,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 88.7,
+   "rr_cv": 0.244,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 16.56,
+    "template_corr": 0.978
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 332.754,
+   "t_end": 342.754,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 93.5,
+   "rr_cv": 0.21,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 15.78,
+    "template_corr": 0.978
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 335.0,
+   "t_end": 345.0,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 91.8,
+   "rr_cv": 0.24,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 16.49,
+    "template_corr": 0.979
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 337.246,
+   "t_end": 347.246,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 89.4,
+   "rr_cv": 0.207,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 16.37,
+    "template_corr": 0.99
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 339.492,
+   "t_end": 349.492,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 94.9,
+   "rr_cv": 0.181,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 16.24,
+    "template_corr": 0.99
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 341.738,
+   "t_end": 351.738,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 94.6,
+   "rr_cv": 0.203,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 15.19,
+    "template_corr": 0.99
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 343.985,
+   "t_end": 353.985,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 91.9,
+   "rr_cv": 0.25,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 16.17,
+    "template_corr": 0.99
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 346.231,
+   "t_end": 356.231,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 90.8,
+   "rr_cv": 0.238,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 16.65,
+    "template_corr": 0.989
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 348.477,
+   "t_end": 358.477,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 86.7,
+   "rr_cv": 0.248,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 17.88,
+    "template_corr": 0.989
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 350.723,
+   "t_end": 360.723,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 88.9,
+   "rr_cv": 0.247,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 17.13,
+    "template_corr": 0.989
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 352.969,
+   "t_end": 362.969,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 94.1,
+   "rr_cv": 0.202,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 16.99,
+    "template_corr": 0.989
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 355.215,
+   "t_end": 365.215,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 88.3,
+   "rr_cv": 0.213,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 16.78,
+    "template_corr": 0.989
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 357.462,
+   "t_end": 367.462,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 86.0,
+   "rr_cv": 0.201,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 17.87,
+    "template_corr": 0.988
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 359.708,
+   "t_end": 369.708,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 84.2,
+   "rr_cv": 0.172,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 17.05,
+    "template_corr": 0.989
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 361.954,
+   "t_end": 371.954,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 80.3,
+   "rr_cv": 0.137,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 18.69,
+    "template_corr": 0.991
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 364.2,
+   "t_end": 374.2,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 85.6,
+   "rr_cv": 0.193,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 17.36,
+    "template_corr": 0.99
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 366.446,
+   "t_end": 376.446,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 85.5,
+   "rr_cv": 0.22,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 17.34,
+    "template_corr": 0.992
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 368.692,
+   "t_end": 378.692,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 84.4,
+   "rr_cv": 0.223,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 17.54,
+    "template_corr": 0.99
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 370.938,
+   "t_end": 380.938,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 85.4,
+   "rr_cv": 0.229,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 17.7,
+    "template_corr": 0.989
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 373.185,
+   "t_end": 383.185,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 82.8,
+   "rr_cv": 0.208,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 17.62,
+    "template_corr": 0.988
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 375.431,
+   "t_end": 385.431,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 83.9,
+   "rr_cv": 0.162,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 17.52,
+    "template_corr": 0.988
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 377.677,
+   "t_end": 387.677,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 86.2,
+   "rr_cv": 0.169,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 15.89,
+    "template_corr": 0.988
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 379.923,
+   "t_end": 389.923,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 83.9,
+   "rr_cv": 0.185,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 17.34,
+    "template_corr": 0.988
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 382.169,
+   "t_end": 392.169,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 98.5,
+   "rr_cv": 0.256,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 14.97,
+    "template_corr": 0.986
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 384.415,
+   "t_end": 394.415,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 100.4,
+   "rr_cv": 0.256,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 14.9,
+    "template_corr": 0.989
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 386.662,
+   "t_end": 396.662,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 94.8,
+   "rr_cv": 0.294,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 15.2,
+    "template_corr": 0.988
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 388.908,
+   "t_end": 398.908,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 99.1,
+   "rr_cv": 0.272,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 14.97,
+    "template_corr": 0.989
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 391.154,
+   "t_end": 401.154,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 92.6,
+   "rr_cv": 0.219,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 15.55,
+    "template_corr": 0.992
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 393.4,
+   "t_end": 403.4,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 90.4,
+   "rr_cv": 0.198,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 17.99,
+    "template_corr": 0.993
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 395.646,
+   "t_end": 405.646,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 91.8,
+   "rr_cv": 0.158,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 16.45,
+    "template_corr": 0.992
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 397.892,
+   "t_end": 407.892,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 86.3,
+   "rr_cv": 0.18,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 16.35,
+    "template_corr": 0.993
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 400.138,
+   "t_end": 410.138,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 89.2,
+   "rr_cv": 0.215,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 16.46,
+    "template_corr": 0.994
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 402.385,
+   "t_end": 412.385,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 93.8,
+   "rr_cv": 0.244,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 14.99,
+    "template_corr": 0.992
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 404.631,
+   "t_end": 414.631,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 99.1,
+   "rr_cv": 0.256,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 15.07,
+    "template_corr": 0.991
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 406.877,
+   "t_end": 416.877,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 99.6,
+   "rr_cv": 0.244,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 14.73,
+    "template_corr": 0.99
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 409.123,
+   "t_end": 419.123,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 93.7,
+   "rr_cv": 0.219,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 14.76,
+    "template_corr": 0.987
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 411.369,
+   "t_end": 421.369,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 87.9,
+   "rr_cv": 0.216,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 16.44,
+    "template_corr": 0.988
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 413.615,
+   "t_end": 423.615,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 81.0,
+   "rr_cv": 0.191,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 19.58,
+    "template_corr": 0.989
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 415.862,
+   "t_end": 425.862,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 85.1,
+   "rr_cv": 0.231,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 17.67,
+    "template_corr": 0.988
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 418.108,
+   "t_end": 428.108,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 88.3,
+   "rr_cv": 0.259,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 16.67,
+    "template_corr": 0.991
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 420.354,
+   "t_end": 430.354,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 86.7,
+   "rr_cv": 0.258,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 16.45,
+    "template_corr": 0.991
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 422.6,
+   "t_end": 432.6,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 90.9,
+   "rr_cv": 0.252,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 16.44,
+    "template_corr": 0.992
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 424.846,
+   "t_end": 434.846,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 87.1,
+   "rr_cv": 0.229,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 17.9,
+    "template_corr": 0.994
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 427.092,
+   "t_end": 437.092,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 85.6,
+   "rr_cv": 0.222,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 17.52,
+    "template_corr": 0.991
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 429.338,
+   "t_end": 439.338,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 89.3,
+   "rr_cv": 0.225,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 17.03,
+    "template_corr": 0.99
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 431.585,
+   "t_end": 441.585,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 86.4,
+   "rr_cv": 0.192,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 17.68,
+    "template_corr": 0.988
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 433.831,
+   "t_end": 443.831,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 89.7,
+   "rr_cv": 0.183,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 16.75,
+    "template_corr": 0.988
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 436.077,
+   "t_end": 446.077,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 91.3,
+   "rr_cv": 0.203,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 16.87,
+    "template_corr": 0.988
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 438.323,
+   "t_end": 448.323,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 87.2,
+   "rr_cv": 0.189,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 18.08,
+    "template_corr": 0.99
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 440.569,
+   "t_end": 450.569,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 86.4,
+   "rr_cv": 0.182,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 19.73,
+    "template_corr": 0.99
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 442.815,
+   "t_end": 452.815,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 88.9,
+   "rr_cv": 0.305,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 16.54,
+    "template_corr": 0.991
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 445.062,
+   "t_end": 455.062,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 85.2,
+   "rr_cv": 0.289,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 16.36,
+    "template_corr": 0.993
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 447.308,
+   "t_end": 457.308,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 86.0,
+   "rr_cv": 0.293,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 17.77,
+    "template_corr": 0.991
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 449.554,
+   "t_end": 459.554,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": "AFIB",
+   "label_stable_name": "AFib",
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 92.5,
+   "rr_cv": 0.28,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 17.49,
+    "template_corr": 0.99
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  }
+ ]
+}

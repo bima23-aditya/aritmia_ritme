@@ -1,0 +1,1160 @@
+<!DOCTYPE html>
+<html lang="id" class="h-full bg-slate-50 text-slate-800">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beat Ledger - Monitoring EKG Real-time</title>
+
+    <!-- Tailwind, font, ikon, dan CryptoJS dari CDN (butuh koneksi internet) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: { extend: { fontFamily: {
+                mono: ['JetBrains Mono', 'Courier New', 'monospace'],
+                sans: ['Inter', 'system-ui', 'sans-serif'],
+            } } }
+        }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+
+    <style>
+        body { font-family: 'Inter', system-ui, sans-serif; }
+        .font-mono { font-family: 'JetBrains Mono', monospace; }
+        .ecg-canvas-container {
+            position: relative; background: #fff; border-radius: 0.85rem; overflow: hidden;
+            border: 1px solid #cbd5e1; box-shadow: inset 0 1px 4px rgba(0,0,0,0.03);
+        }
+        @keyframes pulse-ring { 0%,100% { transform: scale(0.98); opacity: .9 } 50% { transform: scale(1.02); opacity: .6 } }
+        .recording-pulse { animation: pulse-ring 1.5s infinite ease-in-out; }
+        ::-webkit-scrollbar { width: 7px; height: 7px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        @media print { header, nav, .no-print { display: none !important; } }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col antialiased">
+
+    <!-- HEADER -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-wrap items-center justify-between min-h-16 py-2 gap-4">
+                <div class="flex items-center space-x-3 shrink-0">
+                    <div class="p-2.5 bg-gradient-to-tr from-indigo-600 to-blue-500 rounded-xl text-white shadow-md shadow-indigo-500/20">
+                        <i class="fa-solid fa-heart-pulse text-xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-extrabold tracking-tight text-slate-900 leading-none">Beat Ledger</h1>
+                        <p class="text-xs text-slate-500 font-medium mt-0.5">Monitoring EKG Real-time & Autentikasi Laporan Medis</p>
+                    </div>
+                </div>
+
+                <nav class="flex bg-slate-100 p-1 rounded-xl border border-slate-200 text-xs font-bold">
+                    <button id="tab-btn-dashboard" onclick="switchMainTab('dashboard')" class="flex items-center space-x-2 px-5 py-2 rounded-lg">
+                        <i class="fa-solid fa-chart-line"></i><span>Dashboard</span>
+                    </button>
+                    <button id="tab-btn-history" onclick="switchMainTab('history')" class="flex items-center space-x-2 px-5 py-2 rounded-lg">
+                        <i class="fa-solid fa-clock-rotate-left"></i><span>History</span>
+                        <span id="history-counter-badge" class="ml-1 px-2 py-0.5 text-[10px] bg-indigo-100 text-indigo-700 rounded-full font-mono">0</span>
+                    </button>
+                </nav>
+
+                <div class="flex items-center space-x-3 shrink-0">
+                    <!-- Status koneksi: WebSocket ke backend + sumber data sesi -->
+                    <div id="conn-pill" class="flex items-center px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-100 text-slate-600 border border-slate-300">
+                        <svg id="conn-svg" class="w-4 h-4 mr-2 fill-slate-500" viewBox="0 0 24 24">
+                            <path d="M17.71 7.71L12 2h-1v7.59L6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 11 14.41V22h1l5.71-5.71-4.3-4.29 4.3-4.29zM13 5.83l1.88 1.88L13 9.59V5.83zm1.88 10.46L13 18.17v-3.76l1.88 1.88z"/>
+                        </svg>
+                        <span id="conn-text">Menghubungkan...</span>
+                    </div>
+                    <!-- Status model & Polar H10; klik untuk memilih model / (dis)konek Polar -->
+                    <button type="button" id="model-pill" onclick="openModelModal()" class="flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold border bg-slate-100 text-slate-500 border-slate-300">
+                        <i id="model-icon" class="fa-solid fa-brain"></i><span id="model-text">Model: -</span>
+                    </button>
+                    <button type="button" id="polar-pill" onclick="togglePolar()" class="flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold border bg-slate-100 text-slate-500 border-slate-300">
+                        <i id="polar-icon" class="fa-brands fa-bluetooth-b"></i><span id="polar-text">Polar H10: -</span>
+                    </button>
+                    <div class="flex items-center space-x-1.5 bg-slate-100 p-1 rounded-xl border border-slate-200">
+                        <button id="btn-start" onclick="openStartModal()" class="flex items-center space-x-1.5 px-4 py-2 rounded-lg text-xs font-bold">
+                            <i class="fa-solid fa-play text-[10px]"></i><span>Start</span>
+                        </button>
+                        <button id="btn-stop" onclick="stopSession()" class="flex items-center space-x-1.5 px-4 py-2 rounded-lg text-xs font-bold">
+                            <i class="fa-solid fa-square text-[10px]"></i><span>Stop</span>
+                        </button>
+                        <button onclick="resetDisplay()" class="flex items-center px-3 py-2 bg-slate-200 hover:bg-slate-300 text-slate-700 rounded-lg text-xs font-bold" title="Bersihkan grafik">
+                            <i class="fa-solid fa-rotate-right text-[10px]"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex-1 w-full space-y-6">
+
+        <!-- ============================ DASHBOARD ============================ -->
+        <div id="view-dashboard" class="space-y-6">
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                <!-- Hasil klasifikasi (label stabil) -->
+                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm relative overflow-hidden flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between pb-2">
+                            <span class="text-xs font-extrabold uppercase tracking-wider text-slate-500">Hasil Klasifikasi</span>
+                            <div id="diag-icon-bg" class="p-2.5 rounded-xl border bg-slate-50 text-slate-500 border-slate-200">
+                                <i id="diag-icon" class="fa-solid fa-hourglass-half text-base"></i>
+                            </div>
+                        </div>
+                        <div id="metric-diagnosis" class="mt-2 text-lg font-black tracking-tight text-slate-400">Menunggu data...</div>
+                        <div id="metric-window-label" class="text-[11px] text-slate-500 font-medium mt-1"></div>
+                    </div>
+                    <div class="mt-4 pt-2 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-500 font-medium">
+                        <span>Status Prediksi AI</span>
+                        <span id="diag-status" class="font-bold text-slate-500">-</span>
+                    </div>
+                    <div id="diag-bar" class="absolute bottom-0 left-0 right-0 h-1 bg-slate-300"></div>
+                </div>
+
+                <!-- Keyakinan -->
+                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between pb-2">
+                            <span class="text-xs font-extrabold uppercase tracking-wider text-slate-500">Tingkat Keyakinan</span>
+                            <div class="p-2.5 bg-blue-50 text-blue-600 rounded-xl border border-blue-200"><i class="fa-solid fa-gauge-high text-base"></i></div>
+                        </div>
+                        <div class="mt-2 flex items-baseline justify-between">
+                            <div class="text-3xl font-black text-slate-900 tracking-tight font-mono"><span id="metric-confidence">-</span><span class="text-sm font-sans font-bold text-slate-500">%</span></div>
+                            <span id="conf-pill" class="px-2 py-0.5 text-[10px] font-bold rounded-md border bg-slate-50 text-slate-500 border-slate-200">-</span>
+                        </div>
+                    </div>
+                    <div class="mt-4 w-full bg-slate-100 h-2 rounded-full overflow-hidden border border-slate-200">
+                        <div id="confidence-bar" class="bg-blue-600 h-full rounded-full transition-all duration-300" style="width:0%"></div>
+                    </div>
+                </div>
+
+                <!-- Heart rate -->
+                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between pb-2">
+                            <span class="text-xs font-extrabold uppercase tracking-wider text-slate-500">Heart Rate (HR)</span>
+                            <div class="p-2.5 bg-rose-50 text-rose-600 rounded-xl border border-rose-200"><i class="fa-solid fa-heart text-base"></i></div>
+                        </div>
+                        <div class="mt-2 flex items-baseline justify-between">
+                            <div class="text-3xl font-black text-slate-900 tracking-tight font-mono"><span id="metric-hr">-</span> <span class="text-sm font-sans font-bold text-slate-500">BPM</span></div>
+                            <span id="hr-pill" class="text-[10px] font-extrabold px-2.5 py-1 rounded-lg border bg-slate-50 text-slate-500 border-slate-200">-</span>
+                        </div>
+                    </div>
+                    <div class="mt-4 pt-2 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-500 font-medium">
+                        <span>Interval RR</span><span id="metric-rr" class="font-mono font-bold text-slate-700">-</span>
+                    </div>
+                </div>
+
+                <!-- SQI -->
+                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between pb-2">
+                            <span class="text-xs font-extrabold uppercase tracking-wider text-slate-500">Kualitas Sinyal (SQI)</span>
+                            <div id="sqi-icon-bg" class="p-2.5 rounded-xl border bg-slate-50 text-slate-500 border-slate-200"><i class="fa-solid fa-wave-square text-base"></i></div>
+                        </div>
+                        <div id="metric-sqi" class="mt-2 text-xl font-extrabold flex items-center gap-2 text-slate-400">
+                            <span id="sqi-dot" class="w-3 h-3 rounded-full bg-slate-300 inline-block"></span><span id="sqi-label">-</span>
+                        </div>
+                    </div>
+                    <div class="mt-4 pt-2 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-500 font-medium gap-2">
+                        <span>Korelasi template</span><span id="sqi-detail" class="font-mono font-bold text-slate-700 text-right">-</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex flex-col gap-6">
+                <!-- EKG live -->
+                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+                    <div class="flex flex-wrap items-center justify-between gap-2">
+                        <div class="flex items-center space-x-2">
+                            <span id="live-dot" class="w-3.5 h-3.5 rounded-full bg-slate-300"></span>
+                            <h3 class="text-base font-bold text-slate-900">Grafik Sinyal EKG (Sliding Window)</h3>
+                        </div>
+                        <div class="flex items-center space-x-3 text-xs font-mono text-slate-500 bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-200">
+                            <span>130 Hz</span><span>|</span><span>10 detik terakhir</span><span>|</span><span>Filter 0,5-40 Hz</span>
+                        </div>
+                    </div>
+                    <div class="ecg-canvas-container h-64 w-full">
+                        <canvas id="canvas-raw" class="w-full h-full block"></canvas>
+                        <div class="absolute bottom-3 left-4 text-xs text-slate-700 font-mono pointer-events-none bg-white/95 px-3 py-1.5 rounded-lg border border-slate-300 shadow-sm font-bold flex items-center gap-2">
+                            <span class="w-2 h-2 rounded-full bg-indigo-600 inline-block"></span>
+                            <span id="live-caption">Real-time ECG Stream</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Jendela yang dianalisis + Grad-CAM -->
+                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+                    <div class="flex flex-wrap items-center justify-between gap-2">
+                        <div class="flex items-center space-x-2">
+                            <span class="w-3.5 h-3.5 rounded-full bg-indigo-600"></span>
+                            <h3 class="text-base font-bold text-slate-900">Grafik Inferensi Explainable AI (XAI)</h3>
+                            <span id="xai-time" class="text-xs font-mono text-slate-500"></span>
+                        </div>
+                        <div id="prob-chips" class="flex flex-wrap items-center gap-1.5 text-[11px] font-bold"></div>
+                    </div>
+                    <div class="ecg-canvas-container h-64 w-full">
+                        <canvas id="canvas-xai" class="w-full h-full block"></canvas>
+                        <div class="absolute bottom-3 left-4 text-xs text-slate-700 font-mono pointer-events-none bg-white/95 px-3 py-1.5 rounded-lg border border-slate-300 shadow-sm flex flex-wrap items-center gap-4 font-bold">
+                            <span class="flex items-center"><span class="w-2.5 h-2.5 rounded-full bg-amber-500 inline-block mr-1.5"></span>Grad-CAM</span>
+                            <span class="flex items-center"><span class="w-2.5 h-2.5 rounded-full bg-indigo-600 inline-block mr-1.5"></span>Sinyal (diproses)</span>
+                            <span class="flex items-center"><span class="w-2.5 h-2.5 rounded-full bg-blue-700 inline-block mr-1.5"></span>Puncak R</span>
+                        </div>
+                    </div>
+                    <p class="text-[11px] text-slate-500">Jendela 10 detik terakhir yang diklasifikasi model (diperbarui tiap 2 detik). Area kuning = bagian sinyal yang paling memengaruhi prediksi.</p>
+                </div>
+            </div>
+
+            <!-- Autentikasi laporan -->
+            <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 space-y-6">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-100 pb-4">
+                    <div>
+                        <div class="flex flex-wrap items-center gap-2">
+                            <h3 class="text-lg font-bold text-slate-900">Pembuktian Keaslian Laporan Medis (Proof of Authenticity)</h3>
+                            <span id="auth-badge" class="px-3 py-1 bg-slate-50 text-slate-500 border border-slate-200 text-xs font-bold rounded-full">Belum ada laporan</span>
+                        </div>
+                        <p class="text-xs text-slate-500 mt-1">Sidik jari SHA-256 dari laporan PDF yang dibuat server. File yang diunggah dicocokkan dengan laporan tersimpan.</p>
+                    </div>
+                    <div class="text-xs text-slate-600 font-mono bg-slate-50 px-3.5 py-1.5 rounded-xl border border-slate-200 font-bold">
+                        Blockchain: <span class="text-amber-600">belum terhubung</span>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2">
+                        <div class="flex items-center justify-between text-xs text-slate-600 font-bold">
+                            <span class="flex items-center gap-1.5"><i class="fa-solid fa-file-pdf text-rose-600"></i> Laporan Terakhir</span>
+                            <button id="panel-report-link" type="button" class="hidden text-indigo-600 hover:text-indigo-800 text-[11px] font-extrabold">Lihat laporan</button>
+                        </div>
+                        <p id="panel-report-id" class="font-mono text-xs text-slate-700 font-bold break-all bg-white p-3 rounded-lg border border-slate-200 shadow-sm">-</p>
+                    </div>
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2">
+                        <div class="flex items-center justify-between text-xs text-slate-600 font-bold">
+                            <span class="flex items-center gap-1.5"><i class="fa-solid fa-fingerprint text-emerald-600"></i> Document Hash (SHA-256)</span>
+                            <button onclick="copyToClipboard(document.getElementById('panel-doc-hash').innerText)" class="text-indigo-600 hover:text-indigo-800 text-[11px] font-extrabold">Copy</button>
+                        </div>
+                        <p id="panel-doc-hash" class="font-mono text-xs text-indigo-700 font-bold break-all bg-white p-3 rounded-lg border border-slate-200 shadow-sm">-</p>
+                    </div>
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2">
+                        <div class="flex items-center justify-between text-xs text-slate-600 font-bold">
+                            <span class="flex items-center gap-1.5"><i class="fa-solid fa-link text-cyan-600"></i> IPFS CID / Tx Hash</span>
+                        </div>
+                        <p class="font-mono text-xs text-slate-400 font-bold break-all bg-white p-3 rounded-lg border border-slate-200 shadow-sm">Belum tersedia (integrasi IPFS & smart contract belum dibuat)</p>
+                    </div>
+                </div>
+
+                <div class="space-y-3">
+                    <label class="text-xs font-bold uppercase text-slate-500 tracking-wider">Area Validator PDF Laporan Medis</label>
+                    <div id="drop-zone" ondragover="handleDragOver(event)" ondragleave="handleDragLeave()" ondrop="handleFileDrop(event)" class="border-2 border-dashed border-slate-300 hover:border-indigo-500 rounded-2xl p-6 text-center bg-slate-50 hover:bg-indigo-50/50 transition-all cursor-pointer relative">
+                        <input type="file" id="pdf-file-input" onchange="handleFileSelect(event)" accept="application/pdf" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
+                        <div class="space-y-2 pointer-events-none">
+                            <div class="w-12 h-12 bg-indigo-50 text-indigo-600 rounded-full flex items-center justify-center mx-auto border border-indigo-200 shadow-sm"><i class="fa-solid fa-file-shield text-xl"></i></div>
+                            <p class="text-sm font-bold text-slate-900">Unggah atau Tarik File PDF Laporan ke Sini</p>
+                            <p class="text-xs text-slate-500">SHA-256 dihitung di browser lalu dicocokkan dengan laporan yang tersimpan di server.</p>
+                        </div>
+                    </div>
+                    <div id="validator-result" class="hidden"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================ HISTORY ============================ -->
+        <div id="view-history" class="hidden space-y-6">
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
+                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center space-x-4">
+                    <div class="p-3 bg-indigo-50 border border-indigo-200 text-indigo-600 rounded-xl"><i class="fa-solid fa-folder-open text-xl"></i></div>
+                    <div><span class="text-xs font-bold text-slate-500 uppercase">Total Rekaman EKG</span><div id="stat-total-records" class="text-2xl font-black text-slate-900 font-mono">0</div></div>
+                </div>
+                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center space-x-4">
+                    <div class="p-3 bg-rose-50 border border-rose-200 text-rose-600 rounded-xl"><i class="fa-solid fa-heart-circle-exclamation text-xl"></i></div>
+                    <div><span class="text-xs font-bold text-slate-500 uppercase">Sesi dengan AFib Terdeteksi</span><div id="stat-arrhythmia-cases" class="text-2xl font-black text-slate-900 font-mono">0</div></div>
+                </div>
+                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center space-x-4">
+                    <div class="p-3 bg-emerald-50 border border-emerald-200 text-emerald-600 rounded-xl"><i class="fa-solid fa-file-pdf text-xl"></i></div>
+                    <div><span class="text-xs font-bold text-slate-500 uppercase">Sesi dengan Laporan PDF</span><div id="stat-reports" class="text-2xl font-black text-slate-900 font-mono">0</div></div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+                <div class="p-6 border-b border-slate-200 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                    <div>
+                        <h2 class="text-lg font-bold text-slate-900">Histori Perekaman EKG</h2>
+                        <p class="text-xs text-slate-500">Sesi yang tersimpan di server (folder <span class="font-mono">sessions/</span>).</p>
+                    </div>
+                    <div class="flex flex-wrap items-center gap-3">
+                        <div class="relative">
+                            <i class="fa-solid fa-magnifying-glass text-slate-400 absolute left-3 top-1/2 -translate-y-1/2 text-xs"></i>
+                            <input type="text" id="history-search-input" oninput="renderHistoryTable()" placeholder="Cari ID sesi / pasien..." class="pl-9 pr-4 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500 w-56">
+                        </div>
+                        <select id="history-filter-select" onchange="renderHistoryTable()" class="px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs text-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                            <option value="ALL">Semua sesi</option>
+                            <option value="AFIB">Ada AFib</option>
+                            <option value="NOAFIB">Tanpa AFib</option>
+                        </select>
+                        <button onclick="loadSessions()" class="px-3.5 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-300 rounded-xl text-xs font-bold flex items-center gap-1.5">
+                            <i class="fa-solid fa-rotate text-indigo-600"></i><span>Muat ulang</span>
+                        </button>
+                        <button onclick="exportHistoryCSV()" class="px-3.5 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-300 rounded-xl text-xs font-bold flex items-center gap-1.5">
+                            <i class="fa-solid fa-file-csv text-indigo-600"></i><span>Export CSV</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-slate-50 text-[11px] font-black text-slate-500 uppercase tracking-wider border-b border-slate-200">
+                                <th class="py-3.5 px-6">ID / Waktu</th>
+                                <th class="py-3.5 px-6">Pasien</th>
+                                <th class="py-3.5 px-6">Ritme Dominan</th>
+                                <th class="py-3.5 px-6">HR Median</th>
+                                <th class="py-3.5 px-6">Durasi</th>
+                                <th class="py-3.5 px-6">Laporan</th>
+                                <th class="py-3.5 px-6 text-right">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="history-tbody" class="divide-y divide-slate-200 text-xs font-medium"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Log -->
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 space-y-3">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                <div class="flex items-center space-x-2">
+                    <span class="p-1.5 bg-slate-100 text-slate-700 rounded-lg text-xs"><i class="fa-solid fa-terminal"></i></span>
+                    <h3 class="text-sm font-bold text-slate-900">System Activity & Status Log</h3>
+                </div>
+                <div class="flex items-center space-x-3">
+                    <div id="system-status-indicator" class="px-2.5 py-1 text-xs font-bold rounded-lg flex items-center gap-1.5 font-mono"></div>
+                    <button onclick="clearSystemLogs()" class="text-slate-400 hover:text-slate-600 text-xs px-2.5 py-1 rounded-lg border border-slate-200 hover:bg-slate-50">Clear Log</button>
+                </div>
+            </div>
+            <div id="log-console" class="bg-slate-900 text-slate-200 font-mono text-xs p-4 rounded-xl h-36 overflow-y-auto space-y-1.5 shadow-inner"></div>
+        </div>
+    </main>
+
+    <!-- MODAL: MULAI SESI -->
+    <div id="modal-start" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-lg w-full p-6 border border-slate-200 shadow-2xl space-y-5">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-4">
+                <div class="flex items-center space-x-2">
+                    <div class="p-2 bg-indigo-50 text-indigo-600 rounded-lg border border-indigo-200"><i class="fa-solid fa-file-medical text-base"></i></div>
+                    <h3 class="text-base font-bold text-slate-900">Mulai Sesi Perekaman</h3>
+                </div>
+                <button onclick="closeStartModal()" class="text-slate-400 hover:text-slate-600 p-1"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <form id="start-form" novalidate onsubmit="startSession(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Sumber Data</label>
+                    <div class="grid grid-cols-2 gap-2 text-xs font-bold">
+                        <label class="flex items-center gap-2 p-3 rounded-xl border border-slate-300 cursor-pointer has-[:checked]:border-indigo-500 has-[:checked]:bg-indigo-50">
+                            <input type="radio" name="source" value="polar" checked onchange="toggleSourceFields()"> <i class="fa-brands fa-bluetooth-b text-indigo-600"></i> Polar H10
+                        </label>
+                        <label class="flex items-center gap-2 p-3 rounded-xl border border-slate-300 cursor-pointer has-[:checked]:border-indigo-500 has-[:checked]:bg-indigo-50">
+                            <input type="radio" name="source" value="replay" onchange="toggleSourceFields()"> <i class="fa-solid fa-file-waveform text-indigo-600"></i> Replay file
+                        </label>
+                    </div>
+                </div>
+                <div id="polar-fields">
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Alamat perangkat (opsional)</label>
+                    <input type="text" id="input-address" placeholder="kosongkan untuk memindai otomatis" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                    <p class="text-[11px] text-slate-500 mt-1">Koneksi Bluetooth dilakukan oleh server. Pastikan strap tidak sedang terhubung ke HP/aplikasi lain.</p>
+                </div>
+                <div id="replay-fields" class="hidden grid grid-cols-4 gap-3">
+                    <div class="col-span-3">
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Path file di server</label>
+                        <input type="text" id="input-file" placeholder="ecg_main_mobile-legends2.csv" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-sm font-mono focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Kecepatan</label>
+                        <input type="number" id="input-speed" value="1" min="0.1" step="0.1" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-sm font-mono focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">ID Pasien (pseudonim)</label>
+                    <input type="text" id="input-patient-id" placeholder="mis. P-001 (jangan nama asli)" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                    <p class="text-[11px] text-slate-500 mt-1">Dicetak di laporan PDF. Gunakan kode, bukan nama asli pasien.</p>
+                </div>
+                <div class="flex justify-end space-x-3 pt-3 border-t border-slate-100">
+                    <button type="button" onclick="closeStartModal()" class="px-4 py-2 border border-slate-300 text-slate-700 rounded-xl text-xs font-bold hover:bg-slate-100">Batal</button>
+                    <button type="submit" id="btn-submit-start" class="px-5 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-xs font-bold shadow-md flex items-center space-x-2">
+                        <i class="fa-solid fa-play"></i><span>Mulai</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL: PILIH MODEL -->
+    <div id="modal-model" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-lg w-full p-6 border border-slate-200 shadow-2xl space-y-5">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-4">
+                <div class="flex items-center space-x-2">
+                    <div class="p-2 bg-indigo-50 text-indigo-600 rounded-lg border border-indigo-200"><i class="fa-solid fa-brain text-base"></i></div>
+                    <h3 class="text-base font-bold text-slate-900">Pilih Model Klasifikasi</h3>
+                </div>
+                <button onclick="closeModelModal()" class="text-slate-400 hover:text-slate-600 p-1"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <div id="model-list" class="space-y-2 max-h-80 overflow-y-auto"></div>
+            <p id="model-note" class="text-[11px] text-slate-500"></p>
+            <div class="flex justify-end space-x-3 pt-3 border-t border-slate-100">
+                <button type="button" onclick="closeModelModal()" class="px-4 py-2 border border-slate-300 text-slate-700 rounded-xl text-xs font-bold hover:bg-slate-100">Batal</button>
+                <button type="button" id="btn-use-model" onclick="useModel()" class="px-5 py-2 bg-indigo-600 hover:bg-indigo-500 disabled:bg-slate-200 disabled:text-slate-400 disabled:cursor-not-allowed text-white rounded-xl text-xs font-bold shadow-md flex items-center space-x-2">
+                    <i class="fa-solid fa-check"></i><span>Gunakan model</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: PENAMPIL LAPORAN PDF -->
+    <div id="modal-report" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-2 sm:p-4">
+        <div class="bg-white rounded-2xl w-full max-w-5xl h-[95vh] border border-slate-200 shadow-2xl flex flex-col overflow-hidden">
+            <div class="flex flex-wrap items-center justify-between gap-3 px-5 py-3.5 border-b border-slate-100">
+                <div class="flex items-center gap-2.5 min-w-0">
+                    <div class="p-2 bg-rose-50 text-rose-600 rounded-lg border border-rose-200"><i class="fa-solid fa-file-pdf text-base"></i></div>
+                    <div class="min-w-0">
+                        <h3 class="text-sm font-bold text-slate-900">Laporan Sesi <span id="report-title-id" class="font-mono"></span></h3>
+                        <p id="report-subtitle" class="text-[11px] text-slate-500 truncate"></p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2">
+                    <a id="report-download" href="#" class="inline-flex items-center gap-1.5 px-3.5 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-bold"><i class="fa-solid fa-download"></i> Unduh</a>
+                    <a id="report-newtab" href="#" target="_blank" class="inline-flex items-center gap-1.5 px-3.5 py-2 border border-slate-300 text-slate-700 hover:bg-slate-100 rounded-xl text-xs font-bold"><i class="fa-solid fa-up-right-from-square"></i> Tab baru</a>
+                    <button onclick="closeReportModal()" class="text-slate-400 hover:text-slate-600 p-1.5" title="Tutup"><i class="fa-solid fa-xmark text-lg"></i></button>
+                </div>
+            </div>
+            <div class="relative flex-1 bg-slate-100">
+                <div id="report-loading" class="absolute inset-0 flex flex-col items-center justify-center gap-2 text-xs text-slate-500">
+                    <i class="fa-solid fa-circle-notch fa-spin text-2xl text-indigo-500"></i>
+                    <span id="report-loading-text">Memuat laporan...</span>
+                </div>
+                <iframe id="report-frame" title="Laporan PDF" class="absolute inset-0 w-full h-full hidden"></iframe>
+            </div>
+            <div class="px-5 py-2.5 border-t border-slate-100 text-[11px] text-slate-500 flex flex-wrap items-center justify-between gap-2">
+                <span class="font-mono break-all"><i class="fa-solid fa-fingerprint text-emerald-600 mr-1"></i>SHA-256: <span id="report-sha">-</span></span>
+                <span>PDF tidak tampil? Gunakan <b>Tab baru</b> atau <b>Unduh</b>.</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: DETAIL SESI -->
+    <div id="modal-history-detail" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-xl w-full p-6 border border-slate-200 shadow-2xl space-y-6">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-4">
+                <div class="flex items-center space-x-2">
+                    <div class="p-2 bg-indigo-50 text-indigo-600 rounded-lg border border-indigo-200"><i class="fa-solid fa-notes-medical text-base"></i></div>
+                    <h3 class="text-base font-bold text-slate-900">Detail Sesi Perekaman</h3>
+                </div>
+                <button onclick="closeDetailModal()" class="text-slate-400 hover:text-slate-600 p-1"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <div id="detail-modal-body" class="space-y-4"></div>
+            <div class="flex justify-end pt-4 border-t border-slate-100">
+                <button onclick="closeDetailModal()" class="px-5 py-2 bg-slate-800 text-white rounded-xl text-xs font-bold hover:bg-slate-700">Tutup</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // =================================================================
+        // KONSTANTA & STATE
+        // =================================================================
+        const FS = 130, N = FS * 10;
+        const LABEL_STYLE = {
+            SR:   { text: 'text-emerald-600', bg: 'bg-emerald-50', border: 'border-emerald-200', bar: 'bg-emerald-500', icon: 'fa-heart-circle-check' },
+            SB:   { text: 'text-cyan-600',    bg: 'bg-cyan-50',    border: 'border-cyan-200',    bar: 'bg-cyan-500',    icon: 'fa-heart-circle-minus' },
+            ST:   { text: 'text-amber-600',   bg: 'bg-amber-50',   border: 'border-amber-200',   bar: 'bg-amber-500',   icon: 'fa-heart-circle-plus' },
+            AFIB: { text: 'text-rose-600',    bg: 'bg-rose-50',    border: 'border-rose-200',    bar: 'bg-rose-500',    icon: 'fa-heart-circle-exclamation' },
+        };
+        const NEUTRAL = { text: 'text-slate-400', bg: 'bg-slate-50', border: 'border-slate-200', bar: 'bg-slate-300', icon: 'fa-hourglass-half' };
+
+        let live = new Float32Array(N);
+        let lastRhythm = null;
+        let running = false, wsOpen = false;
+        let sessionInfo = null;
+        let sessions = [];
+        let sys = { model: null, polar: 'idle' };   // status dari backend (pesan "system")
+
+        const $ = id => document.getElementById(id);
+        const fmt = (x, n = 0) => x == null || !isFinite(x) ? '-' : x.toFixed(n).replace('.', ',');
+        const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
+        // =================================================================
+        // LOG & STATUS
+        // =================================================================
+        function addLog(message, level = 'INFO') {
+            const el = $('log-console');
+            const now = new Date();
+            const t = now.toTimeString().split(' ')[0] + '.' + String(now.getMilliseconds()).padStart(3, '0');
+            const color = { INFO: 'text-sky-400', OK: 'text-emerald-400', WARN: 'text-amber-400', ERROR: 'text-rose-400' }[level] || 'text-slate-400';
+            const row = document.createElement('div');
+            row.className = 'flex items-start space-x-2 border-b border-slate-800/60 pb-1';
+            row.innerHTML = `<span class="text-slate-500 shrink-0">[${t}]</span><span class="${color} font-bold shrink-0">[${level}]</span><span class="text-slate-300">${esc(message)}</span>`;
+            el.appendChild(row);
+            while (el.children.length > 300) el.removeChild(el.firstChild);
+            el.scrollTop = el.scrollHeight;
+        }
+        function clearSystemLogs() { $('log-console').innerHTML = ''; }
+
+        function renderStatus() {
+            const ind = $('system-status-indicator');
+            const [cls, dot, txt] = !wsOpen ? ['bg-slate-100 text-slate-600 border-slate-300', 'bg-slate-400', 'BACKEND OFFLINE']
+                : running ? ['bg-emerald-50 text-emerald-700 border-emerald-200', 'bg-emerald-500 animate-pulse', 'STATUS: RUNNING']
+                : ['bg-rose-50 text-rose-700 border-rose-200', 'bg-rose-500', 'STATUS: STOPPED'];
+            ind.className = `px-2.5 py-1 text-xs font-bold rounded-lg flex items-center gap-1.5 font-mono border ${cls}`;
+            ind.innerHTML = `<span class="w-2 h-2 rounded-full ${dot}"></span><span>${txt}</span>`;
+
+            let text, pc, sc;
+            if (!wsOpen) { text = 'Backend terputus'; pc = 'bg-rose-50 text-rose-700 border-rose-300'; sc = 'fill-rose-600'; }
+            else if (running && sessionInfo && sessionInfo.source === 'polar' && sys.polar !== 'connected') {
+                text = 'Menunggu Polar H10'; pc = 'bg-amber-50 text-amber-700 border-amber-300'; sc = 'fill-amber-600 animate-pulse';
+            } else if (running && sessionInfo) {
+                text = sessionInfo.source === 'polar' ? 'Polar H10 aktif' : 'Replay aktif';
+                pc = 'bg-emerald-50 text-emerald-700 border-emerald-300'; sc = 'fill-emerald-600 animate-pulse';
+            } else if (sys.model !== 'ready') {
+                text = 'Backend belum siap'; pc = 'bg-amber-50 text-amber-700 border-amber-300'; sc = 'fill-amber-600';
+            } else { text = 'Backend siap'; pc = 'bg-slate-100 text-slate-700 border-slate-300'; sc = 'fill-slate-600'; }
+            $('conn-pill').className = `flex items-center px-3.5 py-2 rounded-xl text-xs font-bold border shadow-sm ${pc}`;
+            $('conn-svg').setAttribute('class', `w-4 h-4 mr-2 ${sc}`);
+            $('conn-text').textContent = text;
+            renderSystem();
+
+            const bs = $('btn-start'), bt = $('btn-stop');
+            const canStart = wsOpen && !running && sys.model === 'ready';
+            bs.disabled = !canStart; bt.disabled = !running;
+            bs.className = 'flex items-center space-x-1.5 px-4 py-2 rounded-lg text-xs font-bold transition-all ' +
+                (canStart ? 'bg-emerald-600 hover:bg-emerald-500 text-white shadow-sm active:scale-95' : 'bg-slate-200 text-slate-400 cursor-not-allowed');
+            bt.className = 'flex items-center space-x-1.5 px-4 py-2 rounded-lg text-xs font-bold transition-all ' +
+                (running ? 'bg-rose-600 hover:bg-rose-500 text-white shadow-sm active:scale-95 recording-pulse' : 'bg-slate-200 text-slate-400 cursor-not-allowed');
+            $('live-dot').className = 'w-3.5 h-3.5 rounded-full ' + (running ? 'bg-emerald-500 animate-pulse' : 'bg-slate-300');
+            $('live-caption').textContent = running && sessionInfo
+                ? `${sessionInfo.id} · ${sessionInfo.source === 'polar' ? 'Polar H10' : 'Replay'} · ${sessionInfo.patient_id || 'ANONIM'}`
+                : 'Tidak ada sesi aktif';
+        }
+
+        const PILL = {
+            slate:   'bg-slate-100 text-slate-500 border-slate-300',
+            amber:   'bg-amber-50 text-amber-700 border-amber-300',
+            emerald: 'bg-emerald-50 text-emerald-700 border-emerald-300',
+            rose:    'bg-rose-50 text-rose-700 border-rose-300',
+        };
+        const SPIN = 'fa-solid fa-circle-notch fa-spin';
+
+        function setSysPill(name, color, icon, text, title) {
+            $(`${name}-pill`).className = `flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold border shadow-sm transition-all ${PILL[color]}`
+                + (wsOpen ? ' cursor-pointer hover:brightness-95 hover:shadow active:scale-95' : ' cursor-default');
+            $(`${name}-pill`).title = title || '';
+            $(`${name}-icon`).className = icon;
+            $(`${name}-text`).textContent = text;
+        }
+
+        // results_2ch_rrfix/rhythm_cnn_best.pt -> results_2ch_rrfix (semua checkpoint bernama sama)
+        const modelShort = p => { const parts = String(p || '').split('/'); return parts.length > 1 ? parts[parts.length - 2] : parts[0]; };
+
+        function renderSystem() {
+            const m = !wsOpen || !sys.model ? ['slate', 'fa-solid fa-brain', 'Model: -']
+                : sys.model === 'loading' ? ['amber', SPIN, 'Sedang memuat model...']
+                : sys.model === 'ready' ? ['emerald', 'fa-solid fa-circle-check', `Model telah dimuat · ${modelShort(sys.model_detail)}`]
+                : ['rose', 'fa-solid fa-circle-xmark', 'Model gagal dimuat'];
+            setSysPill('model', ...m, [sys.model_detail, wsOpen && 'Klik untuk memilih model'].filter(Boolean).join('\n'));
+
+            const p = !wsOpen ? ['slate', 'fa-brands fa-bluetooth-b', 'Polar H10: -']
+                : sys.polar === 'scanning' ? ['amber', SPIN, 'Sedang mencari Polar H10...']
+                : sys.polar === 'connecting' ? ['amber', SPIN, 'Menghubungkan Polar H10...']
+                : sys.polar === 'connected' ? ['emerald', 'fa-solid fa-circle-check', 'Polar H10 telah terhubung']
+                : sys.polar === 'error' ? ['rose', 'fa-solid fa-circle-xmark', 'Polar H10 gagal terhubung']
+                : ['slate', 'fa-brands fa-bluetooth-b', 'Polar H10 belum terhubung'];
+            const hint = { idle: 'Klik untuk menghubungkan', error: 'Klik untuk mencoba lagi', connected: 'Klik untuk memutus',
+                           scanning: 'Klik untuk membatalkan', connecting: 'Klik untuk membatalkan' }[sys.polar];
+            setSysPill('polar', ...p, [sys.polar_detail, wsOpen && hint].filter(Boolean).join('\n'));
+        }
+
+        function onSystem(m) {
+            const prev = sys;
+            sys = m;
+            if (prev.model !== m.model) {
+                if (m.model === 'loading') addLog(`Sedang memuat model (${m.model_detail})...`, 'INFO');
+                else if (m.model === 'ready') addLog(`Model telah dimuat (${m.model_detail}).`, 'OK');
+                else if (m.model === 'error') addLog(`Model gagal dimuat: ${m.model_detail}`, 'ERROR');
+            }
+            if (prev.polar !== m.polar) {
+                if (m.polar === 'scanning') addLog('Sedang mencari Polar H10...', 'INFO');
+                else if (m.polar === 'connecting') addLog(`Polar H10 ditemukan: ${m.polar_detail}. Menghubungkan...`, 'INFO');
+                else if (m.polar === 'connected') addLog(`Polar H10 telah terhubung: ${m.polar_detail}.`, 'OK');
+                else if (m.polar === 'error') addLog(`Polar H10 gagal terhubung: ${m.polar_detail}`, 'ERROR');
+            }
+            renderStatus();
+        }
+
+        async function postJson(url, body) {
+            const r = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body || {}) });
+            const j = await r.json().catch(() => ({}));
+            if (!r.ok) throw new Error(j.detail || r.status);
+            return j;
+        }
+
+        // Klik indikator Polar: hubungkan bila belum, batalkan/putus bila sedang/sudah terhubung
+        async function togglePolar() {
+            if (!wsOpen) return;
+            try {
+                if (sys.polar === 'idle' || sys.polar === 'error') {
+                    await postJson('/api/polar/connect', { address: $('input-address').value.trim() || null });
+                } else if (sys.polar === 'connected') {
+                    if (confirm('Putuskan koneksi Polar H10?')) await postJson('/api/polar/disconnect');
+                } else if (confirm('Batalkan pencarian Polar H10?')) {
+                    await postJson('/api/polar/disconnect');
+                }
+            } catch (err) { addLog('Polar H10: ' + err.message, 'WARN'); }
+        }
+
+        let models = [], selectedModel = null;
+
+        async function openModelModal() {
+            if (!wsOpen) return;
+            $('modal-model').classList.remove('hidden');
+            $('model-list').innerHTML = '<p class="text-xs text-slate-500"><i class="fa-solid fa-circle-notch fa-spin mr-1"></i>Membaca daftar model...</p>';
+            try {
+                models = await (await fetch('/api/models')).json();
+            } catch (err) {
+                $('model-list').innerHTML = `<p class="text-xs text-rose-600">Gagal membaca daftar model: ${esc(err)}</p>`; return;
+            }
+            selectedModel = (models.find(m => m.active) || {}).path || null;
+            renderModelList();
+        }
+        function closeModelModal() { $('modal-model').classList.add('hidden'); }
+        function selectModel(path) { selectedModel = path; renderModelList(); }
+
+        function renderModelList() {
+            $('model-list').innerHTML = models.length ? models.map(m => {
+                const sel = m.path === selectedModel;
+                const f1 = m.val_macro_f1 != null ? fmt(m.val_macro_f1 * 100, 1) + '%' : '-';
+                return `<button type="button" onclick="selectModel(${esc(JSON.stringify(m.path))})" ${m.error ? 'disabled' : ''}
+                    class="w-full text-left p-3 rounded-xl border transition-all ${sel ? 'border-indigo-500 bg-indigo-50' : 'border-slate-200 hover:bg-slate-50'} ${m.error ? 'opacity-50 cursor-not-allowed' : ''}">
+                    <div class="flex items-center justify-between gap-2">
+                        <span class="font-mono text-xs font-bold text-slate-800 break-all">${esc(m.path)}</span>
+                        ${m.active ? '<span class="shrink-0 px-2 py-0.5 text-[10px] font-bold rounded-full bg-emerald-100 text-emerald-700">Aktif</span>' : ''}
+                    </div>
+                    ${m.error ? `<p class="text-[11px] text-rose-600 mt-1">Tidak bisa dibaca: ${esc(m.error)}</p>` : `
+                    <div class="flex flex-wrap gap-x-4 gap-y-1 mt-1.5 text-[11px] text-slate-500">
+                        <span>Val macro-F1 <b class="text-slate-700">${f1}</b></span>
+                        <span>Epoch <b class="text-slate-700">${m.epoch ?? '-'}</b></span>
+                        <span>Kanal <b class="text-slate-700">${m.in_channels}</b></span>
+                        <span>Kelas <b class="text-slate-700">${esc((m.classes || []).join(', '))}</b></span>
+                        <span>${esc(m.modified.replace('T', ' '))}</span>
+                    </div>`}
+                </button>`;
+            }).join('') : '<p class="text-xs text-slate-500">Tidak ada checkpoint (.pt) di folder results*/ atau models/.</p>';
+
+            const active = (models.find(m => m.active) || {}).path;
+            const blocked = running ? 'Hentikan sesi dulu sebelum mengganti model.'
+                : sys.model === 'loading' ? 'Model sedang dimuat, tunggu sebentar.' : '';
+            $('model-note').textContent = blocked || 'Model baru dimuat di server; sesi berikutnya memakai model yang dipilih.';
+            $('btn-use-model').disabled = !!blocked || !selectedModel || selectedModel === active;
+        }
+
+        async function useModel() {
+            try {
+                await postJson('/api/model', { path: selectedModel });
+                closeModelModal();
+            } catch (err) { addLog('Gagal mengganti model: ' + err.message, 'ERROR'); }
+        }
+
+        // =================================================================
+        // BACKEND: WEBSOCKET & REST
+        // =================================================================
+        function connect() {
+            const ws = new WebSocket(`${location.protocol === 'https:' ? 'wss' : 'ws'}://${location.host}/ws`);
+            ws.onopen = async () => {
+                wsOpen = true; addLog('Terhubung ke backend (WebSocket).', 'OK');
+                try {
+                    const st = await (await fetch('/api/status')).json();
+                    running = st.running; sessionInfo = st.running ? st : null;
+                    if (running) addLog(`Sesi berjalan: ${st.id} (${st.source}).`, 'INFO');
+                } catch (e) { /* status opsional */ }
+                renderStatus();
+            };
+            ws.onclose = () => {
+                if (wsOpen) addLog('Koneksi backend terputus, mencoba lagi...', 'WARN');
+                wsOpen = false; renderStatus(); setTimeout(connect, 1500);
+            };
+            ws.onmessage = ev => {
+                const m = JSON.parse(ev.data);
+                if (m.type === 'ecg') onEcg(m);
+                else if (m.type === 'rhythm') onRhythm(m);
+                else if (m.type === 'status') onStatus(m);
+                else if (m.type === 'system') onSystem(m);
+            };
+        }
+
+        function onEcg(m) {
+            const s = m.samples;
+            if (s.length >= N) { live.set(s.slice(-N)); return; }
+            live.copyWithin(0, s.length); live.set(s, N - s.length);
+        }
+
+        function onStatus(m) {
+            if (m.state === 'running') {
+                running = true; sessionInfo = m; lastRhythm = null; live.fill(0);
+                addLog(`Sesi ${m.id} dimulai (sumber: ${m.source}, pasien: ${m.patient_id}).`, 'OK');
+                resetCards(); drawXai();
+            } else if (m.state === 'stopped') {
+                running = false;
+                if (m.error) addLog(`Sesi ${m.id} berhenti karena error: ${m.error}`, 'ERROR');
+                else addLog(`Sesi ${m.id} selesai.` + (m.saved ? ` Tersimpan: ${m.saved}` : ' (tidak ada jendela yang dianalisis)'), 'OK');
+                if (m.report) {
+                    addLog(`Laporan PDF siap: ${m.report}`, 'OK');
+                    setLatestReport(m.id, m.report, m.report_sha256);
+                }
+                loadSessions();
+            }
+            renderStatus();
+        }
+
+        function openStartModal() {
+            if (!wsOpen) return addLog('Backend belum terhubung.', 'WARN');
+            if (sys.model !== 'ready') return addLog('Model belum siap, tunggu sampai "Model telah dimuat".', 'WARN');
+            if (running) return;
+            const conn = sys.polar === 'connected';
+            $('input-address').disabled = conn;
+            $('input-address').placeholder = conn ? `memakai ${sys.polar_detail} (sudah terhubung)` : 'kosongkan untuk memindai otomatis';
+            $('modal-start').classList.remove('hidden');
+        }
+        function closeStartModal() { $('modal-start').classList.add('hidden'); }
+        function toggleSourceFields() {
+            const replay = document.querySelector('input[name=source]:checked').value === 'replay';
+            $('replay-fields').classList.toggle('hidden', !replay);
+            $('polar-fields').classList.toggle('hidden', replay);
+        }
+
+        async function startSession(e) {
+            e.preventDefault();
+            const source = document.querySelector('input[name=source]:checked').value;
+            const body = { source, patient_id: $('input-patient-id').value.trim() || null };
+            if (source === 'replay') {
+                body.file = $('input-file').value.trim();
+                body.speed = parseFloat($('input-speed').value) || 1;
+                // Validasi manual (form novalidate): kolom tersembunyi tidak boleh memblokir submit diam-diam
+                if (!body.file) return addLog('Isi path file rekaman untuk mode replay.', 'WARN');
+                if (body.speed <= 0) return addLog('Kecepatan replay harus lebih dari 0.', 'WARN');
+            } else {
+                body.address = $('input-address').value.trim() || null;
+            }
+            $('btn-submit-start').disabled = true;
+            try {
+                const r = await fetch('/api/session/start', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+                const j = await r.json();
+                if (!r.ok) { addLog('Gagal memulai sesi: ' + (j.detail || r.status), 'ERROR'); return; }
+                closeStartModal();
+            } catch (err) {
+                addLog('Gagal menghubungi backend: ' + err, 'ERROR');
+            } finally { $('btn-submit-start').disabled = false; }
+        }
+
+        async function stopSession() {
+            if (!running) return;
+            addLog('Menghentikan sesi dan membuat laporan PDF...', 'INFO');
+            try { await fetch('/api/session/stop', { method: 'POST' }); }
+            catch (err) { addLog('Gagal menghentikan sesi: ' + err, 'ERROR'); }
+        }
+
+        function resetDisplay() { live.fill(0); lastRhythm = null; resetCards(); drawXai(); addLog('Grafik dibersihkan.', 'INFO'); }
+
+        // =================================================================
+        // KARTU METRIK
+        // =================================================================
+        function setPill(el, text, color) {
+            el.textContent = text;
+            el.className = el.className.replace(/\b(bg|text|border)-(slate|emerald|amber|rose|blue|cyan)-\d+\b/g, '').replace(/\s+/g, ' ').trim()
+                + ` bg-${color}-50 text-${color}-700 border-${color}-200`;
+        }
+
+        function resetCards() {
+            setDiagnosis(null, 'Menunggu data...', '-', '');
+            $('metric-confidence').textContent = '-'; $('confidence-bar').style.width = '0%';
+            setPill($('conf-pill'), '-', 'slate');
+            $('metric-hr').textContent = '-'; setPill($('hr-pill'), '-', 'slate'); $('metric-rr').textContent = '-';
+            setSqi(null); $('prob-chips').innerHTML = ''; $('xai-time').textContent = '';
+        }
+
+        function setDiagnosis(label, text, status, sub) {
+            const st = label === 'BAD' ? { ...NEUTRAL, text: 'text-slate-600', icon: 'fa-triangle-exclamation' } : (LABEL_STYLE[label] || NEUTRAL);
+            $('metric-diagnosis').className = `mt-2 text-lg font-black tracking-tight ${st.text}`;
+            $('metric-diagnosis').textContent = text;
+            $('diag-icon-bg').className = `p-2.5 rounded-xl border ${st.bg} ${st.text} ${st.border}`;
+            $('diag-icon').className = `fa-solid ${st.icon} text-base`;
+            $('diag-bar').className = `absolute bottom-0 left-0 right-0 h-1 ${st.bar}`;
+            $('diag-status').textContent = status;
+            $('metric-window-label').textContent = sub;
+        }
+
+        function setSqi(m) {
+            const dot = $('sqi-dot'), box = $('metric-sqi'), bg = $('sqi-icon-bg');
+            if (!m) {
+                box.className = 'mt-2 text-xl font-extrabold flex items-center gap-2 text-slate-400';
+                dot.className = 'w-3 h-3 rounded-full bg-slate-300 inline-block';
+                bg.className = 'p-2.5 rounded-xl border bg-slate-50 text-slate-500 border-slate-200';
+                $('sqi-label').textContent = '-'; $('sqi-detail').textContent = '-'; return;
+            }
+            const good = m.sqi === 'baik', c = good ? 'emerald' : 'rose';
+            box.className = `mt-2 text-xl font-extrabold flex items-center gap-2 text-${c}-600`;
+            dot.className = `w-3 h-3 rounded-full bg-${c}-500 inline-block` + (good ? '' : ' animate-ping');
+            bg.className = `p-2.5 rounded-xl border bg-${c}-50 text-${c}-600 border-${c}-200`;
+            $('sqi-label').textContent = good ? 'Baik' : 'Buruk';
+            const tc = m.sqi_metrics && m.sqi_metrics.template_corr;
+            $('sqi-detail').textContent = good ? fmt(tc, 2) : (m.sqi_reasons || []).join('; ') || fmt(tc, 2);
+        }
+
+        function onRhythm(m) {
+            lastRhythm = m;
+            setSqi(m);
+
+            // HR & RR dari analisis R-peak (tetap ditampilkan walau sinyal buruk)
+            $('metric-hr').textContent = m.hr != null ? Math.round(m.hr) : '-';
+            if (m.hr == null) setPill($('hr-pill'), '-', 'slate');
+            else if (m.hr < 60) setPill($('hr-pill'), 'Bradikardia', 'cyan');
+            else if (m.hr > 100) setPill($('hr-pill'), 'Takikardia', 'amber');
+            else setPill($('hr-pill'), 'Normal', 'emerald');
+            $('metric-rr').textContent = m.rr_ms && m.rr_ms.length
+                ? `${Math.round(Math.min(...m.rr_ms))}-${Math.round(Math.max(...m.rr_ms))} ms · CV ${fmt(m.rr_cv, 3)}` : '-';
+
+            $('xai-time').textContent = `t = ${fmt(m.t_start, 1)}-${fmt(m.t_end, 1)} s`;
+
+            if (m.sqi === 'buruk' || !m.label) {
+                setDiagnosis('BAD', 'Sinyal buruk', 'Tidak diklasifikasi', (m.sqi_reasons || []).join('; '));
+                $('metric-confidence').textContent = '-'; $('confidence-bar').style.width = '0%';
+                setPill($('conf-pill'), '-', 'slate'); $('prob-chips').innerHTML = '';
+                addLog('Sinyal buruk: ' + (m.sqi_reasons || []).join('; '), 'WARN');
+                drawXai(); return;
+            }
+
+            // Status resmi = label stabil (2 jendela berturut-turut); label jendela ini sebagai info tambahan
+            const stable = m.label_stable;
+            const status = !stable ? 'Menunggu label stabil' : m.uncertain ? 'Belum pasti' : 'Stabil';
+            const sub = `Jendela ini: ${m.label_name} (${Math.round(m.conf * 100)}%)`;
+            setDiagnosis(stable || null, stable ? m.label_stable_name : 'Menunggu...', status, sub);
+
+            const pct = m.conf * 100;
+            $('metric-confidence').textContent = fmt(pct, 1);
+            $('confidence-bar').style.width = pct.toFixed(1) + '%';
+            $('confidence-bar').className = `h-full rounded-full transition-all duration-300 ${m.uncertain ? 'bg-amber-500' : 'bg-blue-600'}`;
+            setPill($('conf-pill'), m.uncertain ? 'Belum pasti' : 'Yakin', m.uncertain ? 'amber' : 'blue');
+
+            $('prob-chips').innerHTML = Object.entries(m.probs || {}).map(([c, p]) => {
+                const st = LABEL_STYLE[c] || NEUTRAL, on = c === m.label;
+                return `<span class="px-2 py-0.5 rounded-md border ${on ? `${st.bg} ${st.text} ${st.border}` : 'bg-slate-50 text-slate-500 border-slate-200'} font-mono">${c} ${Math.round(p * 100)}%</span>`;
+            }).join('');
+
+            if (stable === 'AFIB' && m.label === 'AFIB' && !m.uncertain) addLog(`AFib terdeteksi pada t=${fmt(m.t_end, 1)} s (${Math.round(m.conf * 100)}%).`, 'WARN');
+            drawXai();
+        }
+
+        // =================================================================
+        // CANVAS
+        // =================================================================
+        function setupCanvas(c) {
+            const r = c.getBoundingClientRect(), p = window.devicePixelRatio || 1;
+            if (c.width !== Math.round(r.width * p) || c.height !== Math.round(r.height * p)) {
+                c.width = Math.round(r.width * p); c.height = Math.round(r.height * p);
+            }
+            const x = c.getContext('2d'); x.setTransform(p, 0, 0, p, 0, 0);
+            return [x, r.width, r.height];
+        }
+
+        // Grid kertas EKG: kotak besar 0,2 s, kotak kecil 0,04 s (lebar canvas = 10 s)
+        function drawGrid(x, w, h) {
+            x.fillStyle = '#ffffff'; x.fillRect(0, 0, w, h);
+            const major = w / 50, minor = major / 5;
+            if (!(major > 0) || !(h > 0)) return;   // canvas tersembunyi (lebar 0): step 0 = loop tak berujung
+            const lines = (step, color) => {
+                x.strokeStyle = color; x.lineWidth = 1; x.beginPath();
+                for (let px = 0; px <= w; px += step) { x.moveTo(px, 0); x.lineTo(px, h); }
+                for (let py = h; py >= 0; py -= step) { x.moveTo(0, py); x.lineTo(w, py); }
+                x.stroke();
+            };
+            if (minor >= 4) lines(minor, '#ffe4e6');
+            lines(major, '#fca5a5');
+        }
+
+        function trace(x, data, w, h, color, lo, hi, lw) {
+            const Y = v => h - (v - lo) / (hi - lo) * h;
+            x.strokeStyle = color; x.lineWidth = lw; x.lineJoin = 'round'; x.beginPath();
+            for (let i = 0; i < data.length; i++) {
+                const px = i / (data.length - 1) * w;
+                i ? x.lineTo(px, Y(data[i])) : x.moveTo(px, Y(data[i]));
+            }
+            x.stroke(); return Y;
+        }
+
+        // Skala otomatis yang dihaluskan supaya grafik live tidak "melompat"
+        let liveLo = -500, liveHi = 1500;
+        function drawLive() {
+            requestAnimationFrame(drawLive);
+            if ($('view-dashboard').classList.contains('hidden')) return;   // tab History aktif: tidak perlu menggambar
+            const [x, w, h] = setupCanvas($('canvas-raw'));
+            drawGrid(x, w, h);
+            let lo = Infinity, hi = -Infinity;
+            for (const v of live) { if (v < lo) lo = v; if (v > hi) hi = v; }
+            if (hi - lo < 1) { lo = -1; hi = 1; }
+            const pad = (hi - lo) * 0.15;
+            liveLo += (lo - pad - liveLo) * 0.1; liveHi += (hi + pad - liveHi) * 0.1;
+            trace(x, live, w, h, '#1e1b4b', liveLo, liveHi, 1.6);
+        }
+
+        function drawXai() {
+            const [x, w, h] = setupCanvas($('canvas-xai'));
+            drawGrid(x, w, h);
+            const m = lastRhythm;
+            if (!m || !m.window) {
+                x.fillStyle = '#94a3b8'; x.font = '600 13px Inter, sans-serif'; x.textAlign = 'center';
+                x.fillText('Menunggu jendela 10 detik pertama...', w / 2, h / 2); return;
+            }
+            const d = m.window, n = d.length;
+            if (m.cam && m.sqi !== 'buruk') {
+                for (let i = 0; i < m.cam.length; i++) {
+                    const v = m.cam[i];
+                    if (v > 0.05) { x.fillStyle = `rgba(245,158,11,${(v * 0.55).toFixed(3)})`; x.fillRect(i / n * w, 0, w / n + 1, h); }
+                }
+            }
+            let lo = Infinity, hi = -Infinity;
+            for (const v of d) { if (v < lo) lo = v; if (v > hi) hi = v; }
+            const r = (hi - lo) || 1; lo -= r * 0.12; hi += r * 0.35;
+            const Y = trace(x, d, w, h, '#4338ca', lo, hi, 1.8);
+
+            const pk = m.r_peaks || [];
+            x.fillStyle = '#1d4ed8';
+            for (const p of pk) { x.beginPath(); x.arc(p / (n - 1) * w, Y(d[p]) - 7, 3.5, 0, 7); x.fill(); }
+            if (m.rr_ms && m.rr_ms.length) {
+                x.fillStyle = '#4f46e5'; x.font = '600 11px "JetBrains Mono", monospace'; x.textAlign = 'center';
+                for (let i = 0; i < pk.length - 1 && i < m.rr_ms.length; i++) {
+                    x.fillText(Math.round(m.rr_ms[i]) + ' ms', (pk[i] + pk[i + 1]) / 2 / (n - 1) * w, 16);
+                }
+            }
+            if (m.sqi === 'buruk') {
+                x.fillStyle = 'rgba(255,255,255,0.7)'; x.fillRect(0, 0, w, h);
+                x.fillStyle = '#be123c'; x.font = '700 14px Inter, sans-serif'; x.textAlign = 'center';
+                x.fillText('Sinyal buruk: jendela ini tidak diklasifikasi', w / 2, h / 2);
+            }
+        }
+
+        // =================================================================
+        // HISTORY (dari /api/sessions)
+        // =================================================================
+        function dominant(counts) {
+            const e = Object.entries(counts || {}).sort((a, b) => b[1] - a[1]);
+            return e.length ? e[0][0] : '-';
+        }
+        const hasAfib = s => Object.keys(s.summary.counts || {}).some(k => /afib|fibril/i.test(k));
+        function duration(s) {
+            if (!s.started_at || !s.ended_at) return '-';
+            const sec = Math.max(0, (new Date(s.ended_at) - new Date(s.started_at)) / 1000);
+            const hh = Math.floor(sec / 3600), mm = Math.floor(sec % 3600 / 60), ss = Math.round(sec % 60);
+            return hh ? `${hh}j ${mm}m` : `${mm}m ${ss}d`;
+        }
+
+        async function loadSessions() {
+            try {
+                sessions = await (await fetch('/api/sessions')).json();
+                const latest = sessions.find(s => s.has_report);
+                if (latest) setLatestReport(latest.id, `/api/sessions/${latest.id}/report`, latest.report_sha256);
+                renderHistoryTable();
+            } catch (err) { addLog('Gagal memuat histori sesi: ' + err, 'ERROR'); }
+        }
+
+        function renderHistoryTable() {
+            $('history-counter-badge').textContent = sessions.length;
+            $('stat-total-records').textContent = sessions.length;
+            $('stat-arrhythmia-cases').textContent = sessions.filter(hasAfib).length;
+            $('stat-reports').textContent = sessions.filter(s => s.has_report).length;
+
+            const q = $('history-search-input').value.toLowerCase();
+            const f = $('history-filter-select').value;
+            const rows = sessions.filter(s =>
+                (s.id.toLowerCase().includes(q) || String(s.patient_id || '').toLowerCase().includes(q)) &&
+                (f === 'ALL' || (f === 'AFIB') === hasAfib(s)));
+
+            const tb = $('history-tbody');
+            if (!rows.length) {
+                tb.innerHTML = `<tr><td colspan="7" class="py-8 text-center text-slate-500">${sessions.length ? 'Tidak ada sesi yang sesuai.' : 'Belum ada sesi tersimpan.'}</td></tr>`;
+                return;
+            }
+            tb.innerHTML = rows.map(s => {
+                const afib = hasAfib(s);
+                return `<tr class="hover:bg-slate-50 transition-colors">
+                    <td class="py-3.5 px-6"><div class="font-bold text-slate-900 font-mono">${esc(s.id)}</div>
+                        <div class="text-[10px] text-slate-500 font-mono">${esc((s.started_at || '').replace('T', ' '))}</div></td>
+                    <td class="py-3.5 px-6"><div class="font-bold text-slate-800">${esc(s.patient_id || 'ANONIM')}</div>
+                        <div class="text-[11px] text-slate-500">${s.source === 'polar' ? 'Polar H10' : 'Replay'}</div></td>
+                    <td class="py-3.5 px-6"><span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold border ${afib ? 'bg-rose-50 text-rose-700 border-rose-200' : 'bg-emerald-50 text-emerald-700 border-emerald-200'}">${esc(dominant(s.summary.counts))}</span>
+                        ${afib ? '<div class="text-[10px] text-rose-600 mt-0.5 font-bold">Ada jendela AFib</div>' : ''}</td>
+                    <td class="py-3.5 px-6 font-bold text-slate-900 font-mono">${fmt(s.summary.hr_median, 0)} <span class="text-[10px] font-normal text-slate-500">BPM</span></td>
+                    <td class="py-3.5 px-6 font-mono text-slate-700">${duration(s)}</td>
+                    <td class="py-3.5 px-6">${s.has_report
+                        ? `<button onclick="openReport('${esc(s.id)}')" class="inline-flex items-center text-[11px] font-bold text-indigo-600 hover:text-indigo-800"><i class="fa-solid fa-file-pdf mr-1"></i> Lihat</button>`
+                        : '<span class="text-[11px] text-slate-400">belum ada</span>'}</td>
+                    <td class="py-3.5 px-6 text-right"><button onclick="openDetailModal('${esc(s.id)}')" class="px-3 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-bold border border-slate-300">Detail</button></td>
+                </tr>`;
+            }).join('');
+        }
+
+        function openDetailModal(id) {
+            const s = sessions.find(r => r.id === id);
+            if (!s) return;
+            const sm = s.summary, total = Object.values(sm.counts || {}).reduce((a, b) => a + b, 0) || 1;
+            const bars = Object.entries(sm.counts || {}).sort((a, b) => b[1] - a[1]).map(([k, v]) => `
+                <div class="flex items-center gap-2 text-xs"><span class="w-32 text-slate-600 font-semibold">${esc(k)}</span>
+                    <div class="flex-1 bg-slate-100 h-2 rounded-full overflow-hidden"><div class="h-full bg-indigo-500" style="width:${(v / total * 100).toFixed(1)}%"></div></div>
+                    <span class="w-20 text-right font-mono text-slate-700">${v} (${Math.round(v / total * 100)}%)</span></div>`).join('');
+            $('detail-modal-body').innerHTML = `
+                <div class="grid grid-cols-2 gap-3 bg-slate-50 p-4 rounded-xl border border-slate-200 text-xs">
+                    <div><span class="text-slate-500 font-bold uppercase block text-[10px]">ID Sesi</span><p class="font-bold text-slate-900 font-mono">${esc(s.id)}</p></div>
+                    <div><span class="text-slate-500 font-bold uppercase block text-[10px]">Pasien</span><p class="font-bold text-slate-700">${esc(s.patient_id || 'ANONIM')}</p></div>
+                    <div><span class="text-slate-500 font-bold uppercase block text-[10px]">Mulai / Selesai</span><p class="font-mono text-slate-700">${esc((s.started_at || '-').replace('T', ' '))}<br>${esc((s.ended_at || '-').replace('T', ' '))}</p></div>
+                    <div><span class="text-slate-500 font-bold uppercase block text-[10px]">HR min / median / maks</span><p class="font-bold text-slate-900 font-mono">${fmt(sm.hr_min)} / ${fmt(sm.hr_median)} / ${fmt(sm.hr_max)} BPM</p></div>
+                    <div><span class="text-slate-500 font-bold uppercase block text-[10px]">Jendela dianalisis</span><p class="font-mono text-slate-700">${sm.n_windows} (sinyal buruk: ${sm.n_bad_signal})</p></div>
+                    <div><span class="text-slate-500 font-bold uppercase block text-[10px]">Sumber</span><p class="text-slate-700 break-all">${s.source === 'polar' ? 'Polar H10' : 'Replay: ' + esc(s.file || '')}</p></div>
+                </div>
+                <div class="space-y-2"><span class="text-[10px] font-bold text-slate-500 uppercase">Distribusi ritme per jendela</span>${bars || '<p class="text-xs text-slate-500">-</p>'}</div>
+                <div class="space-y-1"><span class="text-[10px] font-bold text-slate-500 uppercase">SHA-256 Laporan PDF</span>
+                    <div class="p-2.5 bg-slate-50 text-indigo-700 rounded-xl font-mono text-xs break-all border border-slate-200">${esc(s.report_sha256 || 'Laporan belum dibuat')}</div></div>
+                ${s.error ? `<div class="p-3 bg-rose-50 rounded-xl border border-rose-200 text-xs text-rose-700">Sesi berhenti karena error: ${esc(s.error)}</div>` : ''}
+                <button onclick="openReport('${esc(s.id)}')" class="inline-flex items-center gap-1.5 px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-bold"><i class="fa-solid fa-file-pdf"></i> ${s.has_report ? 'Lihat' : 'Buat & lihat'} laporan</button>`;
+            $('modal-history-detail').classList.remove('hidden');
+        }
+        function closeDetailModal() { $('modal-history-detail').classList.add('hidden'); }
+
+        // =================================================================
+        // PENAMPIL LAPORAN PDF
+        // =================================================================
+        let reportBlobUrl = null;
+
+        async function openReport(id) {
+            const s = sessions.find(r => r.id === id) || {};
+            const url = `/api/sessions/${encodeURIComponent(id)}/report`;
+            closeDetailModal();
+            $('report-title-id').textContent = id;
+            $('report-subtitle').textContent = [s.patient_id || 'ANONIM', s.source === 'polar' ? 'Polar H10' : s.source ? 'Replay' : '',
+                (s.started_at || '').replace('T', ' ')].filter(Boolean).join(' · ');
+            $('report-sha').textContent = s.report_sha256 || '-';
+            $('report-download').href = url + '?download=1';
+            $('report-newtab').href = url;
+            $('report-frame').classList.add('hidden');
+            $('report-loading').classList.remove('hidden');
+            $('report-loading-text').textContent = s.has_report === false ? 'Membuat laporan PDF...' : 'Memuat laporan...';
+            $('modal-report').classList.remove('hidden');
+
+            // Ambil dulu sebagai blob supaya error (mis. sesi tidak ada) tampil rapi, bukan JSON di iframe
+            try {
+                const r = await fetch(url);
+                if (!r.ok) throw new Error((await r.json().catch(() => ({}))).detail || `HTTP ${r.status}`);
+                const blob = await r.blob();
+                if ($('report-title-id').textContent !== id) return;   // pengguna sudah membuka laporan lain
+                if (reportBlobUrl) URL.revokeObjectURL(reportBlobUrl);
+                reportBlobUrl = URL.createObjectURL(blob);
+                $('report-frame').src = reportBlobUrl;
+                $('report-frame').classList.remove('hidden');
+                $('report-loading').classList.add('hidden');
+                if (!s.has_report) loadSessions();   // laporan baru dibuat: perbarui tabel & hash
+            } catch (err) {
+                $('report-loading').innerHTML = `<i class="fa-solid fa-triangle-exclamation text-2xl text-rose-500"></i>
+                    <span class="text-rose-600 font-bold">Gagal memuat laporan: ${esc(err.message)}</span>`;
+                addLog(`Gagal memuat laporan ${id}: ${err.message}`, 'ERROR');
+            }
+        }
+
+        function closeReportModal() {
+            $('modal-report').classList.add('hidden');
+            $('report-frame').src = 'about:blank';
+            if (reportBlobUrl) { URL.revokeObjectURL(reportBlobUrl); reportBlobUrl = null; }
+            // Kembalikan isi loading (bisa tertimpa pesan error)
+            $('report-loading').innerHTML = '<i class="fa-solid fa-circle-notch fa-spin text-2xl text-indigo-500"></i><span id="report-loading-text">Memuat laporan...</span>';
+        }
+
+        function exportHistoryCSV() {
+            const q = v => `"${String(v ?? '').replace(/"/g, '""')}"`;
+            let csv = 'id,started_at,ended_at,source,patient_id,dominant_rhythm,has_afib,hr_min,hr_median,hr_max,n_windows,n_bad_signal,report_sha256\n';
+            for (const s of sessions) {
+                const m = s.summary;
+                csv += [s.id, s.started_at, s.ended_at, s.source, s.patient_id, dominant(m.counts), hasAfib(s),
+                        m.hr_min, m.hr_median, m.hr_max, m.n_windows, m.n_bad_signal, s.report_sha256].map(q).join(',') + '\n';
+            }
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv' }));
+            a.download = `BeatLedger_History_${new Date().toISOString().substring(0, 10)}.csv`;
+            document.body.appendChild(a); a.click(); a.remove();
+            addLog(`Histori (${sessions.length} sesi) diekspor ke CSV.`, 'OK');
+        }
+
+        // =================================================================
+        // AUTENTIKASI LAPORAN (SHA-256 lokal; blockchain belum terhubung)
+        // =================================================================
+        function setLatestReport(id, url, sha) {
+            $('panel-report-id').textContent = id;
+            const a = $('panel-report-link'); a.onclick = () => openReport(id); a.classList.remove('hidden');
+            $('panel-doc-hash').textContent = sha || '-';
+            const b = $('auth-badge');
+            b.className = 'px-3 py-1 bg-indigo-50 text-indigo-700 border border-indigo-200 text-xs font-bold rounded-full flex items-center gap-1.5';
+            b.innerHTML = '<i class="fa-solid fa-fingerprint"></i> Hash tercatat di server';
+        }
+
+        function handleDragOver(e) { e.preventDefault(); $('drop-zone').classList.add('border-indigo-500', 'bg-indigo-50'); }
+        function handleDragLeave() { $('drop-zone').classList.remove('border-indigo-500', 'bg-indigo-50'); }
+        function handleFileDrop(e) { e.preventDefault(); handleDragLeave(); if (e.dataTransfer.files.length) verifyFile(e.dataTransfer.files[0]); }
+        function handleFileSelect(e) { if (e.target.files.length) verifyFile(e.target.files[0]); e.target.value = ''; }
+
+        function verifyFile(file) {
+            const reader = new FileReader();
+            reader.onload = async ev => {
+                const hash = CryptoJS.SHA256(CryptoJS.lib.WordArray.create(ev.target.result)).toString();
+                await loadSessions();
+                const match = sessions.find(s => s.report_sha256 === hash);
+                const box = $('validator-result');
+                box.className = `p-4 rounded-xl border text-xs font-semibold flex flex-wrap items-center justify-between gap-3 ${match ? 'border-emerald-300 bg-emerald-50 text-emerald-800' : 'border-rose-300 bg-rose-50 text-rose-800'}`;
+                box.innerHTML = `
+                    <div class="flex items-center space-x-3">
+                        <i class="fa-solid ${match ? 'fa-circle-check text-emerald-600' : 'fa-circle-xmark text-rose-600'} text-lg"></i>
+                        <div><div class="font-bold text-slate-900">${match ? `COCOK: identik dengan laporan sesi ${esc(match.id)}` : 'TIDAK COCOK: file tidak identik dengan laporan mana pun di server'}</div>
+                        <div class="font-mono text-[10px] break-all">${esc(file.name)} · SHA-256 ${hash}</div></div>
+                    </div>
+                    <span class="px-2.5 py-1 ${match ? 'bg-emerald-600' : 'bg-rose-600'} text-white text-[10px] rounded-md font-black uppercase tracking-wider">${match ? 'Asli' : 'Tidak dikenal'}</span>`;
+                addLog(`Verifikasi ${file.name}: ${match ? 'cocok dengan ' + match.id : 'tidak cocok'}.`, match ? 'OK' : 'WARN');
+            };
+            reader.readAsArrayBuffer(file);
+        }
+
+        // =================================================================
+        // NAVIGASI & UTILITAS
+        // =================================================================
+        function switchMainTab(tab) {
+            const on = 'flex items-center space-x-2 px-5 py-2 rounded-lg transition-all bg-white text-indigo-600 shadow-sm border border-slate-200/80';
+            const off = 'flex items-center space-x-2 px-5 py-2 rounded-lg transition-all text-slate-600 hover:text-slate-900 hover:bg-slate-200/60';
+            $('view-dashboard').classList.toggle('hidden', tab !== 'dashboard');
+            $('view-history').classList.toggle('hidden', tab !== 'history');
+            $('tab-btn-dashboard').className = tab === 'dashboard' ? on : off;
+            $('tab-btn-history').className = tab === 'history' ? on : off;
+            if (tab === 'history') loadSessions(); else drawXai();
+        }
+
+        async function copyToClipboard(text) {
+            try { await navigator.clipboard.writeText(text); } catch (e) { return; }
+            const t = document.createElement('div');
+            t.className = 'fixed bottom-5 right-5 bg-slate-900 text-white px-4 py-2.5 rounded-xl text-xs font-bold shadow-xl z-50 flex items-center space-x-2';
+            t.innerHTML = '<i class="fa-solid fa-check-circle text-emerald-400"></i><span>Tersalin ke clipboard</span>';
+            document.body.appendChild(t); setTimeout(() => t.remove(), 2000);
+        }
+
+        window.addEventListener('resize', drawXai);
+        window.addEventListener('keydown', e => { if (e.key === 'Escape') { closeStartModal(); closeDetailModal(); } });
+
+        switchMainTab('dashboard');
+        resetCards(); renderStatus(); drawXai();
+        connect(); loadSessions(); requestAnimationFrame(drawLive);
+    </script>
+</body>
+</html>

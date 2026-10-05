@@ -1,0 +1,270 @@
+{
+ "session": {
+  "id": "S-20260924-030949",
+  "started_at": "2026-09-24T03:09:49",
+  "source": "replay",
+  "file": "/home/bima/Documents/capstone/aritmia_ritme/ecg_main_mobile-legends2.csv",
+  "speed": 1.0,
+  "ended_at": "2026-09-24T03:10:21",
+  "error": null
+ },
+ "summary": {
+  "n_windows": 10,
+  "n_bad_signal": 0,
+  "counts": {
+   "Sinus normal": 10
+  },
+  "hr_min": 80.3,
+  "hr_max": 86.2,
+  "hr_median": 83.5,
+  "events": [
+   {
+    "t": 12.354,
+    "label_name": "Sinus normal",
+    "hr": 83.5
+   }
+  ]
+ },
+ "windows": [
+  {
+   "t_start": 0.108,
+   "t_end": 10.108,
+   "label": "SR",
+   "label_name": "Sinus normal",
+   "label_stable": null,
+   "label_stable_name": null,
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 85.8,
+   "rr_cv": 0.104,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 26.47,
+    "template_corr": 0.97
+   },
+   "probs": {
+    "SR": 1.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 0.0
+   }
+  },
+  {
+   "t_start": 2.354,
+   "t_end": 12.354,
+   "label": "SR",
+   "label_name": "Sinus normal",
+   "label_stable": "SR",
+   "label_stable_name": "Sinus normal",
+   "conf": 0.999,
+   "uncertain": false,
+   "hr": 83.5,
+   "rr_cv": 0.095,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 27.12,
+    "template_corr": 0.966
+   },
+   "probs": {
+    "SR": 0.999,
+    "SB": 0.0,
+    "ST": 0.001,
+    "AFIB": 0.0
+   }
+  },
+  {
+   "t_start": 4.6,
+   "t_end": 14.6,
+   "label": "SR",
+   "label_name": "Sinus normal",
+   "label_stable": "SR",
+   "label_stable_name": "Sinus normal",
+   "conf": 0.998,
+   "uncertain": false,
+   "hr": 80.3,
+   "rr_cv": 0.056,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 29.66,
+    "template_corr": 0.964
+   },
+   "probs": {
+    "SR": 0.998,
+    "SB": 0.0,
+    "ST": 0.001,
+    "AFIB": 0.0
+   }
+  },
+  {
+   "t_start": 6.846,
+   "t_end": 16.846,
+   "label": "SR",
+   "label_name": "Sinus normal",
+   "label_stable": "SR",
+   "label_stable_name": "Sinus normal",
+   "conf": 0.999,
+   "uncertain": false,
+   "hr": 81.4,
+   "rr_cv": 0.056,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 30.08,
+    "template_corr": 0.964
+   },
+   "probs": {
+    "SR": 0.999,
+    "SB": 0.0,
+    "ST": 0.001,
+    "AFIB": 0.0
+   }
+  },
+  {
+   "t_start": 9.092,
+   "t_end": 19.092,
+   "label": "SR",
+   "label_name": "Sinus normal",
+   "label_stable": "SR",
+   "label_stable_name": "Sinus normal",
+   "conf": 0.997,
+   "uncertain": false,
+   "hr": 83.0,
+   "rr_cv": 0.035,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 27.97,
+    "template_corr": 0.966
+   },
+   "probs": {
+    "SR": 0.997,
+    "SB": 0.0,
+    "ST": 0.002,
+    "AFIB": 0.001
+   }
+  },
+  {
+   "t_start": 11.338,
+   "t_end": 21.338,
+   "label": "SR",
+   "label_name": "Sinus normal",
+   "label_stable": "SR",
+   "label_stable_name": "Sinus normal",
+   "conf": 0.999,
+   "uncertain": false,
+   "hr": 82.9,
+   "rr_cv": 0.034,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 29.61,
+    "template_corr": 0.973
+   },
+   "probs": {
+    "SR": 0.999,
+    "SB": 0.0,
+    "ST": 0.001,
+    "AFIB": 0.001
+   }
+  },
+  {
+   "t_start": 13.585,
+   "t_end": 23.585,
+   "label": "SR",
+   "label_name": "Sinus normal",
+   "label_stable": "SR",
+   "label_stable_name": "Sinus normal",
+   "conf": 0.998,
+   "uncertain": false,
+   "hr": 83.4,
+   "rr_cv": 0.042,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 28.57,
+    "template_corr": 0.968
+   },
+   "probs": {
+    "SR": 0.998,
+    "SB": 0.0,
+    "ST": 0.002,
+    "AFIB": 0.001
+   }
+  },
+  {
+   "t_start": 15.831,
+   "t_end": 25.831,
+   "label": "SR",
+   "label_name": "Sinus normal",
+   "label_stable": "SR",
+   "label_stable_name": "Sinus normal",
+   "conf": 0.997,
+   "uncertain": false,
+   "hr": 83.5,
+   "rr_cv": 0.042,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 28.72,
+    "template_corr": 0.971
+   },
+   "probs": {
+    "SR": 0.997,
+    "SB": 0.0,
+    "ST": 0.002,
+    "AFIB": 0.001
+   }
+  },
+  {
+   "t_start": 18.077,
+   "t_end": 28.077,
+   "label": "SR",
+   "label_name": "Sinus normal",
+   "label_stable": "SR",
+   "label_stable_name": "Sinus normal",
+   "conf": 0.998,
+   "uncertain": false,
+   "hr": 84.9,
+   "rr_cv": 0.046,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 28.81,
+    "template_corr": 0.973
+   },
+   "probs": {
+    "SR": 0.998,
+    "SB": 0.0,
+    "ST": 0.001,
+    "AFIB": 0.0
+   }
+  },
+  {
+   "t_start": 20.323,
+   "t_end": 30.323,
+   "label": "SR",
+   "label_name": "Sinus normal",
+   "label_stable": "SR",
+   "label_stable_name": "Sinus normal",
+   "conf": 0.998,
+   "uncertain": false,
+   "hr": 86.2,
+   "rr_cv": 0.044,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 28.73,
+    "template_corr": 0.972
+   },
+   "probs": {
+    "SR": 0.998,
+    "SB": 0.001,
+    "ST": 0.0,
+    "AFIB": 0.001
+   }
+  }
+ ]
+}

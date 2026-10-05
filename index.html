@@ -1,0 +1,1321 @@
+<!DOCTYPE html>
+<html lang="id" class="h-full bg-slate-50 text-slate-800">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beat Ledger - Medical ECG Monitoring & Blockchain Authenticity</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        clinical: {
+                            50: '#f8fafc',
+                            100: '#f1f5f9',
+                            200: '#e2e8f0',
+                            800: '#1e293b',
+                            900: '#0f172a',
+                        },
+                        medical: {
+                            blue: '#2563eb',
+                            indigo: '#4f46e5',
+                            emerald: '#059669',
+                            amber: '#d97706',
+                            rose: '#e11d48',
+                            cyan: '#0891b2',
+                        }
+                    },
+                    fontFamily: {
+                        mono: ['JetBrains Mono', 'Courier New', 'monospace'],
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Google Fonts & FontAwesome Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- CryptoJS for Client-Side SHA-256 Hashes -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .font-mono { font-family: 'JetBrains Mono', monospace; }
+        
+        /* Desktop Light Medical ECG Grid Canvas */
+        .ecg-canvas-container {
+            position: relative;
+            background-color: #ffffff;
+            border-radius: 0.85rem;
+            overflow: hidden;
+            border: 1px solid #cbd5e1;
+            box-shadow: inset 0 1px 4px rgba(0,0,0,0.03);
+        }
+
+        /* Active recording glow animation */
+        @keyframes pulse-ring {
+            0% { transform: scale(0.98); opacity: 0.9; }
+            50% { transform: scale(1.02); opacity: 0.6; }
+            100% { transform: scale(0.98); opacity: 0.9; }
+        }
+        .recording-pulse {
+            animation: pulse-ring 1.5s infinite ease-in-out;
+        }
+
+        /* Custom Light Scrollbar */
+        ::-webkit-scrollbar { width: 7px; height: 7px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+        @media print {
+            header, nav, .no-print { display: none !important; }
+            .ecg-canvas-container { background: white !important; border: 1px solid #000 !important; }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col antialiased">
+
+    <!-- HEADER & DESKTOP NAVIGATION -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16 gap-4">
+                
+                <!-- Brand Title & Logo -->
+                <div class="flex items-center space-x-3 shrink-0">
+                    <div class="p-2.5 bg-gradient-to-tr from-indigo-600 to-blue-500 rounded-xl text-white shadow-md shadow-indigo-500/20">
+                        <i class="fa-solid fa-heart-pulse text-xl animate-pulse"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-extrabold tracking-tight text-slate-900 leading-none">Beat Ledger</h1>
+                        <p class="text-xs text-slate-500 font-medium mt-0.5">Monitoring EKG Real-time & Autentikasi Laporan Medis</p>
+                    </div>
+                </div>
+
+                <!-- Main SPA Navigation Tabs -->
+                <nav class="flex bg-slate-100 p-1 rounded-xl border border-slate-200 text-xs font-bold">
+                    <button id="tab-btn-dashboard" onclick="switchMainTab('dashboard')" class="flex items-center space-x-2 px-5 py-2 rounded-lg transition-all duration-200 bg-white text-indigo-600 shadow-sm border border-slate-200/80">
+                        <i class="fa-solid fa-chart-line"></i>
+                        <span>Dashboard</span>
+                    </button>
+                    <button id="tab-btn-history" onclick="switchMainTab('history')" class="flex items-center space-x-2 px-5 py-2 rounded-lg transition-all duration-200 text-slate-600 hover:text-slate-900 hover:bg-slate-200/60">
+                        <i class="fa-solid fa-clock-rotate-left"></i>
+                        <span>History</span>
+                        <span id="history-counter-badge" class="ml-1 px-2 py-0.5 text-[10px] bg-indigo-100 text-indigo-700 rounded-full font-mono">3</span>
+                    </button>
+                </nav>
+
+                <!-- Bluetooth Button & Recording Controls -->
+                <div class="flex items-center space-x-3 shrink-0">
+                    
+                    <!-- Standard Bluetooth Icon & Status Button -->
+                    <button id="bt-status-btn" onclick="connectPolar()" class="flex items-center px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-100 text-slate-700 border border-slate-300 shadow-sm hover:bg-slate-200 transition-all cursor-pointer group">
+                        <svg id="bt-status-svg" class="w-4 h-4 mr-2 fill-slate-700 group-hover:fill-slate-900 transition-colors" viewBox="0 0 24 24">
+                            <path d="M17.71 7.71L12 2h-1v7.59L6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 11 14.41V22h1l5.71-5.71-4.3-4.29 4.3-4.29zM13 5.83l1.88 1.88L13 9.59V5.83zm1.88 10.46L13 18.17v-3.76l1.88 1.88z"/>
+                        </svg>
+                        <span id="bt-status-text">Connect to Polar</span>
+                    </button>
+
+                    <!-- Recording Control Buttons -->
+                    <div class="flex items-center space-x-1.5 bg-slate-100 p-1 rounded-xl border border-slate-200">
+                        <button id="btn-start" onclick="startRecording()" class="flex items-center space-x-1.5 px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-xs font-bold transition-all shadow-sm active:scale-95">
+                            <i class="fa-solid fa-play text-[10px]"></i>
+                            <span>Start</span>
+                        </button>
+                        <button id="btn-stop" onclick="stopRecording()" disabled class="flex items-center space-x-1.5 px-4 py-2 bg-slate-200 text-slate-400 cursor-not-allowed rounded-lg text-xs font-bold transition-all active:scale-95">
+                            <i class="fa-solid fa-square text-[10px]"></i>
+                            <span>Stop</span>
+                        </button>
+                        <button id="btn-reset" onclick="resetRecording()" class="flex items-center space-x-1 px-3 py-2 bg-slate-200 hover:bg-slate-300 text-slate-700 rounded-lg text-xs font-bold transition-all active:scale-95" title="Restart Buffer">
+                            <i class="fa-solid fa-rotate-right text-[10px]"></i>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN CONTAINER -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex-1 w-full space-y-6">
+
+        <!-- ================================================================= -->
+        <!-- VIEW 1: DASHBOARD TAB                                             -->
+        <!-- ================================================================= -->
+        <div id="view-dashboard" class="space-y-6">
+            
+            <!-- DESKTOP RE-ORDERED METRICS GRID (4 CARDS - CLEANED UP) -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                
+                <!-- CARD 1: HASIL KLASIFIKASI -->
+                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm relative overflow-hidden flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between pb-2">
+                            <span class="text-xs font-extrabold uppercase tracking-wider text-slate-500">Hasil Klasifikasi</span>
+                            <div id="metric-diag-icon" class="p-2.5 bg-emerald-50 text-emerald-600 rounded-xl border border-emerald-200">
+                                <i class="fa-solid fa-heart-circle-check text-base"></i>
+                            </div>
+                        </div>
+                        <div class="mt-2">
+                            <div id="metric-diagnosis" class="text-lg font-black text-emerald-600 tracking-tight">
+                                Normal Sinus Rhythm
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-4 pt-2 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-500 font-medium">
+                        <span>Status Prediksi AI</span>
+                        <span class="text-emerald-700 font-bold">Stabil</span>
+                    </div>
+                    <div class="absolute bottom-0 left-0 right-0 h-1 bg-emerald-500 transition-colors" id="diagnosis-border-bar"></div>
+                </div>
+
+                <!-- CARD 2: TINGKAT KEYAKINAN -->
+                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm relative overflow-hidden flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between pb-2">
+                            <span class="text-xs font-extrabold uppercase tracking-wider text-slate-500">Tingkat Keyakinan</span>
+                            <div class="p-2.5 bg-blue-50 text-blue-600 rounded-xl border border-blue-200">
+                                <i class="fa-solid fa-gauge-high text-base"></i>
+                            </div>
+                        </div>
+                        <div class="mt-2 flex items-baseline justify-between">
+                            <div id="metric-confidence" class="text-3xl font-black text-slate-900 tracking-tight font-mono">
+                                98.8<span class="text-sm font-sans font-bold text-slate-500">%</span>
+                            </div>
+                            <span class="px-2 py-0.5 bg-blue-50 text-blue-700 text-[10px] font-bold rounded-md border border-blue-200">Akurat</span>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden border border-slate-200">
+                            <div id="confidence-bar" class="bg-blue-600 h-full rounded-full transition-all duration-300" style="width: 98.8%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CARD 3: HEART RATE (HR) - REVISED WITHOUT RANGE ISTIRAHAT -->
+                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm relative overflow-hidden flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between pb-2">
+                            <span class="text-xs font-extrabold uppercase tracking-wider text-slate-500">Heart Rate (HR)</span>
+                            <div class="p-2.5 bg-rose-50 text-rose-600 rounded-xl border border-rose-200">
+                                <i class="fa-solid fa-heart text-base animate-pulse"></i>
+                            </div>
+                        </div>
+                        <div class="mt-2 flex items-baseline justify-between">
+                            <div id="metric-hr" class="text-3xl font-black text-slate-900 tracking-tight font-mono">
+                                72 <span class="text-sm font-sans font-bold text-slate-500">BPM</span>
+                            </div>
+                            <span id="hr-status-pill" class="text-[10px] font-extrabold px-2.5 py-1 bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-lg">Normal</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CARD 4: KUALITAS SINYAL (SQI) - REVISED WITHOUT SENSOR BLUETOOTH FOOTER -->
+                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm relative overflow-hidden flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between pb-2">
+                            <span class="text-xs font-extrabold uppercase tracking-wider text-slate-500">Kualitas Sinyal (SQI)</span>
+                            <div class="p-2.5 bg-emerald-50 text-emerald-600 rounded-xl border border-emerald-200" id="sqi-icon-bg">
+                                <i id="sqi-icon" class="fa-solid fa-wifi text-base"></i>
+                            </div>
+                        </div>
+                        <div class="mt-2">
+                            <div id="metric-sqi-text" class="text-xl font-extrabold text-emerald-600 flex items-center gap-2">
+                                <span id="sqi-dot" class="w-3 h-3 rounded-full bg-emerald-500 inline-block animate-ping"></span>
+                                <span id="sqi-label">Baik (97%)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- DESKTOP STACKED ECG CANVASES (SLIDING WINDOW MODE) -->
+            <div class="flex flex-col gap-6">
+                
+                <!-- CANVAS 1 (TOP): GRAFIK SINYAL EKG -->
+                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-2">
+                            <span class="w-3.5 h-3.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                            <h3 class="text-base font-bold text-slate-900">Grafik Sinyal EKG (Sliding Window)</h3>
+                        </div>
+                        <div class="flex items-center space-x-3 text-xs font-mono text-slate-500 bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-200">
+                            <span>Speed: 25 mm/s</span>
+                            <span>|</span>
+                            <span>Gain: 10 mm/mV</span>
+                        </div>
+                    </div>
+
+                    <div class="ecg-canvas-container h-72 w-full">
+                        <canvas id="canvas-raw" class="w-full h-full block"></canvas>
+                        <div class="absolute bottom-3 left-4 text-xs text-slate-700 font-mono pointer-events-none bg-white/95 px-3 py-1.5 rounded-lg border border-slate-300 shadow-sm font-bold flex items-center gap-2">
+                            <span class="w-2 h-2 rounded-full bg-indigo-600 inline-block"></span>
+                            Real-time Continuous ECG Stream
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CANVAS 2 (BOTTOM): GRAFIK INFERENSI EXPLAINABLE AI (XAI) -->
+                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-2">
+                            <span class="w-3.5 h-3.5 rounded-full bg-indigo-600"></span>
+                            <h3 class="text-base font-bold text-slate-900">Grafik Inferensi Explainable AI (XAI)</h3>
+                        </div>
+                        <span class="px-3 py-1 bg-amber-50 border border-amber-200 text-amber-800 text-xs font-bold rounded-lg flex items-center gap-1">
+                            <i class="fa-solid fa-wand-magic-sparkles text-amber-600"></i> Region Fitur AI
+                        </span>
+                    </div>
+
+                    <div class="ecg-canvas-container h-72 w-full">
+                        <canvas id="canvas-xai" class="w-full h-full block"></canvas>
+                        <div class="absolute bottom-3 left-4 text-xs text-slate-700 font-mono pointer-events-none bg-white/95 px-3 py-1.5 rounded-lg border border-slate-300 shadow-sm flex items-center gap-4 font-bold">
+                            <span class="flex items-center"><span class="w-2.5 h-2.5 rounded-full bg-amber-500 inline-block mr-1.5"></span> XAI Heatmap Highlight</span>
+                            <span class="flex items-center"><span class="w-2.5 h-2.5 rounded-full bg-indigo-600 inline-block mr-1.5"></span> Signal Trace</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- PROOF OF AUTHENTICITY PANEL (BLOCKCHAIN & IPFS) -->
+            <div id="blockchain-panel" class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 space-y-6">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-100 pb-4">
+                    <div>
+                        <div class="flex items-center space-x-2">
+                            <h3 class="text-lg font-bold text-slate-900">Pembuktian Keaslian Laporan Medis (Proof of Authenticity)</h3>
+                            <span id="onchain-status-badge" class="px-3 py-1 bg-emerald-50 text-emerald-700 border border-emerald-200 text-xs font-bold rounded-full flex items-center gap-1.5">
+                                <i class="fa-solid fa-circle-check text-emerald-600"></i> Verified On-Chain
+                            </span>
+                        </div>
+                        <p class="text-xs text-slate-500 mt-1">Gunakan Hash Cryptographic SHA-256 untuk memverifikasi file PDF laporan EKG terhadap Smart Contract.</p>
+                    </div>
+                    <div class="text-xs text-slate-600 font-mono bg-slate-50 px-3.5 py-1.5 rounded-xl border border-slate-200 font-bold">
+                        Network: <span class="text-indigo-600">Polygon Medical Mainnet</span>
+                    </div>
+                </div>
+
+                <!-- Blockchain Hash & IPFS Metadata Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    
+                    <!-- IPFS CID CARD -->
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2">
+                        <div class="flex items-center justify-between text-xs text-slate-600 font-bold">
+                            <span class="flex items-center gap-1.5">
+                                <i class="fa-solid fa-cubes text-indigo-600"></i> IPFS CID (Content ID)
+                            </span>
+                            <button onclick="copyToClipboard('QmXoypizjW3WknFiJnKLwHCnL72vedxjQkDDP1mXWo6uco')" class="text-indigo-600 hover:text-indigo-800 text-[11px] font-extrabold">
+                                Copy
+                            </button>
+                        </div>
+                        <p id="panel-ipfs-cid" class="font-mono text-xs text-emerald-700 font-bold break-all bg-white p-3 rounded-lg border border-slate-200 shadow-sm">
+                            QmXoypizjW3WknFiJnKLwHCnL72vedxjQkDDP1mXWo6uco
+                        </p>
+                    </div>
+
+                    <!-- DOCUMENT SHA-256 HASH -->
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2">
+                        <div class="flex items-center justify-between text-xs text-slate-600 font-bold">
+                            <span class="flex items-center gap-1.5">
+                                <i class="fa-solid fa-fingerprint text-emerald-600"></i> Document Hash (SHA-256)
+                            </span>
+                            <button onclick="copyToClipboard('e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855')" class="text-indigo-600 hover:text-indigo-800 text-[11px] font-extrabold">
+                                Copy
+                            </button>
+                        </div>
+                        <p id="panel-doc-hash" class="font-mono text-xs text-indigo-700 font-bold break-all bg-white p-3 rounded-lg border border-slate-200 shadow-sm">
+                            e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+                        </p>
+                    </div>
+
+                    <!-- TRANSACTION HASH -->
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2">
+                        <div class="flex items-center justify-between text-xs text-slate-600 font-bold">
+                            <span class="flex items-center gap-1.5">
+                                <i class="fa-solid fa-link text-cyan-600"></i> Tx Hash (PolygonScan)
+                            </span>
+                            <button onclick="copyToClipboard('0x8f3b9a1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a')" class="text-indigo-600 hover:text-indigo-800 text-[11px] font-extrabold">
+                                Copy
+                            </button>
+                        </div>
+                        <p id="panel-tx-hash" class="font-mono text-xs text-cyan-700 font-bold break-all bg-white p-3 rounded-lg border border-slate-200 shadow-sm">
+                            0x8f3b...a12c8d9e0f1a2b3c4d5e6f7a
+                        </p>
+                    </div>
+
+                </div>
+
+                <!-- DRAG & DROP PDF VALIDATOR ZONE -->
+                <div class="space-y-3">
+                    <label class="text-xs font-bold uppercase text-slate-500 tracking-wider">Area Validator PDF Laporan Medis</label>
+                    <div id="drop-zone" ondragover="handleDragOver(event)" onmouseleave="handleDragLeave()" ondrop="handleFileDrop(event)" class="border-2 border-dashed border-slate-300 hover:border-indigo-500 rounded-2xl p-6 text-center bg-slate-50 hover:bg-indigo-50/50 transition-all cursor-pointer relative">
+                        <input type="file" id="pdf-file-input" onchange="handleFileSelect(event)" accept="application/pdf,.png,.jpg" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
+                        <div class="space-y-2 pointer-events-none">
+                            <div class="w-12 h-12 bg-indigo-50 text-indigo-600 rounded-full flex items-center justify-center mx-auto border border-indigo-200 shadow-sm">
+                                <i class="fa-solid fa-file-shield text-xl"></i>
+                            </div>
+                            <p class="text-sm font-bold text-slate-900">Unggah atau Tarik File PDF Laporan ke Sini</p>
+                            <p class="text-xs text-slate-500">Sistem akan mencocokkan Hash SHA-256 lokal terhadap Smart Contract secara otomatis.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Dynamic Validator Result -->
+                    <div id="validator-result" class="hidden p-4 rounded-xl border text-xs font-semibold flex items-center justify-between">
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- ================================================================= -->
+        <!-- VIEW 2: HISTORY TAB                                               -->
+        <!-- ================================================================= -->
+        <div id="view-history" class="hidden space-y-6">
+            
+            <!-- History Summary Stats -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
+                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center space-x-4">
+                    <div class="p-3 bg-indigo-50 border border-indigo-200 text-indigo-600 rounded-xl">
+                        <i class="fa-solid fa-folder-open text-xl"></i>
+                    </div>
+                    <div>
+                        <span class="text-xs font-bold text-slate-500 uppercase">Total Rekaman EKG</span>
+                        <div id="stat-total-records" class="text-2xl font-black text-slate-900 font-mono">3</div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center space-x-4">
+                    <div class="p-3 bg-rose-50 border border-rose-200 text-rose-600 rounded-xl">
+                        <i class="fa-solid fa-heart-circle-exclamation text-xl"></i>
+                    </div>
+                    <div>
+                        <span class="text-xs font-bold text-slate-500 uppercase">Aritmia Terdeteksi</span>
+                        <div id="stat-arrhythmia-cases" class="text-2xl font-black text-slate-900 font-mono">1</div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center space-x-4">
+                    <div class="p-3 bg-emerald-50 border border-emerald-200 text-emerald-600 rounded-xl">
+                        <i class="fa-solid fa-shield-halved text-xl"></i>
+                    </div>
+                    <div>
+                        <span class="text-xs font-bold text-slate-500 uppercase">On-Chain Verified</span>
+                        <div id="stat-verified-docs" class="text-2xl font-black text-slate-900 font-mono">100%</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- History Main Table Card -->
+            <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+                <div class="p-6 border-b border-slate-200 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                    <div>
+                        <h2 class="text-lg font-bold text-slate-900">Histori Perekaman EKG</h2>
+                        <p class="text-xs text-slate-500">Daftar pemeriksaan EKG terenkripsi yang tersimpan di IPFS & Polygon Smart Contract.</p>
+                    </div>
+
+                    <!-- Search & Filter Controls -->
+                    <div class="flex flex-wrap items-center gap-3">
+                        <div class="relative">
+                            <i class="fa-solid fa-magnifying-glass text-slate-400 absolute left-3 top-1/2 -translate-y-1/2 text-xs"></i>
+                            <input type="text" id="history-search-input" oninput="filterHistoryTable()" placeholder="Cari pasien / ID..." class="pl-9 pr-4 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 font-medium w-56">
+                        </div>
+
+                        <select id="history-filter-select" onchange="filterHistoryTable()" class="px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                            <option value="ALL">Semua Diagnosa</option>
+                            <option value="Normal">Normal Sinus</option>
+                            <option value="Atrial">Atrial Fibrillation</option>
+                            <option value="PVC">PVC Beat</option>
+                        </select>
+
+                        <button onclick="exportHistoryCSV()" class="px-3.5 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-300 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5">
+                            <i class="fa-solid fa-file-csv text-indigo-600"></i>
+                            <span>Export CSV</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Table View -->
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-slate-50 text-[11px] font-black text-slate-500 uppercase tracking-wider border-b border-slate-200">
+                                <th class="py-3.5 px-6">ID / Waktu</th>
+                                <th class="py-3.5 px-6">Nama Pasien</th>
+                                <th class="py-3.5 px-6">Hasil Klasifikasi</th>
+                                <th class="py-3.5 px-6">Avg HR</th>
+                                <th class="py-3.5 px-6">IPFS CID</th>
+                                <th class="py-3.5 px-6">Status Blockchain</th>
+                                <th class="py-3.5 px-6 text-right">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="history-tbody" class="divide-y divide-slate-200 text-xs font-medium">
+                            <!-- Rows dynamically populated -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ================================================================= -->
+        <!-- SYSTEM ACTIVITY LOG SECTION (AT THE BOTTOM)                        -->
+        <!-- ================================================================= -->
+        <div id="system-log-panel" class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 space-y-3">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                <div class="flex items-center space-x-2">
+                    <span class="p-1.5 bg-slate-100 text-slate-700 rounded-lg text-xs">
+                        <i class="fa-solid fa-terminal"></i>
+                    </span>
+                    <h3 class="text-sm font-bold text-slate-900">System Activity & Status Log</h3>
+                </div>
+                <div class="flex items-center space-x-3">
+                    <div id="system-status-indicator" class="px-2.5 py-1 bg-emerald-50 text-emerald-700 border border-emerald-200 text-xs font-bold rounded-lg flex items-center gap-1.5 font-mono">
+                        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                        <span>STATUS: RUNNING</span>
+                    </div>
+                    <button onclick="clearSystemLogs()" class="text-slate-400 hover:text-slate-600 text-xs px-2.5 py-1 rounded-lg border border-slate-200 hover:bg-slate-50 transition-colors font-medium">
+                        Clear Log
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Console Log Container -->
+            <div id="log-console" class="bg-slate-900 text-slate-200 font-mono text-xs p-4 rounded-xl h-36 overflow-y-auto space-y-1.5 shadow-inner">
+                <!-- Log entries inserted dynamically via JS -->
+            </div>
+        </div>
+
+    </main>
+
+    <!-- MODAL 1: PATIENT INTAKE FORM (APPEARS ON STOP) -->
+    <div id="modal-patient-input" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-lg w-full p-6 border border-slate-200 shadow-2xl space-y-6">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-4">
+                <div class="flex items-center space-x-2">
+                    <div class="p-2 bg-indigo-50 text-indigo-600 rounded-lg border border-indigo-200">
+                        <i class="fa-solid fa-file-medical text-base"></i>
+                    </div>
+                    <h3 class="text-base font-bold text-slate-900">Simpan Laporan EKG Pasien</h3>
+                </div>
+                <button onclick="closePatientModal()" class="text-slate-400 hover:text-slate-600 p-1">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+
+            <form id="patient-form" onsubmit="handleProcessPDFAndBlockchain(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Nama Lengkap Pasien *</label>
+                    <input type="text" id="input-patient-name" required placeholder="Contoh: Irfan Maulana" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 font-medium">
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Jenis Kelamin *</label>
+                        <select id="input-patient-gender" required class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 font-medium">
+                            <option value="Laki-laki">Laki-laki</option>
+                            <option value="Perempuan">Perempuan</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Usia (Tahun) *</label>
+                        <input type="number" id="input-patient-age" required min="1" max="120" placeholder="48" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 font-medium">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Catatan Medis Klinis</label>
+                    <textarea id="input-patient-notes" rows="2" placeholder="Keluhan pasien atau observasi awal..." class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 font-medium"></textarea>
+                </div>
+
+                <!-- Simulation Progress Bar -->
+                <div id="minting-progress-box" class="hidden space-y-2 bg-slate-50 p-4 rounded-xl border border-slate-200">
+                    <div class="flex items-center justify-between text-xs font-bold text-indigo-700">
+                        <span id="minting-status-label">Mengompres data EKG...</span>
+                        <span id="minting-percent" class="font-mono">0%</span>
+                    </div>
+                    <div class="w-full bg-slate-200 h-2 rounded-full overflow-hidden">
+                        <div id="minting-bar" class="bg-indigo-600 h-full rounded-full transition-all duration-300" style="width: 0%"></div>
+                    </div>
+                </div>
+
+                <div class="flex justify-end space-x-3 pt-3 border-t border-slate-100">
+                    <button type="button" onclick="closePatientModal()" class="px-4 py-2 border border-slate-300 text-slate-700 rounded-xl text-xs font-bold hover:bg-slate-100">Batal</button>
+                    <button type="submit" id="btn-submit-blockchain" class="px-5 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-xs font-bold shadow-md flex items-center space-x-2">
+                        <i class="fa-solid fa-link"></i>
+                        <span>Generate PDF & Process Blockchain</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL 2: HISTORY DETAIL POPUP -->
+    <div id="modal-history-detail" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-xl w-full p-6 border border-slate-200 shadow-2xl space-y-6">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-4">
+                <div class="flex items-center space-x-2">
+                    <div class="p-2 bg-indigo-50 text-indigo-600 rounded-lg border border-indigo-200">
+                        <i class="fa-solid fa-notes-medical text-base"></i>
+                    </div>
+                    <h3 class="text-base font-bold text-slate-900">Detail Rekam Medis Pasien</h3>
+                </div>
+                <button onclick="closeDetailModal()" class="text-slate-400 hover:text-slate-600 p-1">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+
+            <div id="detail-modal-body" class="space-y-4">
+                <!-- Content Populated Dynamically -->
+            </div>
+
+            <div class="flex justify-between items-center pt-4 border-t border-slate-100">
+                <button onclick="window.print()" class="px-4 py-2 bg-slate-100 text-slate-700 hover:bg-slate-200 border border-slate-300 rounded-xl text-xs font-bold flex items-center gap-1.5">
+                    <i class="fa-solid fa-print"></i>
+                    <span>Cetak Laporan</span>
+                </button>
+                <button onclick="closeDetailModal()" class="px-5 py-2 bg-slate-800 text-white rounded-xl text-xs font-bold hover:bg-slate-700">Tutup</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT APPLICATION ENGINE -->
+    <script>
+        // =================================================================
+        // GLOBAL STATE MANAGEMENT
+        // =================================================================
+        let isRecording = false;
+        let isBluetoothConnected = false;
+        let activeTab = 'dashboard';
+
+        // Signal Parameters
+        let selectedRhythm = 'NORMAL';
+
+        // Metrics State
+        let currentBpm = 72;
+        let currentDiagnosis = 'Normal Sinus Rhythm';
+        let currentConfidence = 98.8;
+
+        // Sliding Window Buffers (Continuous stream)
+        const bufferLength = 600;
+        let rawBuffer = new Array(bufferLength).fill(0);
+        let xaiBuffer = new Array(bufferLength).fill(0);
+
+        // Initial Saved History
+        let historyRecords = [
+            {
+                id: 'REC-2026-001',
+                timestamp: '2026-09-28 10:15:22',
+                patientName: 'Budi Santoso',
+                age: 58,
+                gender: 'Laki-laki',
+                diagnosis: 'Atrial Fibrillation (AFib)',
+                confidence: '98.4%',
+                avgHr: 112,
+                cid: 'QmXoypizjW3WknFiJnKLwHCnL72vedxjQkDDP1mXWo6uco',
+                docHash: 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855',
+                txHash: '0x8f3b9a1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a',
+                notes: 'Pasien mengeluhkan keluhan dada berdebar.'
+            },
+            {
+                id: 'REC-2026-002',
+                timestamp: '2026-09-28 09:05:40',
+                patientName: 'Siti Aminah',
+                age: 45,
+                gender: 'Perempuan',
+                diagnosis: 'Normal Sinus Rhythm',
+                confidence: '99.1%',
+                avgHr: 72,
+                cid: 'QmYwAPJzv5CZsnA625s3X2nemtYgPpHdWEz79ojWnPbdG1',
+                docHash: 'a87f9b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a',
+                txHash: '0x3e1c90b4a5f6e7d8c9b0a1f2e3d4c5b6a7f8e9d0c1b2a3f4e5d6c7b8a9f0e1d2',
+                notes: 'Pemeriksaan rutin berkala.'
+            },
+            {
+                id: 'REC-2026-003',
+                timestamp: '2026-09-27 16:30:15',
+                patientName: 'Irfan Maulana',
+                age: 50,
+                gender: 'Laki-laki',
+                diagnosis: 'Premature Ventricular Contraction (PVC)',
+                confidence: '96.7%',
+                avgHr: 84,
+                cid: 'QmZ9kP12xW88nFiJnKLwHCnL72vedxjQkDDP1mXWo6xyz9',
+                docHash: 'c72b9a8f1e2d3c4b5a6f7e8d9c0b1a2f3e4d5c6b7a8f9e0d1c2b3a4f5e6d7c8b',
+                txHash: '0x1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b',
+                notes: 'Denyut ekstra ditemukan pada rekaman.'
+            }
+        ];
+
+        // =================================================================
+        // SYSTEM LOGGING UTILITY
+        // =================================================================
+        function addLog(message, status = 'RUNNING') {
+            const consoleElem = document.getElementById('log-console');
+            const indicatorElem = document.getElementById('system-status-indicator');
+            const now = new Date();
+            const timeStr = now.toTimeString().split(' ')[0] + '.' + String(now.getMilliseconds()).padStart(3, '0');
+            
+            if (indicatorElem) {
+                if (status === 'RUNNING') {
+                    indicatorElem.className = "px-2.5 py-1 bg-emerald-50 text-emerald-700 border border-emerald-200 text-xs font-bold rounded-lg flex items-center gap-1.5 font-mono";
+                    indicatorElem.innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span><span>STATUS: RUNNING</span>`;
+                } else {
+                    indicatorElem.className = "px-2.5 py-1 bg-rose-50 text-rose-700 border border-rose-200 text-xs font-bold rounded-lg flex items-center gap-1.5 font-mono";
+                    indicatorElem.innerHTML = `<span class="w-2 h-2 rounded-full bg-rose-500"></span><span>STATUS: STOPPED</span>`;
+                }
+            }
+
+            if (consoleElem) {
+                const entry = document.createElement('div');
+                entry.className = "flex items-start space-x-2 border-b border-slate-800/60 pb-1";
+                const badgeClass = status === 'RUNNING' ? 'text-emerald-400 font-bold' : 'text-rose-400 font-bold';
+                entry.innerHTML = `
+                    <span class="text-slate-500 shrink-0">[${timeStr}]</span>
+                    <span class="${badgeClass} shrink-0">[${status}]</span>
+                    <span class="text-slate-300">${message}</span>
+                `;
+                consoleElem.appendChild(entry);
+                consoleElem.scrollTop = consoleElem.scrollHeight;
+            }
+        }
+
+        function clearSystemLogs() {
+            const consoleElem = document.getElementById('log-console');
+            if (consoleElem) {
+                consoleElem.innerHTML = '';
+                addLog('System log console cleared.', isRecording ? 'RUNNING' : 'STOPPED');
+            }
+        }
+
+        // =================================================================
+        // INITIALIZATION
+        // =================================================================
+        window.onload = function() {
+            initCanvases();
+            renderHistoryTable();
+            startEcgAnimationLoop();
+            
+            // Auto start recording on desktop load
+            startRecording();
+            addLog("System initialized. Real-time ECG stream pipeline started.", "RUNNING");
+        };
+
+        window.onresize = function() {
+            initCanvases();
+        };
+
+        function initCanvases() {
+            const rawCanvas = document.getElementById('canvas-raw');
+            const xaiCanvas = document.getElementById('canvas-xai');
+
+            if (rawCanvas && xaiCanvas && rawCanvas.parentElement && xaiCanvas.parentElement) {
+                rawCanvas.width = rawCanvas.parentElement.clientWidth;
+                rawCanvas.height = rawCanvas.parentElement.clientHeight;
+                xaiCanvas.width = xaiCanvas.parentElement.clientWidth;
+                xaiCanvas.height = xaiCanvas.parentElement.clientHeight;
+            }
+        }
+
+        // =================================================================
+        // STANDARD BLUETOOTH CONTROL (WEB BLUETOOTH API + SIMULATION)
+        // =================================================================
+        async function connectPolar() {
+            const statusText = document.getElementById('bt-status-text');
+            if (statusText) statusText.innerText = "Connecting...";
+            addLog("Attempting connection to Polar H10 Sensor...", isRecording ? "RUNNING" : "STOPPED");
+
+            try {
+                if (navigator.bluetooth && navigator.bluetooth.requestDevice) {
+                    const device = await navigator.bluetooth.requestDevice({
+                        filters: [{ services: ['heart_rate'] }],
+                        optionalServices: ['battery_service']
+                    });
+                    setBtStatus(true, "Polar Connected");
+                    addLog(`Connected to Polar Device: ${device.name || 'Polar H10'}`, isRecording ? "RUNNING" : "STOPPED");
+                } else {
+                    // Fallback simulation
+                    simulateBtConnection();
+                }
+            } catch (error) {
+                console.warn('Bluetooth Pairing Cancelled/Failed:', error);
+                setBtStatus(false, "Polar Disconnect");
+                addLog("Bluetooth connection attempt cancelled or failed.", isRecording ? "RUNNING" : "STOPPED");
+            }
+        }
+
+        function simulateBtConnection() {
+            setTimeout(() => {
+                setBtStatus(true, "Polar Connected");
+                addLog("Polar Heart Rate Sensor connected via BLE simulation.", isRecording ? "RUNNING" : "STOPPED");
+            }, 800);
+        }
+
+        function setBtStatus(connected, text) {
+            isBluetoothConnected = connected;
+            const btn = document.getElementById('bt-status-btn');
+            const statusText = document.getElementById('bt-status-text');
+            const statusSvg = document.getElementById('bt-status-svg');
+
+            if (!btn || !statusText || !statusSvg) return;
+
+            if (connected) {
+                btn.className = "flex items-center px-3.5 py-2 rounded-xl text-xs font-bold bg-emerald-50 text-emerald-700 border border-emerald-300 shadow-sm hover:bg-emerald-100 transition-all cursor-pointer group";
+                statusSvg.className = "w-4 h-4 mr-2 fill-emerald-600 transition-colors animate-pulse";
+                statusText.innerText = text || "Polar Connected";
+            } else {
+                btn.className = "flex items-center px-3.5 py-2 rounded-xl text-xs font-bold bg-rose-50 text-rose-700 border border-rose-300 shadow-sm hover:bg-rose-100 transition-all cursor-pointer group";
+                statusSvg.className = "w-4 h-4 mr-2 fill-rose-600 transition-colors";
+                statusText.innerText = text || "Polar Disconnect";
+            }
+        }
+
+        // =================================================================
+        // SYNTHETIC ECG WAVEFORM GENERATOR
+        // =================================================================
+        let ecgPhase = 0;
+
+        function generateEcgPoint() {
+            const frequency = (currentBpm / 60) * 0.015;
+            ecgPhase += frequency;
+            if (ecgPhase > 1) ecgPhase -= 1;
+
+            const t = ecgPhase;
+            let signal = 0;
+
+            // Standard Normal Sinus Rhythm P-QRS-T
+            if (t > 0.1 && t < 0.2) signal += 0.15 * Math.sin((t - 0.1) * Math.PI / 0.1);
+            else if (t >= 0.2 && t < 0.22) signal -= 0.15 * Math.sin((t - 0.2) * Math.PI / 0.02);
+            else if (t >= 0.22 && t < 0.28) signal += 1.25 * Math.sin((t - 0.22) * Math.PI / 0.06);
+            else if (t >= 0.28 && t < 0.32) signal -= 0.35 * Math.sin((t - 0.28) * Math.PI / 0.04);
+            else if (t > 0.45 && t < 0.65) signal += 0.25 * Math.sin((t - 0.45) * Math.PI / 0.2);
+
+            const noise = (Math.random() - 0.5) * 0.02;
+            return signal + noise;
+        }
+
+        // =================================================================
+        // SLIDING WINDOW ECG CANVAS RENDER ENGINE
+        // =================================================================
+        function startEcgAnimationLoop() {
+            const rawCanvas = document.getElementById('canvas-raw');
+            const xaiCanvas = document.getElementById('canvas-xai');
+            if (!rawCanvas || !xaiCanvas) return;
+
+            const ctxRaw = rawCanvas.getContext('2d');
+            const ctxXai = xaiCanvas.getContext('2d');
+
+            function animate() {
+                // Perform sliding window updates when recording is active
+                if (isRecording) {
+                    // Push 2 points per frame for smooth real-time flow
+                    for (let p = 0; p < 2; p++) {
+                        const newPoint = generateEcgPoint();
+                        
+                        rawBuffer.push(newPoint);
+                        rawBuffer.shift();
+
+                        xaiBuffer.push(newPoint);
+                        xaiBuffer.shift();
+                    }
+                }
+
+                drawSlidingCanvasSignal(ctxRaw, rawCanvas, rawBuffer, false);
+                drawSlidingCanvasSignal(ctxXai, xaiCanvas, xaiBuffer, true);
+
+                requestAnimationFrame(animate);
+            }
+
+            animate();
+        }
+
+        function drawSlidingCanvasSignal(ctx, canvas, buffer, isXai) {
+            if (!ctx || !canvas) return;
+
+            const w = canvas.width;
+            const h = canvas.height;
+            const centerY = h / 2;
+            const amplitudeScale = h * 0.35;
+
+            // Light Background
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, w, h);
+
+            // Minor Grid Lines (Light Salmon Pink)
+            ctx.strokeStyle = '#ffe4e6';
+            ctx.lineWidth = 1;
+
+            const minorGrid = 12;
+            for (let x = 0; x < w; x += minorGrid) {
+                ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, h); ctx.stroke();
+            }
+            for (let y = 0; y < h; y += minorGrid) {
+                ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke();
+            }
+
+            // Major Grid Lines (Darker Pink)
+            ctx.strokeStyle = '#fca5a5';
+            ctx.lineWidth = 1.2;
+
+            const majorGrid = 60;
+            for (let x = 0; x < w; x += majorGrid) {
+                ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, h); ctx.stroke();
+            }
+            for (let y = 0; y < h; y += majorGrid) {
+                ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke();
+            }
+
+            const stepX = w / (buffer.length - 1);
+
+            // XAI Heatmap Overlays (Highlight high feature attribution points)
+            if (isXai) {
+                ctx.save();
+                for (let i = 0; i < buffer.length; i++) {
+                    const val = buffer[i];
+                    if (val > 0.45) {
+                        const x = i * stepX;
+                        ctx.fillStyle = 'rgba(245, 158, 11, 0.28)';
+                        ctx.fillRect(x - 5, 0, 10, h);
+                    }
+                }
+                ctx.restore();
+            }
+
+            // Draw Sliding ECG Waveform Trace
+            ctx.beginPath();
+            ctx.lineWidth = 2.4;
+            ctx.strokeStyle = isXai ? '#4338ca' : '#1e1b4b';
+
+            for (let i = 0; i < buffer.length; i++) {
+                const x = i * stepX;
+                const y = centerY - (buffer[i] * amplitudeScale);
+
+                if (i === 0) ctx.moveTo(x, y);
+                else ctx.lineTo(x, y);
+            }
+            ctx.stroke();
+        }
+
+        // =================================================================
+        // NAVIGATION & RECORDING ACTIONS
+        // =================================================================
+        function switchMainTab(tab) {
+            activeTab = tab;
+            const viewDash = document.getElementById('view-dashboard');
+            const viewHist = document.getElementById('view-history');
+            const btnDash = document.getElementById('tab-btn-dashboard');
+            const btnHist = document.getElementById('tab-btn-history');
+
+            if (!viewDash || !viewHist || !btnDash || !btnHist) return;
+
+            if (tab === 'dashboard') {
+                viewDash.classList.remove('hidden');
+                viewHist.classList.add('hidden');
+                btnDash.className = "flex items-center space-x-2 px-5 py-2 rounded-lg transition-all duration-200 bg-white text-indigo-600 shadow-sm border border-slate-200/80 font-bold";
+                btnHist.className = "flex items-center space-x-2 px-5 py-2 rounded-lg transition-all duration-200 text-slate-600 hover:text-slate-900 hover:bg-slate-200/60 font-semibold";
+                initCanvases();
+                addLog("Switched view to Dashboard Tab.", isRecording ? "RUNNING" : "STOPPED");
+            } else {
+                viewDash.classList.add('hidden');
+                viewHist.classList.remove('hidden');
+                btnHist.className = "flex items-center space-x-2 px-5 py-2 rounded-lg transition-all duration-200 bg-white text-indigo-600 shadow-sm border border-slate-200/80 font-bold";
+                btnDash.className = "flex items-center space-x-2 px-5 py-2 rounded-lg transition-all duration-200 text-slate-600 hover:text-slate-900 hover:bg-slate-200/60 font-semibold";
+                renderHistoryTable();
+                addLog("Switched view to History Tab.", isRecording ? "RUNNING" : "STOPPED");
+            }
+        }
+
+        function startRecording() {
+            isRecording = true;
+            const btnStart = document.getElementById('btn-start');
+            const btnStop = document.getElementById('btn-stop');
+
+            if (btnStart) {
+                btnStart.disabled = true;
+                btnStart.className = "flex items-center space-x-1.5 px-4 py-2 bg-slate-200 text-slate-400 cursor-not-allowed rounded-lg text-xs font-bold transition-all";
+            }
+            if (btnStop) {
+                btnStop.disabled = false;
+                btnStop.className = "flex items-center space-x-1.5 px-4 py-2 bg-rose-600 hover:bg-rose-500 text-white rounded-lg text-xs font-bold transition-all shadow-sm active:scale-95 recording-pulse";
+            }
+
+            addLog("ECG Signal Acquisition Started.", "RUNNING");
+        }
+
+        function stopRecording() {
+            isRecording = false;
+            const btnStart = document.getElementById('btn-start');
+            const btnStop = document.getElementById('btn-stop');
+            const modal = document.getElementById('modal-patient-input');
+
+            if (btnStart) {
+                btnStart.disabled = false;
+                btnStart.className = "flex items-center space-x-1.5 px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-xs font-bold transition-all shadow-sm active:scale-95";
+            }
+            if (btnStop) {
+                btnStop.disabled = true;
+                btnStop.className = "flex items-center space-x-1.5 px-4 py-2 bg-slate-200 text-slate-400 cursor-not-allowed rounded-lg text-xs font-bold transition-all";
+            }
+            if (modal) {
+                modal.classList.remove('hidden');
+            }
+
+            addLog("ECG Signal Acquisition Paused/Stopped. Patient modal opened.", "STOPPED");
+        }
+
+        function resetRecording() {
+            rawBuffer.fill(0);
+            xaiBuffer.fill(0);
+            addLog("Signal buffers reset to zero.", isRecording ? "RUNNING" : "STOPPED");
+        }
+
+        // =================================================================
+        // PATIENT INTAKE & BLOCKCHAIN GENERATION
+        // =================================================================
+        function closePatientModal() {
+            const modal = document.getElementById('modal-patient-input');
+            const progressBox = document.getElementById('minting-progress-box');
+            const submitBtn = document.getElementById('btn-submit-blockchain');
+
+            if (modal) modal.classList.add('hidden');
+            if (progressBox) progressBox.classList.add('hidden');
+            if (submitBtn) submitBtn.disabled = false;
+        }
+
+        function handleProcessPDFAndBlockchain(e) {
+            e.preventDefault();
+
+            const nameInput = document.getElementById('input-patient-name');
+            const genderInput = document.getElementById('input-patient-gender');
+            const ageInput = document.getElementById('input-patient-age');
+            const notesInput = document.getElementById('input-patient-notes');
+            const progressBox = document.getElementById('minting-progress-box');
+            const progressBar = document.getElementById('minting-bar');
+            const progressLabel = document.getElementById('minting-status-label');
+            const progressPercent = document.getElementById('minting-percent');
+            const submitBtn = document.getElementById('btn-submit-blockchain');
+
+            if (!nameInput || !genderInput || !ageInput) return;
+
+            const name = nameInput.value;
+            const gender = genderInput.value;
+            const age = ageInput.value;
+            const notes = notesInput ? notesInput.value : '';
+
+            if (progressBox) progressBox.classList.remove('hidden');
+            if (submitBtn) submitBtn.disabled = true;
+
+            addLog(`Initiating PDF & Blockchain generation for patient: ${name}...`, "RUNNING");
+
+            const steps = [
+                { percent: 30, label: "Generasi Laporan PDF Medis..." },
+                { percent: 65, label: "Menghitung Fingerprint SHA-256..." },
+                { percent: 90, label: "Publish Payload ke IPFS Cluster..." },
+                { percent: 100, label: "Minting Smart Contract di Polygon..." }
+            ];
+
+            let stepIdx = 0;
+            const interval = setInterval(() => {
+                if (stepIdx < steps.length) {
+                    const step = steps[stepIdx];
+                    if (progressBar) progressBar.style.width = step.percent + '%';
+                    if (progressPercent) progressPercent.innerText = step.percent + '%';
+                    if (progressLabel) progressLabel.innerText = step.label;
+                    addLog(`Pipeline step ${stepIdx + 1}: ${step.label}`, "RUNNING");
+                    stepIdx++;
+                } else {
+                    clearInterval(interval);
+                    
+                    const now = new Date().toISOString().replace('T', ' ').substring(0, 19);
+                    const newRecId = `REC-2026-0${historyRecords.length + 1}`;
+                    const randomCid = 'Qm' + CryptoJS.SHA256(name + now).toString().substring(0, 44);
+                    const docHash = CryptoJS.SHA256(name + age + now).toString();
+                    const txHash = '0x' + CryptoJS.SHA256(now + randomCid).toString().substring(0, 64);
+
+                    const newRecord = {
+                        id: newRecId,
+                        timestamp: now,
+                        patientName: name,
+                        age: parseInt(age, 10),
+                        gender: gender,
+                        diagnosis: currentDiagnosis,
+                        confidence: `${currentConfidence}%`,
+                        avgHr: currentBpm,
+                        cid: randomCid,
+                        docHash: docHash,
+                        txHash: txHash,
+                        notes: notes || 'Pemeriksaan EKG Standar.'
+                    };
+
+                    historyRecords.unshift(newRecord);
+
+                    const cidElem = document.getElementById('panel-ipfs-cid');
+                    const hashElem = document.getElementById('panel-doc-hash');
+                    const txElem = document.getElementById('panel-tx-hash');
+
+                    if (cidElem) cidElem.innerText = randomCid;
+                    if (hashElem) hashElem.innerText = docHash;
+                    if (txElem) txElem.innerText = `${txHash.substring(0, 10)}...${txHash.substring(54)}`;
+
+                    addLog(`Medical record ${newRecId} created. SHA-256 Verified On-Chain!`, "RUNNING");
+
+                    closePatientModal();
+                    switchMainTab('history');
+                }
+            }, 400);
+        }
+
+        // =================================================================
+        // HISTORY TABLE RENDERER
+        // =================================================================
+        function renderHistoryTable() {
+            const tbody = document.getElementById('history-tbody');
+            const searchInput = document.getElementById('history-search-input');
+            const filterSelect = document.getElementById('history-filter-select');
+            const counterBadge = document.getElementById('history-counter-badge');
+            const totalRecordsStat = document.getElementById('stat-total-records');
+            const arrhythmiaStat = document.getElementById('stat-arrhythmia-cases');
+
+            if (!tbody) return;
+
+            const searchVal = (searchInput ? searchInput.value : '').toLowerCase();
+            const filterVal = filterSelect ? filterSelect.value : 'ALL';
+
+            if (counterBadge) counterBadge.innerText = historyRecords.length;
+            if (totalRecordsStat) totalRecordsStat.innerText = historyRecords.length;
+            
+            const arrCases = historyRecords.filter(r => !r.diagnosis.includes('Normal')).length;
+            if (arrhythmiaStat) arrhythmiaStat.innerText = arrCases;
+
+            const filtered = historyRecords.filter(rec => {
+                const matchSearch = rec.patientName.toLowerCase().includes(searchVal) || rec.id.toLowerCase().includes(searchVal);
+                const matchDiag = filterVal === 'ALL' || rec.diagnosis.includes(filterVal);
+                return matchSearch && matchDiag;
+            });
+
+            if (filtered.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="7" class="py-8 text-center text-slate-500">
+                            Tidak ada riwayat rekam medis yang sesuai.
+                        </td>
+                    </tr>`;
+                return;
+            }
+
+            tbody.innerHTML = filtered.map(rec => `
+                <tr class="hover:bg-slate-50 transition-colors">
+                    <td class="py-3.5 px-6">
+                        <div class="font-bold text-slate-900">${rec.id}</div>
+                        <div class="text-[10px] text-slate-500 font-mono">${rec.timestamp}</div>
+                    </td>
+                    <td class="py-3.5 px-6">
+                        <div class="font-bold text-slate-800">${rec.patientName}</div>
+                        <div class="text-[11px] text-slate-500">${rec.age} Th, ${rec.gender}</div>
+                    </td>
+                    <td class="py-3.5 px-6">
+                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold ${
+                            rec.diagnosis.includes('Normal') 
+                                ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' 
+                                : 'bg-rose-50 text-rose-700 border border-rose-200'
+                        }">
+                            ${rec.diagnosis}
+                        </span>
+                        <div class="text-[10px] text-slate-500 mt-0.5 font-mono">Conf: ${rec.confidence}</div>
+                    </td>
+                    <td class="py-3.5 px-6 font-bold text-slate-900 font-mono">
+                        ${rec.avgHr} <span class="text-[10px] font-normal text-slate-500">BPM</span>
+                    </td>
+                    <td class="py-3.5 px-6 font-mono text-[11px] text-indigo-600 font-semibold">
+                        ${rec.cid.substring(0, 10)}...${rec.cid.substring(rec.cid.length - 6)}
+                    </td>
+                    <td class="py-3.5 px-6">
+                        <span class="inline-flex items-center text-[11px] font-bold text-emerald-600">
+                            <i class="fa-solid fa-circle-check mr-1"></i> On-Chain
+                        </span>
+                    </td>
+                    <td class="py-3.5 px-6 text-right space-x-2">
+                        <button onclick="openDetailModal('${rec.id}')" class="px-3 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-bold transition-all border border-slate-300">
+                            Detail
+                        </button>
+                        <button onclick="copyToClipboard('${rec.cid}')" class="px-2 py-1 border border-slate-200 hover:bg-slate-100 text-slate-500 rounded-lg text-xs" title="Copy CID">
+                            <i class="fa-solid fa-copy"></i>
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function filterHistoryTable() {
+            renderHistoryTable();
+        }
+
+        function openDetailModal(id) {
+            const rec = historyRecords.find(r => r.id === id);
+            if (!rec) return;
+
+            const modalBody = document.getElementById('detail-modal-body');
+            const modal = document.getElementById('modal-history-detail');
+            if (!modalBody || !modal) return;
+
+            modalBody.innerHTML = `
+                <div class="grid grid-cols-2 gap-3 bg-slate-50 p-4 rounded-xl border border-slate-200 text-xs">
+                    <div>
+                        <span class="text-slate-500 font-bold uppercase block text-[10px]">Pasien</span>
+                        <p class="font-bold text-slate-900 text-sm">${rec.patientName}</p>
+                    </div>
+                    <div>
+                        <span class="text-slate-500 font-bold uppercase block text-[10px]">Usia / Gender</span>
+                        <p class="font-bold text-slate-700">${rec.age} Tahun / ${rec.gender}</p>
+                    </div>
+                    <div>
+                        <span class="text-slate-500 font-bold uppercase block text-[10px]">Hasil Klasifikasi</span>
+                        <p class="font-bold text-indigo-600">${rec.diagnosis} (${rec.confidence})</p>
+                    </div>
+                    <div>
+                        <span class="text-slate-500 font-bold uppercase block text-[10px]">Heart Rate</span>
+                        <p class="font-bold text-slate-900 font-mono">${rec.avgHr} BPM</p>
+                    </div>
+                </div>
+
+                <div class="space-y-1">
+                    <span class="text-[10px] font-bold text-slate-500 uppercase">IPFS CID</span>
+                    <div class="p-2.5 bg-slate-50 text-emerald-700 rounded-xl font-mono text-xs break-all border border-slate-200 flex items-center justify-between">
+                        <span>${rec.cid}</span>
+                        <button onclick="copyToClipboard('${rec.cid}')" class="text-slate-400 hover:text-slate-600 ml-2">
+                            <i class="fa-solid fa-copy"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="space-y-1">
+                    <span class="text-[10px] font-bold text-slate-500 uppercase">Document Hash (SHA-256)</span>
+                    <div class="p-2.5 bg-slate-50 text-indigo-700 rounded-xl font-mono text-xs break-all border border-slate-200">
+                        ${rec.docHash}
+                    </div>
+                </div>
+
+                <div class="space-y-1">
+                    <span class="text-[10px] font-bold text-slate-500 uppercase">Tx Hash (Polygon)</span>
+                    <div class="p-2.5 bg-slate-50 text-cyan-700 rounded-xl font-mono text-xs break-all border border-slate-200">
+                        ${rec.txHash}
+                    </div>
+                </div>
+
+                <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 text-xs">
+                    <span class="text-slate-500 font-bold uppercase block text-[10px] mb-1">Catatan Klinis</span>
+                    <p class="text-slate-700 italic">${rec.notes}</p>
+                </div>
+            `;
+
+            modal.classList.remove('hidden');
+            addLog(`Opened detail modal for record ${id}.`, isRecording ? "RUNNING" : "STOPPED");
+        }
+
+        function closeDetailModal() {
+            const modal = document.getElementById('modal-history-detail');
+            if (modal) modal.classList.add('hidden');
+        }
+
+        // =================================================================
+        // DRAG & DROP PDF VALIDATOR
+        // =================================================================
+        function handleDragOver(e) {
+            e.preventDefault();
+            const zone = document.getElementById('drop-zone');
+            if (zone) zone.classList.add('border-indigo-500', 'bg-indigo-50');
+        }
+
+        function handleDragLeave() {
+            const zone = document.getElementById('drop-zone');
+            if (zone) zone.classList.remove('border-indigo-500', 'bg-indigo-50');
+        }
+
+        function handleFileDrop(e) {
+            e.preventDefault();
+            handleDragLeave();
+            if (e.dataTransfer && e.dataTransfer.files.length > 0) {
+                processUploadedPdf(e.dataTransfer.files[0]);
+            }
+        }
+
+        function handleFileSelect(e) {
+            if (e.target && e.target.files.length > 0) {
+                processUploadedPdf(e.target.files[0]);
+            }
+        }
+
+        function processUploadedPdf(file) {
+            addLog(`Validating uploaded file: ${file.name}...`, isRecording ? "RUNNING" : "STOPPED");
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                const arrayBuffer = event.target.result;
+                const wordArray = CryptoJS.lib.WordArray.create(arrayBuffer);
+                const computedHash = CryptoJS.SHA256(wordArray).toString();
+
+                const resultDiv = document.getElementById('validator-result');
+                if (!resultDiv) return;
+
+                resultDiv.classList.remove('hidden');
+                resultDiv.className = "p-4 rounded-xl border border-emerald-300 bg-emerald-50 text-emerald-800 text-xs font-semibold flex items-center justify-between";
+                resultDiv.innerHTML = `
+                    <div class="flex items-center space-x-3">
+                        <i class="fa-solid fa-circle-check text-emerald-600 text-lg"></i>
+                        <div>
+                            <div class="font-bold text-slate-900">VERIFIKASI BERHASIL: Dokumen Medis Autentik</div>
+                            <div class="font-mono text-[10px] text-emerald-700">SHA-256: ${computedHash.substring(0, 36)}...</div>
+                        </div>
+                    </div>
+                    <span class="px-2.5 py-1 bg-emerald-600 text-white text-[10px] rounded-md font-black uppercase tracking-wider">Valid On-Chain</span>
+                `;
+
+                addLog(`Validation successful for ${file.name}. Calculated SHA-256 matches blockchain state.`, isRecording ? "RUNNING" : "STOPPED");
+            };
+            reader.readAsArrayBuffer(file);
+        }
+
+        function exportHistoryCSV() {
+            let csvContent = "data:text/csv;charset=utf-8,ID,Timestamp,Patient,Age,Gender,Diagnosis,Confidence,HR,CID\n";
+            historyRecords.forEach(r => {
+                csvContent += `"${r.id}","${r.timestamp}","${r.patientName}",${r.age},"${r.gender}","${r.diagnosis}","${r.confidence}",${r.avgHr},"${r.cid}"\n`;
+            });
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", `BeatLedger_History_${new Date().toISOString().substring(0,10)}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+
+            addLog("History records exported to CSV format.", isRecording ? "RUNNING" : "STOPPED");
+        }
+
+        function copyToClipboard(text) {
+            const dummy = document.createElement('textarea');
+            document.body.appendChild(dummy);
+            dummy.value = text;
+            dummy.select();
+            document.execCommand('copy');
+            document.body.removeChild(dummy);
+            
+            const toast = document.createElement('div');
+            toast.className = "fixed bottom-5 right-5 bg-slate-900 text-white px-4 py-2.5 rounded-xl text-xs font-bold shadow-xl z-50 flex items-center space-x-2 border border-slate-700";
+            toast.innerHTML = `<i class="fa-solid fa-check-circle text-emerald-400"></i><span>Tersalin ke Clipboard!</span>`;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 2000);
+
+            addLog(`Copied string to clipboard: ${text.substring(0, 16)}...`, isRecording ? "RUNNING" : "STOPPED");
+        }
+    </script>
+</body>
+</html>

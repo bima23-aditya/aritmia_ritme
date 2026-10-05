@@ -1,0 +1,894 @@
+{
+ "session": {
+  "id": "S-20260924-004431",
+  "started_at": "2026-09-24T00:44:31",
+  "source": "replay",
+  "file": "/home/bima/Documents/capstone/aritmia_ritme/demo/mitdb_232_sb.txt",
+  "speed": 1.0,
+  "ended_at": "2026-09-24T00:46:12",
+  "error": null
+ },
+ "summary": {
+  "n_windows": 41,
+  "n_bad_signal": 38,
+  "counts": {
+   "AFib": 3
+  },
+  "hr_min": 90.2,
+  "hr_max": 119.0,
+  "hr_median": 112.6,
+  "events": []
+ },
+ "windows": [
+  {
+   "t_start": 0.108,
+   "t_end": 10.108,
+   "label": null,
+   "label_name": "Sinyal buruk",
+   "label_stable": null,
+   "label_stable_name": null,
+   "conf": null,
+   "uncertain": true,
+   "hr": 95.2,
+   "rr_cv": 0.745,
+   "sqi": "buruk",
+   "sqi_reasons": [
+    "bentuk denyut tidak konsisten, kemungkinan artefak gerak (korelasi 0.74)"
+   ],
+   "sqi_metrics": {
+    "kurtosis": 9.44,
+    "template_corr": 0.736
+   },
+   "probs": null
+  },
+  {
+   "t_start": 2.354,
+   "t_end": 12.354,
+   "label": null,
+   "label_name": "Sinyal buruk",
+   "label_stable": null,
+   "label_stable_name": null,
+   "conf": null,
+   "uncertain": true,
+   "hr": 92.3,
+   "rr_cv": 0.776,
+   "sqi": "buruk",
+   "sqi_reasons": [
+    "bentuk denyut tidak konsisten, kemungkinan artefak gerak (korelasi 0.70)"
+   ],
+   "sqi_metrics": {
+    "kurtosis": 10.06,
+    "template_corr": 0.704
+   },
+   "probs": null
+  },
+  {
+   "t_start": 4.6,
+   "t_end": 14.6,
+   "label": null,
+   "label_name": "Sinyal buruk",
+   "label_stable": null,
+   "label_stable_name": null,
+   "conf": null,
+   "uncertain": true,
+   "hr": 109.8,
+   "rr_cv": 0.833,
+   "sqi": "buruk",
+   "sqi_reasons": [
+    "bentuk denyut tidak konsisten, kemungkinan artefak gerak (korelasi 0.69)"
+   ],
+   "sqi_metrics": {
+    "kurtosis": 8.85,
+    "template_corr": 0.695
+   },
+   "probs": null
+  },
+  {
+   "t_start": 6.846,
+   "t_end": 16.846,
+   "label": null,
+   "label_name": "Sinyal buruk",
+   "label_stable": null,
+   "label_stable_name": null,
+   "conf": null,
+   "uncertain": true,
+   "hr": 110.3,
+   "rr_cv": 0.758,
+   "sqi": "buruk",
+   "sqi_reasons": [
+    "bentuk denyut tidak konsisten, kemungkinan artefak gerak (korelasi 0.70)"
+   ],
+   "sqi_metrics": {
+    "kurtosis": 7.09,
+    "template_corr": 0.696
+   },
+   "probs": null
+  },
+  {
+   "t_start": 9.092,
+   "t_end": 19.092,
+   "label": null,
+   "label_name": "Sinyal buruk",
+   "label_stable": null,
+   "label_stable_name": null,
+   "conf": null,
+   "uncertain": true,
+   "hr": 109.6,
+   "rr_cv": 0.765,
+   "sqi": "buruk",
+   "sqi_reasons": [
+    "bentuk denyut tidak konsisten, kemungkinan artefak gerak (korelasi 0.70)"
+   ],
+   "sqi_metrics": {
+    "kurtosis": 6.88,
+    "template_corr": 0.703
+   },
+   "probs": null
+  },
+  {
+   "t_start": 11.338,
+   "t_end": 21.338,
+   "label": null,
+   "label_name": "Sinyal buruk",
+   "label_stable": null,
+   "label_stable_name": null,
+   "conf": null,
+   "uncertain": true,
+   "hr": 118.9,
+   "rr_cv": 0.688,
+   "sqi": "buruk",
+   "sqi_reasons": [
+    "bentuk denyut tidak konsisten, kemungkinan artefak gerak (korelasi 0.73)"
+   ],
+   "sqi_metrics": {
+    "kurtosis": 7.71,
+    "template_corr": 0.726
+   },
+   "probs": null
+  },
+  {
+   "t_start": 13.585,
+   "t_end": 23.585,
+   "label": null,
+   "label_name": "Sinyal buruk",
+   "label_stable": null,
+   "label_stable_name": null,
+   "conf": null,
+   "uncertain": true,
+   "hr": 128.9,
+   "rr_cv": 0.711,
+   "sqi": "buruk",
+   "sqi_reasons": [
+    "bentuk denyut tidak konsisten, kemungkinan artefak gerak (korelasi 0.74)"
+   ],
+   "sqi_metrics": {
+    "kurtosis": 7.67,
+    "template_corr": 0.744
+   },
+   "probs": null
+  },
+  {
+   "t_start": 15.831,
+   "t_end": 25.831,
+   "label": null,
+   "label_name": "Sinyal buruk",
+   "label_stable": null,
+   "label_stable_name": null,
+   "conf": null,
+   "uncertain": true,
+   "hr": 112.0,
+   "rr_cv": 0.828,
+   "sqi": "buruk",
+   "sqi_reasons": [
+    "bentuk denyut tidak konsisten, kemungkinan artefak gerak (korelasi 0.75)"
+   ],
+   "sqi_metrics": {
+    "kurtosis": 8.51,
+    "template_corr": 0.748
+   },
+   "probs": null
+  },
+  {
+   "t_start": 18.077,
+   "t_end": 28.077,
+   "label": null,
+   "label_name": "Sinyal buruk",
+   "label_stable": null,
+   "label_stable_name": null,
+   "conf": null,
+   "uncertain": true,
+   "hr": 102.3,
+   "rr_cv": 1.084,
+   "sqi": "buruk",
+   "sqi_reasons": [
+    "bentuk denyut tidak konsisten, kemungkinan artefak gerak (korelasi 0.75)"
+   ],
+   "sqi_metrics": {
+    "kurtosis": 9.64,
+    "template_corr": 0.745
+   },
+   "probs": null
+  },
+  {
+   "t_start": 20.323,
+   "t_end": 30.323,
+   "label": null,
+   "label_name": "Sinyal buruk",
+   "label_stable": null,
+   "label_stable_name": null,
+   "conf": null,
+   "uncertain": true,
+   "hr": 91.6,
+   "rr_cv": 1.015,
+   "sqi": "buruk",
+   "sqi_reasons": [
+    "bentuk denyut tidak konsisten, kemungkinan artefak gerak (korelasi 0.76)"
+   ],
+   "sqi_metrics": {
+    "kurtosis": 9.35,
+    "template_corr": 0.764
+   },
+   "probs": null
+  },
+  {
+   "t_start": 22.569,
+   "t_end": 32.569,
+   "label": null,
+   "label_name": "Sinyal buruk",
+   "label_stable": null,
+   "label_stable_name": null,
+   "conf": null,
+   "uncertain": true,
+   "hr": 75.2,
+   "rr_cv": 0.827,
+   "sqi": "buruk",
+   "sqi_reasons": [
+    "bentuk denyut tidak konsisten, kemungkinan artefak gerak (korelasi 0.76)"
+   ],
+   "sqi_metrics": {
+    "kurtosis": 11.19,
+    "template_corr": 0.764
+   },
+   "probs": null
+  },
+  {
+   "t_start": 24.815,
+   "t_end": 34.815,
+   "label": null,
+   "label_name": "Sinyal buruk",
+   "label_stable": null,
+   "label_stable_name": null,
+   "conf": null,
+   "uncertain": true,
+   "hr": 107.9,
+   "rr_cv": 0.782,
+   "sqi": "buruk",
+   "sqi_reasons": [
+    "bentuk denyut tidak konsisten, kemungkinan artefak gerak (korelasi 0.77)"
+   ],
+   "sqi_metrics": {
+    "kurtosis": 10.43,
+    "template_corr": 0.773
+   },
+   "probs": null
+  },
+  {
+   "t_start": 27.062,
+   "t_end": 37.062,
+   "label": null,
+   "label_name": "Sinyal buruk",
+   "label_stable": null,
+   "label_stable_name": null,
+   "conf": null,
+   "uncertain": true,
+   "hr": 121.6,
+   "rr_cv": 0.757,
+   "sqi": "buruk",
+   "sqi_reasons": [
+    "bentuk denyut tidak konsisten, kemungkinan artefak gerak (korelasi 0.77)"
+   ],
+   "sqi_metrics": {
+    "kurtosis": 7.17,
+    "template_corr": 0.769
+   },
+   "probs": null
+  },
+  {
+   "t_start": 29.308,
+   "t_end": 39.308,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": null,
+   "label_stable_name": null,
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 112.6,
+   "rr_cv": 0.683,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 7.81,
+    "template_corr": 0.803
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 31.554,
+   "t_end": 41.554,
+   "label": null,
+   "label_name": "Sinyal buruk",
+   "label_stable": null,
+   "label_stable_name": null,
+   "conf": null,
+   "uncertain": true,
+   "hr": 153.1,
+   "rr_cv": 0.305,
+   "sqi": "buruk",
+   "sqi_reasons": [
+    "bentuk denyut tidak konsisten, kemungkinan artefak gerak (korelasi 0.78)"
+   ],
+   "sqi_metrics": {
+    "kurtosis": 7.48,
+    "template_corr": 0.779
+   },
+   "probs": null
+  },
+  {
+   "t_start": 33.8,
+   "t_end": 43.8,
+   "label": null,
+   "label_name": "Sinyal buruk",
+   "label_stable": null,
+   "label_stable_name": null,
+   "conf": null,
+   "uncertain": true,
+   "hr": 115.0,
+   "rr_cv": 0.979,
+   "sqi": "buruk",
+   "sqi_reasons": [
+    "bentuk denyut tidak konsisten, kemungkinan artefak gerak (korelasi 0.77)"
+   ],
+   "sqi_metrics": {
+    "kurtosis": 8.54,
+    "template_corr": 0.774
+   },
+   "probs": null
+  },
+  {
+   "t_start": 36.046,
+   "t_end": 46.046,
+   "label": null,
+   "label_name": "Sinyal buruk",
+   "label_stable": null,
+   "label_stable_name": null,
+   "conf": null,
+   "uncertain": true,
+   "hr": 105.7,
+   "rr_cv": 0.975,
+   "sqi": "buruk",
+   "sqi_reasons": [
+    "bentuk denyut tidak konsisten, kemungkinan artefak gerak (korelasi 0.79)"
+   ],
+   "sqi_metrics": {
+    "kurtosis": 9.87,
+    "template_corr": 0.785
+   },
+   "probs": null
+  },
+  {
+   "t_start": 38.292,
+   "t_end": 48.292,
+   "label": null,
+   "label_name": "Sinyal buruk",
+   "label_stable": null,
+   "label_stable_name": null,
+   "conf": null,
+   "uncertain": true,
+   "hr": 89.9,
+   "rr_cv": 0.94,
+   "sqi": "buruk",
+   "sqi_reasons": [
+    "bentuk denyut tidak konsisten, kemungkinan artefak gerak (korelasi 0.79)"
+   ],
+   "sqi_metrics": {
+    "kurtosis": 9.72,
+    "template_corr": 0.787
+   },
+   "probs": null
+  },
+  {
+   "t_start": 40.538,
+   "t_end": 50.538,
+   "label": null,
+   "label_name": "Sinyal buruk",
+   "label_stable": null,
+   "label_stable_name": null,
+   "conf": null,
+   "uncertain": true,
+   "hr": 113.5,
+   "rr_cv": 0.74,
+   "sqi": "buruk",
+   "sqi_reasons": [
+    "bentuk denyut tidak konsisten, kemungkinan artefak gerak (korelasi 0.78)"
+   ],
+   "sqi_metrics": {
+    "kurtosis": 9.23,
+    "template_corr": 0.783
+   },
+   "probs": null
+  },
+  {
+   "t_start": 42.785,
+   "t_end": 52.785,
+   "label": null,
+   "label_name": "Sinyal buruk",
+   "label_stable": null,
+   "label_stable_name": null,
+   "conf": null,
+   "uncertain": true,
+   "hr": 109.2,
+   "rr_cv": 0.831,
+   "sqi": "buruk",
+   "sqi_reasons": [
+    "bentuk denyut tidak konsisten, kemungkinan artefak gerak (korelasi 0.77)"
+   ],
+   "sqi_metrics": {
+    "kurtosis": 7.98,
+    "template_corr": 0.767
+   },
+   "probs": null
+  },
+  {
+   "t_start": 45.031,
+   "t_end": 55.031,
+   "label": null,
+   "label_name": "Sinyal buruk",
+   "label_stable": null,
+   "label_stable_name": null,
+   "conf": null,
+   "uncertain": true,
+   "hr": 129.6,
+   "rr_cv": 0.764,
+   "sqi": "buruk",
+   "sqi_reasons": [
+    "bentuk denyut tidak konsisten, kemungkinan artefak gerak (korelasi 0.76)"
+   ],
+   "sqi_metrics": {
+    "kurtosis": 7.09,
+    "template_corr": 0.757
+   },
+   "probs": null
+  },
+  {
+   "t_start": 47.277,
+   "t_end": 57.277,
+   "label": null,
+   "label_name": "Sinyal buruk",
+   "label_stable": null,
+   "label_stable_name": null,
+   "conf": null,
+   "uncertain": true,
+   "hr": 117.9,
+   "rr_cv": 0.764,
+   "sqi": "buruk",
+   "sqi_reasons": [
+    "bentuk denyut tidak konsisten, kemungkinan artefak gerak (korelasi 0.77)"
+   ],
+   "sqi_metrics": {
+    "kurtosis": 9.03,
+    "template_corr": 0.772
+   },
+   "probs": null
+  },
+  {
+   "t_start": 49.523,
+   "t_end": 59.523,
+   "label": null,
+   "label_name": "Sinyal buruk",
+   "label_stable": null,
+   "label_stable_name": null,
+   "conf": null,
+   "uncertain": true,
+   "hr": 98.9,
+   "rr_cv": 0.957,
+   "sqi": "buruk",
+   "sqi_reasons": [
+    "bentuk denyut tidak konsisten, kemungkinan artefak gerak (korelasi 0.76)"
+   ],
+   "sqi_metrics": {
+    "kurtosis": 11.31,
+    "template_corr": 0.763
+   },
+   "probs": null
+  },
+  {
+   "t_start": 51.769,
+   "t_end": 61.769,
+   "label": null,
+   "label_name": "Sinyal buruk",
+   "label_stable": null,
+   "label_stable_name": null,
+   "conf": null,
+   "uncertain": true,
+   "hr": 118.6,
+   "rr_cv": 0.942,
+   "sqi": "buruk",
+   "sqi_reasons": [
+    "bentuk denyut tidak konsisten, kemungkinan artefak gerak (korelasi 0.75)"
+   ],
+   "sqi_metrics": {
+    "kurtosis": 8.1,
+    "template_corr": 0.751
+   },
+   "probs": null
+  },
+  {
+   "t_start": 54.015,
+   "t_end": 64.015,
+   "label": null,
+   "label_name": "Sinyal buruk",
+   "label_stable": null,
+   "label_stable_name": null,
+   "conf": null,
+   "uncertain": true,
+   "hr": 104.3,
+   "rr_cv": 0.972,
+   "sqi": "buruk",
+   "sqi_reasons": [
+    "bentuk denyut tidak konsisten, kemungkinan artefak gerak (korelasi 0.76)"
+   ],
+   "sqi_metrics": {
+    "kurtosis": 9.15,
+    "template_corr": 0.755
+   },
+   "probs": null
+  },
+  {
+   "t_start": 56.262,
+   "t_end": 66.262,
+   "label": null,
+   "label_name": "Sinyal buruk",
+   "label_stable": null,
+   "label_stable_name": null,
+   "conf": null,
+   "uncertain": true,
+   "hr": 101.8,
+   "rr_cv": 0.84,
+   "sqi": "buruk",
+   "sqi_reasons": [
+    "bentuk denyut tidak konsisten, kemungkinan artefak gerak (korelasi 0.75)"
+   ],
+   "sqi_metrics": {
+    "kurtosis": 10.13,
+    "template_corr": 0.751
+   },
+   "probs": null
+  },
+  {
+   "t_start": 58.508,
+   "t_end": 68.508,
+   "label": null,
+   "label_name": "Sinyal buruk",
+   "label_stable": null,
+   "label_stable_name": null,
+   "conf": null,
+   "uncertain": true,
+   "hr": 101.6,
+   "rr_cv": 0.76,
+   "sqi": "buruk",
+   "sqi_reasons": [
+    "bentuk denyut tidak konsisten, kemungkinan artefak gerak (korelasi 0.76)"
+   ],
+   "sqi_metrics": {
+    "kurtosis": 7.77,
+    "template_corr": 0.762
+   },
+   "probs": null
+  },
+  {
+   "t_start": 60.754,
+   "t_end": 70.754,
+   "label": null,
+   "label_name": "Sinyal buruk",
+   "label_stable": null,
+   "label_stable_name": null,
+   "conf": null,
+   "uncertain": true,
+   "hr": 85.4,
+   "rr_cv": 0.789,
+   "sqi": "buruk",
+   "sqi_reasons": [
+    "bentuk denyut tidak konsisten, kemungkinan artefak gerak (korelasi 0.78)"
+   ],
+   "sqi_metrics": {
+    "kurtosis": 9.76,
+    "template_corr": 0.784
+   },
+   "probs": null
+  },
+  {
+   "t_start": 63.0,
+   "t_end": 73.0,
+   "label": null,
+   "label_name": "Sinyal buruk",
+   "label_stable": null,
+   "label_stable_name": null,
+   "conf": null,
+   "uncertain": true,
+   "hr": 79.9,
+   "rr_cv": 0.871,
+   "sqi": "buruk",
+   "sqi_reasons": [
+    "bentuk denyut tidak konsisten, kemungkinan artefak gerak (korelasi 0.78)"
+   ],
+   "sqi_metrics": {
+    "kurtosis": 10.95,
+    "template_corr": 0.776
+   },
+   "probs": null
+  },
+  {
+   "t_start": 65.246,
+   "t_end": 75.246,
+   "label": null,
+   "label_name": "Sinyal buruk",
+   "label_stable": null,
+   "label_stable_name": null,
+   "conf": null,
+   "uncertain": true,
+   "hr": 82.0,
+   "rr_cv": 0.867,
+   "sqi": "buruk",
+   "sqi_reasons": [
+    "bentuk denyut tidak konsisten, kemungkinan artefak gerak (korelasi 0.77)"
+   ],
+   "sqi_metrics": {
+    "kurtosis": 12.53,
+    "template_corr": 0.77
+   },
+   "probs": null
+  },
+  {
+   "t_start": 67.492,
+   "t_end": 77.492,
+   "label": null,
+   "label_name": "Sinyal buruk",
+   "label_stable": null,
+   "label_stable_name": null,
+   "conf": null,
+   "uncertain": true,
+   "hr": 94.4,
+   "rr_cv": 0.932,
+   "sqi": "buruk",
+   "sqi_reasons": [
+    "bentuk denyut tidak konsisten, kemungkinan artefak gerak (korelasi 0.77)"
+   ],
+   "sqi_metrics": {
+    "kurtosis": 9.37,
+    "template_corr": 0.766
+   },
+   "probs": null
+  },
+  {
+   "t_start": 69.738,
+   "t_end": 79.738,
+   "label": null,
+   "label_name": "Sinyal buruk",
+   "label_stable": null,
+   "label_stable_name": null,
+   "conf": null,
+   "uncertain": true,
+   "hr": 109.9,
+   "rr_cv": 0.91,
+   "sqi": "buruk",
+   "sqi_reasons": [
+    "bentuk denyut tidak konsisten, kemungkinan artefak gerak (korelasi 0.78)"
+   ],
+   "sqi_metrics": {
+    "kurtosis": 8.37,
+    "template_corr": 0.778
+   },
+   "probs": null
+  },
+  {
+   "t_start": 71.985,
+   "t_end": 81.985,
+   "label": null,
+   "label_name": "Sinyal buruk",
+   "label_stable": null,
+   "label_stable_name": null,
+   "conf": null,
+   "uncertain": true,
+   "hr": 134.3,
+   "rr_cv": 0.788,
+   "sqi": "buruk",
+   "sqi_reasons": [
+    "bentuk denyut tidak konsisten, kemungkinan artefak gerak (korelasi 0.78)"
+   ],
+   "sqi_metrics": {
+    "kurtosis": 7.15,
+    "template_corr": 0.785
+   },
+   "probs": null
+  },
+  {
+   "t_start": 74.231,
+   "t_end": 84.231,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": null,
+   "label_stable_name": null,
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 119.0,
+   "rr_cv": 0.552,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 7.2,
+    "template_corr": 0.803
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 1.0
+   }
+  },
+  {
+   "t_start": 76.477,
+   "t_end": 86.477,
+   "label": null,
+   "label_name": "Sinyal buruk",
+   "label_stable": null,
+   "label_stable_name": null,
+   "conf": null,
+   "uncertain": true,
+   "hr": 126.7,
+   "rr_cv": 0.595,
+   "sqi": "buruk",
+   "sqi_reasons": [
+    "bentuk denyut tidak konsisten, kemungkinan artefak gerak (korelasi 0.80)"
+   ],
+   "sqi_metrics": {
+    "kurtosis": 8.14,
+    "template_corr": 0.797
+   },
+   "probs": null
+  },
+  {
+   "t_start": 78.723,
+   "t_end": 88.723,
+   "label": null,
+   "label_name": "Sinyal buruk",
+   "label_stable": null,
+   "label_stable_name": null,
+   "conf": null,
+   "uncertain": true,
+   "hr": 128.0,
+   "rr_cv": 0.649,
+   "sqi": "buruk",
+   "sqi_reasons": [
+    "bentuk denyut tidak konsisten, kemungkinan artefak gerak (korelasi 0.78)"
+   ],
+   "sqi_metrics": {
+    "kurtosis": 7.82,
+    "template_corr": 0.778
+   },
+   "probs": null
+  },
+  {
+   "t_start": 80.969,
+   "t_end": 90.969,
+   "label": "AFIB",
+   "label_name": "AFib",
+   "label_stable": null,
+   "label_stable_name": null,
+   "conf": 0.765,
+   "uncertain": true,
+   "hr": 90.2,
+   "rr_cv": 0.72,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 9.82,
+    "template_corr": 0.8
+   },
+   "probs": {
+    "SR": 0.0,
+    "SB": 0.235,
+    "ST": 0.0,
+    "AFIB": 0.765
+   }
+  },
+  {
+   "t_start": 83.215,
+   "t_end": 93.215,
+   "label": null,
+   "label_name": "Sinyal buruk",
+   "label_stable": null,
+   "label_stable_name": null,
+   "conf": null,
+   "uncertain": true,
+   "hr": 112.9,
+   "rr_cv": 0.75,
+   "sqi": "buruk",
+   "sqi_reasons": [
+    "bentuk denyut tidak konsisten, kemungkinan artefak gerak (korelasi 0.79)"
+   ],
+   "sqi_metrics": {
+    "kurtosis": 7.82,
+    "template_corr": 0.786
+   },
+   "probs": null
+  },
+  {
+   "t_start": 85.462,
+   "t_end": 95.462,
+   "label": null,
+   "label_name": "Sinyal buruk",
+   "label_stable": null,
+   "label_stable_name": null,
+   "conf": null,
+   "uncertain": true,
+   "hr": 107.5,
+   "rr_cv": 0.766,
+   "sqi": "buruk",
+   "sqi_reasons": [
+    "bentuk denyut tidak konsisten, kemungkinan artefak gerak (korelasi 0.78)"
+   ],
+   "sqi_metrics": {
+    "kurtosis": 9.21,
+    "template_corr": 0.783
+   },
+   "probs": null
+  },
+  {
+   "t_start": 87.708,
+   "t_end": 97.708,
+   "label": null,
+   "label_name": "Sinyal buruk",
+   "label_stable": null,
+   "label_stable_name": null,
+   "conf": null,
+   "uncertain": true,
+   "hr": 110.3,
+   "rr_cv": 0.771,
+   "sqi": "buruk",
+   "sqi_reasons": [
+    "bentuk denyut tidak konsisten, kemungkinan artefak gerak (korelasi 0.78)"
+   ],
+   "sqi_metrics": {
+    "kurtosis": 9.81,
+    "template_corr": 0.777
+   },
+   "probs": null
+  },
+  {
+   "t_start": 89.954,
+   "t_end": 99.954,
+   "label": null,
+   "label_name": "Sinyal buruk",
+   "label_stable": null,
+   "label_stable_name": null,
+   "conf": null,
+   "uncertain": true,
+   "hr": 115.9,
+   "rr_cv": 0.658,
+   "sqi": "buruk",
+   "sqi_reasons": [
+    "bentuk denyut tidak konsisten, kemungkinan artefak gerak (korelasi 0.78)"
+   ],
+   "sqi_metrics": {
+    "kurtosis": 8.18,
+    "template_corr": 0.783
+   },
+   "probs": null
+  }
+ ]
+}

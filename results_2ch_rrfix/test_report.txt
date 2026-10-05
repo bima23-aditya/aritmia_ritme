@@ -1,0 +1,17 @@
+Checkpoint terbaik: epoch 23 (val macro-F1 0.972)
+
+              precision    recall  f1-score   support
+
+Sinus normal      0.963     0.956     0.960       274
+ Sinus brady      0.986     0.990     0.988       584
+ Sinus tachy      0.982     0.940     0.961       235
+        AFib      0.953     0.989     0.971       267
+
+    accuracy                          0.974      1360
+   macro avg      0.971     0.969     0.970      1360
+weighted avg      0.974     0.974     0.974      1360
+
+[[262   6   3   3]
+ [  6 578   0   0]
+ [  3   1 221  10]
+ [  1   1   1 264]]

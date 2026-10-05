@@ -1,0 +1,126 @@
+{
+ "session": {
+  "id": "S-20260923-191908",
+  "started_at": "2026-09-23T19:19:08",
+  "source": "replay",
+  "file": "/home/bima/Documents/capstone/aritmia_ritme/ecg_main_mobile-legends2.csv",
+  "speed": 1.0,
+  "ended_at": "2026-09-23T19:19:26",
+  "error": null
+ },
+ "summary": {
+  "n_windows": 4,
+  "n_bad_signal": 0,
+  "counts": {
+   "Sinus normal": 4
+  },
+  "hr_min": 80.3,
+  "hr_max": 85.8,
+  "hr_median": 83.5,
+  "events": [
+   {
+    "t": 12.354,
+    "label_name": "Sinus normal",
+    "hr": 83.5
+   }
+  ]
+ },
+ "windows": [
+  {
+   "t_start": 0.108,
+   "t_end": 10.108,
+   "label": "SR",
+   "label_name": "Sinus normal",
+   "label_stable": null,
+   "label_stable_name": null,
+   "conf": 1.0,
+   "uncertain": false,
+   "hr": 85.8,
+   "rr_cv": 0.104,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 26.47,
+    "template_corr": 0.97
+   },
+   "probs": {
+    "SR": 1.0,
+    "SB": 0.0,
+    "ST": 0.0,
+    "AFIB": 0.0
+   }
+  },
+  {
+   "t_start": 2.354,
+   "t_end": 12.354,
+   "label": "SR",
+   "label_name": "Sinus normal",
+   "label_stable": "SR",
+   "label_stable_name": "Sinus normal",
+   "conf": 0.999,
+   "uncertain": false,
+   "hr": 83.5,
+   "rr_cv": 0.095,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 27.12,
+    "template_corr": 0.966
+   },
+   "probs": {
+    "SR": 0.999,
+    "SB": 0.0,
+    "ST": 0.001,
+    "AFIB": 0.0
+   }
+  },
+  {
+   "t_start": 4.6,
+   "t_end": 14.6,
+   "label": "SR",
+   "label_name": "Sinus normal",
+   "label_stable": "SR",
+   "label_stable_name": "Sinus normal",
+   "conf": 0.998,
+   "uncertain": false,
+   "hr": 80.3,
+   "rr_cv": 0.056,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 29.66,
+    "template_corr": 0.964
+   },
+   "probs": {
+    "SR": 0.998,
+    "SB": 0.0,
+    "ST": 0.001,
+    "AFIB": 0.0
+   }
+  },
+  {
+   "t_start": 6.846,
+   "t_end": 16.846,
+   "label": "SR",
+   "label_name": "Sinus normal",
+   "label_stable": "SR",
+   "label_stable_name": "Sinus normal",
+   "conf": 0.999,
+   "uncertain": false,
+   "hr": 81.4,
+   "rr_cv": 0.056,
+   "sqi": "baik",
+   "sqi_reasons": [],
+   "sqi_metrics": {
+    "kurtosis": 30.08,
+    "template_corr": 0.964
+   },
+   "probs": {
+    "SR": 0.999,
+    "SB": 0.0,
+    "ST": 0.001,
+    "AFIB": 0.0
+   }
+  }
+ ]
+}

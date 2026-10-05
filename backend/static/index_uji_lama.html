@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Uji backend real-time</title>
+<style>
+  body { font-family: system-ui, sans-serif; margin: 16px; background: #fafaf8; color: #222; }
+  .row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-bottom: 12px; }
+  .card { background: #fff; border: 1px solid #e3e1da; border-radius: 10px; padding: 10px 14px; }
+  .m { min-width: 130px } .m b { display: block; font-size: 22px; font-weight: 500 }
+  .lab { font-size: 12px; color: #777 }
+  canvas { width: 100%; display: block }
+  input { padding: 5px 8px } button { padding: 6px 12px; cursor: pointer }
+  #log { font: 12px monospace; height: 110px; overflow-y: auto; white-space: pre }
+</style>
+</head>
+<body>
+<h3 style="margin:0 0 12px">Uji backend real-time</h3>
+<div class="row card">
+  <input id="file" size="40" placeholder="path file rekaman di komputer server">
+  <input id="speed" size="3" value="1" title="kecepatan replay">
+  <button onclick="start('replay')">Mulai replay</button>
+  <button onclick="start('polar')">Mulai Polar H10</button>
+  <button onclick="stop()">Stop</button>
+  <span id="state" class="lab">tidak terhubung</span>
+</div>
+<div class="row">
+  <div class="card m"><span class="lab">Ritme</span><b id="lbl">-</b></div>
+  <div class="card m"><span class="lab">Confidence</span><b id="conf">-</b></div>
+  <div class="card m"><span class="lab">HR (bpm)</span><b id="hr">-</b></div>
+  <div class="card m"><span class="lab">Interval RR (ms)</span><b id="rr">-</b></div>
+  <div class="card m"><span class="lab">Kualitas sinyal</span><b id="sqi">-</b></div>
+</div>
+<div class="card" style="margin-bottom:12px">
+  <span class="lab">EKG live (filter tampilan, 10 detik terakhir)</span>
+  <canvas id="live" height="150"></canvas>
+</div>
+<div class="card" style="margin-bottom:12px">
+  <span class="lab">Jendela yang terakhir dianalisis + Grad-CAM + R-peak</span>
+  <canvas id="win" height="130"></canvas>
+</div>
+<div class="card"><span class="lab">Log</span><div id="log"></div></div>
+
+<script>
+const FS = 130, N = FS * 10;
+let live = new Float32Array(N), last = null;
+const $ = id => document.getElementById(id);
+function log(s) { const el = $('log'); el.textContent = new Date().toLocaleTimeString() + '  ' + s + '\n' + el.textContent; }
+
+async function start(source) {
+  const body = { source, file: $('file').value, speed: parseFloat($('speed').value) || 1 };
+  const r = await fetch('/api/session/start', { method: 'POST',
+    headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+  const j = await r.json(); log(r.ok ? 'Sesi dimulai: ' + j.id : 'Gagal: ' + j.detail);
+}
+async function stop() { await fetch('/api/session/stop', { method: 'POST' }); }
+
+function connect() {
+  const ws = new WebSocket(`ws://${location.host}/ws`);
+  ws.onopen = () => $('state').textContent = 'WebSocket terhubung';
+  ws.onclose = () => { $('state').textContent = 'terputus, mencoba lagi...'; setTimeout(connect, 1500); };
+  ws.onmessage = ev => {
+    const m = JSON.parse(ev.data);
+    if (m.type === 'ecg') {
+      const s = m.samples; live.copyWithin(0, s.length); live.set(s, N - s.length);
+    } else if (m.type === 'rhythm') {
+      last = m;
+      $('lbl').textContent = m.sqi === 'buruk' ? 'Sinyal buruk' : (m.label_stable_name || 'Menunggu...') + (m.uncertain ? ' ?' : '');
+      $('conf').textContent = m.conf != null ? Math.round(m.conf * 100) + '%' : '-';
+      $('hr').textContent = m.hr != null ? Math.round(m.hr) : '-';
+      $('rr').textContent = (m.rr_ms && m.rr_ms.length)
+        ? `${Math.min(...m.rr_ms).toFixed(0)}-${Math.max(...m.rr_ms).toFixed(0)}` : '-';
+      $('sqi').textContent = m.sqi;
+      if (m.sqi === 'buruk') log('Sinyal buruk: ' + m.sqi_reasons.join('; '));
+      drawWindow();
+    } else if (m.type === 'status') {
+      log('Status: ' + m.state + (m.error ? ' (error: ' + m.error + ')' : '') + (m.saved ? ' -> ' + m.saved : ''));
+    }
+  };
+}
+
+function setup(c) {
+  const r = c.getBoundingClientRect(), p = devicePixelRatio || 1;
+  c.width = r.width * p; c.height = r.height * p;
+  const x = c.getContext('2d'); x.setTransform(p, 0, 0, p, 0, 0); return [x, r.width, r.height];
+}
+function trace(x, data, w, h, color, padTop = 0.1) {
+  let lo = Infinity, hi = -Infinity;
+  for (const v of data) { if (v < lo) lo = v; if (v > hi) hi = v; }
+  const range = (hi - lo) || 1; lo -= range * 0.1; hi += range * padTop;
+  const Y = v => h - (v - lo) / (hi - lo) * h;
+  x.strokeStyle = color; x.lineWidth = 1.2; x.beginPath();
+  data.forEach((v, i) => { const px = i / (data.length - 1) * w; i ? x.lineTo(px, Y(v)) : x.moveTo(px, Y(v)); });
+  x.stroke(); return Y;
+}
+function drawLive() {
+  const [x, w, h] = setup($('live')); x.clearRect(0, 0, w, h);
+  trace(x, live, w, h, '#222'); requestAnimationFrame(drawLive);
+}
+function drawWindow() {
+  if (!last || !last.window) return;
+  const [x, w, h] = setup($('win')); x.clearRect(0, 0, w, h);
+  const d = last.window, n = d.length;
+  if (last.cam) last.cam.forEach((v, i) => {
+    if (v > 0.05) { x.fillStyle = `rgba(226,75,74,${(v * 0.5).toFixed(2)})`; x.fillRect(i / n * w, 0, w / n + 1, h); }
+  });
+  const Y = trace(x, d, w, h, '#222', 0.4);
+  const pk = last.r_peaks;
+  x.fillStyle = '#185FA5';
+  for (const p of pk) { x.beginPath(); x.arc(p / (n - 1) * w, Y(d[p]) - 6, 3, 0, 7); x.fill(); }
+  if (last.rr_ms && last.rr_ms.length) {
+    x.fillStyle = '#534AB7'; x.font = '11px sans-serif'; x.textAlign = 'center';
+    const yLabel = 10; // baris sejajar untuk semua label, tidak mengikuti tinggi denyut
+    for (let i = 0; i < pk.length - 1 && i < last.rr_ms.length; i++) {
+      const xm = (pk[i] + pk[i + 1]) / 2 / (n - 1) * w;
+      x.fillText(Math.round(last.rr_ms[i]) + ' ms', xm, yLabel);
+    }
+  }
+}
+connect(); drawLive();
+</script>
+</body>
+</html>
