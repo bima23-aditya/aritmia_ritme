@@ -1,3 +1,4 @@
+# Pipeline data, training, dan evaluasi
 numpy
 scipy
 PyWavelets
@@ -7,3 +8,11 @@ scikit-learn
 matplotlib
 tqdm
 torch
+wfdb
+
+# Backend real-time + laporan PDF
+fastapi
+uvicorn[standard]
+pydantic
+bleak
+reportlab
